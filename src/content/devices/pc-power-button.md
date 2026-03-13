@@ -2,12 +2,13 @@
 title: "Switch PC"
 description: "Switch mecánico externo para encender y apagar la PC."
 image: "/images/power-button.jpg" 
-gallery: ["/images/power-button.jpg"]
+gallery: ["/images/power-button.jpg", "/images/power-button-color1.jpg", "/images/power-button-color2.jpg"]
 featured: true
 customizable: false
 tags: ["Mechanical", "Personalizable", "Wired"]
 mercadolibreUrl: "https://www.mercadolibre.com.ar/boton-encendido-apagado-externo-pc-switch-computadora-cable/up/MLAU3734369455?pdp_filters=seller_id%3A119316055#polycard_client=search-desktop&search_layout=grid&position=18&type=product&tracking_id=3ed99576-e6b5-4608-a043-a5f3742458c9&wid=MLA2792297746&sid=search"
 firmwareUrl: "" 
+price: 24000
 stock: "En Stock"
 ---
 

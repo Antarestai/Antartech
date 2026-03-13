@@ -3,6 +3,12 @@
 import { Image } from 'astro:assets';
 
 const { featuredDevices } = Astro.props;
+
+const formatter = new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    maximumFractionDigits: 0
+});
 ---
 
 <section id="store" class="py-24 bg-white/50 dark:bg-[#030014]/50 backdrop-blur-3xl transition-colors duration-700 relative z-20 overflow-hidden">
@@ -18,7 +24,7 @@ const { featuredDevices } = Astro.props;
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-4">
             {featuredDevices.map((device: any, index: number) => (
-                <div class={`card-glow group relative bg-white/90 dark:bg-white/[0.06] backdrop-blur-3xl border border-white/60 dark:border-white/[0.08] rounded-[2.5rem] overflow-hidden shadow-xl shadow-indigo-500/5 dark:shadow-2xl dark:shadow-indigo-950/50 transition-all duration-700 hover:-translate-y-4 hover:shadow-2xl hover:shadow-indigo-500/25 hover:border-indigo-400/60 dark:hover:border-indigo-400/30 ring-1 ring-white/20 dark:ring-white/[0.05] flex flex-col will-change-transform scroll-reveal`} style={`transition-delay: ${index * 150}ms`}>
+                <div class={`card-glow group relative bg-white/90 dark:bg-white/[0.06] backdrop-blur-3xl border border-white/60 dark:border-white/[0.08] rounded-[2.5rem] overflow-hidden shadow-xl shadow-indigo-500/5 dark:shadow-2xl dark:shadow-indigo-950/50 transition-all duration-700 hover:-translate-y-4 hover:shadow-2xl hover:shadow-indigo-500/25 hover:border-indigo-400/60 dark:hover:border-indigo-400/30 ring-1 ring-white/20 dark:ring-white/[0.05] flex flex-col will-change-transform scroll-reveal`} style={`transition-delay: ${index * 75}ms`}>
                     <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/10 to-transparent transition-transform duration-[1.5s] ease-in-out pointer-events-none z-20"></div>
 
                     <div class="h-80 overflow-hidden relative z-10 bg-gray-100 dark:bg-gray-900/50">
@@ -59,11 +65,22 @@ const { featuredDevices } = Astro.props;
                         <p class="text-gray-600 dark:text-gray-400 text-base mb-10 leading-relaxed font-light line-clamp-3">{device.data.description}</p>
                         <div class="mt-auto flex items-center gap-4">
                             <a href={`/devices/${device.id}`} class="flex-grow flex justify-center items-center bg-gray-900 dark:bg-white text-white dark:text-gray-900 py-4.5 rounded-2xl font-black uppercase text-xs tracking-[0.1em] transition-all duration-500 hover:bg-gradient-to-r hover:from-fuchsia-600 hover:to-indigo-600 dark:hover:from-fuchsia-500 dark:hover:to-cyan-500 dark:hover:text-white shadow-lg hover:shadow-indigo-500/30">Setup & Config</a>
-                            {device.data.mercadolibreUrl && (
-                                <a href={device.data.mercadolibreUrl} target="_blank" aria-label={`Comprar ${device.data.title}`} class="flex items-center justify-center w-14 h-14 bg-white/80 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-400/10 hover:text-yellow-600 text-gray-500 transition-all duration-500 shrink-0 hover:shadow-lg hover:shadow-yellow-500/20 group/ml">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" class="group-hover/ml:scale-110 transition-transform duration-500" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.56-7.43H5.05"/></svg>
-                                </a>
-                            )}
+                            <!-- Botón Añadir al Carrito (Reemplaza MercadoLibre) -->
+                            <button 
+                                class="add-to-cart-btn flex items-center justify-center w-14 h-14 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30 rounded-2xl hover:bg-indigo-600 hover:border-indigo-600 dark:hover:bg-cyan-500 dark:hover:border-cyan-500 text-indigo-600 hover:text-white transition-all duration-500 shrink-0 hover:shadow-lg hover:shadow-indigo-500/30 dark:hover:shadow-cyan-500/30 group/cart"
+                                data-id={device.id}
+                                data-title={device.data.title}
+                                data-price={device.data.price || 45000} 
+                                data-image={device.data.image ? typeof device.data.image === 'object' ? device.data.image.src : device.data.image : ''}
+                                aria-label={`Añadir ${device.data.title} al carrito`}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" class="group-hover/cart:scale-110 transition-transform duration-500" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+                                    <path d="M3 6h18"/>
+                                    <path d="M12 10v6"/>
+                                    <path d="M9 13h6"/>
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -71,3 +88,42 @@ const { featuredDevices } = Astro.props;
         </div>
     </div>
 </section>
+
+<script>
+    import { cartStore } from '../scripts/cartStore.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Lógica para Añadir al Carrito
+        const addButtons = document.querySelectorAll('.add-to-cart-btn');
+        
+        addButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const button = e.currentTarget as HTMLElement;
+                const id = button.dataset.id;
+                const title = button.dataset.title;
+                const price = parseFloat(button.dataset.price || '0');
+                const image = button.dataset.image;
+
+                if (id && title) {
+                    // Animación de feedback local en el botón
+                    const originalHTML = button.innerHTML;
+                    button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="animate-bounce"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+                    button.classList.add('bg-green-500', 'text-white', 'border-green-500');
+                    button.classList.remove('text-indigo-600');
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalHTML;
+                        button.classList.remove('bg-green-500', 'text-white', 'border-green-500');
+                        button.classList.add('text-indigo-600');
+                    }, 1000);
+
+                    // Guardar en store
+                    cartStore.addItem({ id, title, price, image });
+                    
+                    // Abrir Drawer para darle feedback visual al usuario de que entró al carrito
+                    window.dispatchEvent(new CustomEvent('antares_open_cart'));
+                }
+            });
+        });
+    });
+</script>

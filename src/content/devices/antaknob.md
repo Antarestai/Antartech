@@ -2,12 +2,13 @@
 title: "AntaKnob"
 description: "Controlador multimedia de 5 funciones, con comandos totalmente personalizables."
 image: "/images/antaknob.jpg"
-gallery: ["/images/antaknob.jpg", "/images/antaknob_lateral.png", "/images/antaknob_setup.jpg", "/images/antaknob_setup2.jpg", "/images/antaknob_setup3.jpg"]
+gallery: ["/images/antaknob.jpg", "/images/antaknob-rosa.jpg", "/images/antaknob-blanco.jpg", "/images/antaknob-mix1.jpg", "/images/antaknob-mix2.jpg"]
 tags: ["QMK/VIA", "Personalizable", "Macro", "Wired", "RGB"]
 firmwareUrl: "/downloads/knob_via.json"
 mercadolibreUrl: "https://www.mercadolibre.com.ar/controlador-de-volumen-para-pc-programable-rgb-antaknob/up/MLAU3795618968?pdp_filters=seller_id%3A119316055#polycard_client=search-desktop&search_layout=grid&position=4&type=product&tracking_id=3ed99576-e6b5-4608-a043-a5f3742458c9&wid=MLA2860036316&sid=search"
 featured: true
 customizable: true
+price: 40000
 stock: "En Stock"
 ---
 
@@ -21,8 +22,6 @@ El AntaKnob está diseñado para ser el centro de control de tu setup.
 * **Funciones:** Girar para subir y bajar el volumen, un click para silenciar (mute), y mantener presionado el click mientras girás para pasar a la siguiente o anterior canción.
 * **Conectividad:** USB-C (Plug & Play).
 
-
-![Vista lateral del AntaKnob con cable USB-C](/images/antaknob_lateral.png)
 
 ## Instructivo de Configuración
 

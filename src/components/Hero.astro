@@ -2,10 +2,13 @@
 // src/components/Hero.astro
 ---
 
-<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-gray-50 dark:bg-[#030014] transition-colors duration-700">
-    <canvas id="particles-canvas" class="absolute inset-0 w-full h-full"></canvas>
-    <div 
-        class="absolute inset-0 opacity-[0.3] dark:opacity-[0.8] transition-opacity duration-700" 
+<div id="hero-bg" class="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-gray-50 dark:bg-[#030014] transition-colors duration-700">
+    <div id="parallax-layer-1" class="absolute inset-0 w-full h-full transition-transform duration-300 ease-out will-change-transform">
+        <canvas id="particles-canvas" class="absolute inset-0 w-full h-full"></canvas>
+    </div>
+    
+    <div id="parallax-layer-2"
+        class="absolute inset-0 opacity-[0.3] dark:opacity-[0.8] transition-all duration-700 ease-out will-change-transform" 
         style="background: 
             linear-gradient(135deg, var(--pcb-line) 2px, transparent 2px),
             linear-gradient(225deg, var(--pcb-line) 2px, transparent 2px),
@@ -14,10 +17,14 @@
             background-position: 0 0, 30px 0, 30px 30px;
             background-color: var(--pcb-bg);"
     ></div>
+    
     <div class="absolute inset-0 bg-gradient-to-b from-white/40 via-white/80 to-white dark:from-transparent dark:via-[#030014]/60 dark:to-[#030014] transition-colors duration-700"></div>
-    <div class="absolute top-0 right-0 -mr-40 -mt-40 w-[500px] h-[500px] rounded-full bg-fuchsia-500/15 dark:bg-fuchsia-600/15 blur-[120px] pointer-events-none animate-float-slow"></div>
-    <div class="absolute bottom-0 left-0 -ml-40 -mb-40 w-[500px] h-[500px] rounded-full bg-cyan-500/15 dark:bg-cyan-600/15 blur-[120px] pointer-events-none animate-float-slow-reverse"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-indigo-500/5 dark:bg-indigo-600/10 blur-[150px] pointer-events-none animate-pulse-glow"></div>
+    
+    <div id="parallax-layer-3" class="absolute inset-0 w-full h-full transition-transform duration-500 ease-out will-change-transform">
+        <div class="absolute top-0 right-[-10%] -mt-40 w-[500px] h-[500px] rounded-full bg-fuchsia-500/15 dark:bg-fuchsia-600/15 blur-[120px] pointer-events-none animate-float-slow"></div>
+        <div class="absolute bottom-0 left-[-10%] -mb-40 w-[500px] h-[500px] rounded-full bg-cyan-500/15 dark:bg-cyan-600/15 blur-[120px] pointer-events-none animate-float-slow-reverse"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-indigo-500/5 dark:bg-indigo-600/10 blur-[150px] pointer-events-none animate-pulse-glow"></div>
+    </div>
 </div>
 
 <!-- Floating Keycaps decorativos — deletrean A·N·T·A·R·E·S -->
@@ -230,4 +237,20 @@
         }
         drawParticles();
     }
+
+    // --- Mouse Parallax Effect ---
+    document.addEventListener('mousemove', (e) => {
+        // Obtenemos coordenadas normalizadas del mouse de -1 a 1
+        const x = (e.clientX / window.innerWidth - 0.5) * 2;
+        const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+        const layer1 = document.getElementById('parallax-layer-1'); // Particles (closest)
+        const layer2 = document.getElementById('parallax-layer-2'); // Grid (middle)
+        const layer3 = document.getElementById('parallax-layer-3'); // Orbs (furthest)
+
+        // Multiplicadores al triple para que el efecto sea muy notorio
+        if (layer1) layer1.style.transform = `translate(${x * -60}px, ${y * -60}px)`; 
+        if (layer2) layer2.style.transform = `translate(${x * -30}px, ${y * -30}px)`; 
+        if (layer3) layer3.style.transform = `translate(${x * -90}px, ${y * -90}px)`; 
+    });
 </script>
