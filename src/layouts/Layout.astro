@@ -26,7 +26,7 @@ const { title } = Astro.props;
             }
         </script>
 	</head>
-	<body class="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-200 font-sans antialiased selection:bg-purple-500/30 transition-colors duration-300">
+	<body class="bg-gray-50 dark:bg-[#030014] text-gray-900 dark:text-gray-200 font-sans antialiased selection:bg-fuchsia-500/30 transition-colors duration-700">
         <Navbar />
 		
         <main>
@@ -35,10 +35,10 @@ const { title } = Astro.props;
 
 		<button 
 			id="to-top-button" 
-			class="fixed bottom-8 right-8 z-[60] p-4 rounded-full bg-white/10 dark:bg-gray-900/10 backdrop-blur-xl border border-white/20 dark:border-white/10 text-purple-600 dark:text-purple-400 shadow-2xl transition-all duration-1000 ease-in-out opacity-0 translate-y-10 pointer-events-none hover:bg-purple-600 hover:text-white dark:hover:bg-purple-500 hover:-translate-y-1"
+			class="fixed bottom-8 right-8 z-[60] p-4 rounded-full bg-white/40 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 text-cyan-600 dark:text-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.15)] transition-all duration-700 ease-in-out opacity-0 translate-y-10 pointer-events-none hover:bg-gradient-to-r hover:from-indigo-500 hover:to-cyan-400 hover:text-white hover:border-transparent hover:shadow-[0_0_40px_rgba(6,182,212,0.3)] hover:-translate-y-2 group"
 			aria-label="Volver arriba"
 		>
-			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="group-hover:animate-bounce">
 				<path d="m18 15-6-6-6 6"/>
 			</svg>
 		</button>

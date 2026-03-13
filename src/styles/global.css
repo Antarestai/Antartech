@@ -13,15 +13,15 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  /* Degradado RGB sutil: Violeta a Cian */
-  background: linear-gradient(180deg, #9333ea, #06b6d4);
+  /* Degradado RGB sutil: Indigo a Cyan */
+  background: linear-gradient(180deg, #6366f1, #06b6d4);
   border-radius: 10px;
-  border: 2px solid #111827; /* Crea un efecto de separación del borde */
+  border: 2px solid #030014; /* Crea un efecto de separación del borde oscuro profundo */
 }
 
 ::-webkit-scrollbar-thumb:hover {
   /* Al pasar el mouse, el degradado brilla más */
-  background: linear-gradient(180deg, #a855f7, #22d3ee);
+  background: linear-gradient(180deg, #8b5cf6, #22d3ee);
 }
 
 /* Personalización para Firefox */
