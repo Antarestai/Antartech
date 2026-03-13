@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+/* Esta línea le dice a Tailwind que queremos cambiar el modo con un botón */
+@custom-variant dark (&:is(.dark *));
