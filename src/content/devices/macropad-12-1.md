@@ -2,7 +2,9 @@
 title: "Macropad 12+1"
 description: "Teclado de macros con 12 teclas mecánicas y un rotativo. Totalmente configurable con VIA. Ideal para edición, streaming y productividad."
 image: "/images/macropad.jpg" 
+gallery: ["/images/macropad.jpg"]
 featured: true
+customizable: true
 tags: ["QMK/VIA", "Mechanical", "Personalizable","Wired"]
 firmwareUrl: "/files/macropad-12-1.json"
 mercadolibreUrl: ""

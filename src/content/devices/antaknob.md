@@ -2,10 +2,12 @@
 title: "AntaKnob"
 description: "Controlador multimedia de 5 funciones, con comandos totalmente personalizables."
 image: "/images/antaknob.jpg"
+gallery: ["/images/antaknob.jpg", "/images/antaknob_lateral.png", "/images/antaknob_setup.jpg", "/images/antaknob_setup2.jpg", "/images/antaknob_setup3.jpg"]
 tags: ["QMK/VIA", "Personalizable", "Macro", "Wired", "RGB"]
 firmwareUrl: "/downloads/knob_via.json"
 mercadolibreUrl: "https://www.mercadolibre.com.ar/controlador-de-volumen-para-pc-programable-rgb-antaknob/up/MLAU3795618968?pdp_filters=seller_id%3A119316055#polycard_client=search-desktop&search_layout=grid&position=4&type=product&tracking_id=3ed99576-e6b5-4608-a043-a5f3742458c9&wid=MLA2860036316&sid=search"
 featured: true
+customizable: true
 ---
 
 

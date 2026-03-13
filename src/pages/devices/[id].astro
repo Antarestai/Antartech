@@ -14,27 +14,34 @@ export async function getStaticPaths() {
 const { device } = Astro.props;
 const { Content } = await render(device); 
 
-// Generamos el link de WhatsApp dinámico con el nombre del producto
 const waMessage = `Hola, me comunico para comprar un ${device.data.title} que vi por la pagina`;
 const waLinkDynamic = `https://wa.me/541165361612?text=${encodeURIComponent(waMessage)}`;
+const waCustomMessage = `Hola, me interesa personalizar un ${device.data.title}. ¿Qué opciones hay?`;
+const waCustomLink = `https://wa.me/541165361612?text=${encodeURIComponent(waCustomMessage)}`;
+const gallery = device.data.gallery || [device.data.image];
 ---
 
 <Layout title={`${device.data.title} - Setup & Config | Antares Tech`}>
-    <div class="fixed inset-0 -z-10 bg-gray-50 dark:bg-gray-950 transition-colors duration-500"></div>
+    <div class="fixed inset-0 -z-10 bg-gray-50 dark:bg-[#030014] transition-colors duration-700"></div>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 min-h-screen">
+    <!-- Ambient glow blobs -->
+    <div class="fixed top-0 left-1/4 w-[600px] h-[600px] bg-indigo-500/10 dark:bg-indigo-600/15 rounded-full blur-[150px] pointer-events-none -z-5"></div>
+    <div class="fixed bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-500/10 dark:bg-cyan-600/10 rounded-full blur-[150px] pointer-events-none -z-5"></div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 min-h-screen relative z-10">
         
-        <a href="/#store" class="inline-flex items-center text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors mb-12 animate-fade-in">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="m15 18-6-6 6-6"/></svg>
+        <a href="/#store" class="inline-flex items-center text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 transition-all duration-300 mb-12 group/back">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 group-hover/back:-translate-x-1 transition-transform duration-300"><path d="m15 18-6-6 6-6"/></svg>
             Volver a Productos
         </a>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             
-            <div class="lg:col-span-4 lg:sticky lg:top-32 animate-fade-in">
+            <!-- Sidebar info -->
+            <div class="lg:col-span-4 lg:sticky lg:top-32 scroll-reveal">
                 <div class="flex flex-wrap gap-2 mb-6">
                     {device.data.tags && device.data.tags.map((tag: string) => (
-                        <span class="text-[10px] font-black uppercase tracking-widest text-purple-600 dark:text-purple-400 bg-purple-100/50 dark:bg-purple-900/30 px-3 py-1.5 rounded-md border border-purple-200/50 dark:border-purple-800/50">
+                        <span class="text-[10px] font-black uppercase tracking-widest text-indigo-600 dark:text-cyan-400 bg-indigo-50 dark:bg-cyan-500/10 px-3 py-1.5 rounded-lg border border-indigo-200/50 dark:border-cyan-500/20">
                             {tag}
                         </span>
                     ))}
@@ -50,7 +57,7 @@ const waLinkDynamic = `https://wa.me/541165361612?text=${encodeURIComponent(waMe
 
                 <div class="flex flex-col gap-4">
                     {device.data.firmwareUrl && (
-                        <a href={device.data.firmwareUrl} download class="inline-flex items-center justify-center bg-purple-600 hover:bg-purple-500 text-white px-8 py-5 rounded-2xl font-black uppercase text-xs tracking-[0.1em] transition-all duration-500 ease-in-out shadow-xl shadow-purple-500/20 w-full hover:-translate-y-1">
+                        <a href={device.data.firmwareUrl} download class="inline-flex items-center justify-center bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white px-8 py-5 rounded-2xl font-black uppercase text-xs tracking-[0.1em] transition-all duration-500 shadow-xl shadow-indigo-500/25 w-full hover:-translate-y-1 hover:shadow-indigo-500/40">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                             Descargar JSON (VIA)
                         </a>
@@ -58,24 +65,57 @@ const waLinkDynamic = `https://wa.me/541165361612?text=${encodeURIComponent(waMe
                 </div>
             </div>
 
-            <div class="lg:col-span-8 w-full animate-fade-in">
-                {device.data.image && (
-                    <div class="w-full h-72 md:h-[450px] mb-12 rounded-[2.5rem] overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-800 bg-gray-200 dark:bg-gray-800">
-                        <Image 
-                            src={device.data.image as any} 
-                            alt={`Vista de ${device.data.title}`} 
-                            width={1200}
-                            height={800}
-                            class="w-full h-full object-cover"
-                            format="webp"
-                        />
+            <!-- Main content -->
+            <div class="lg:col-span-8 w-full scroll-reveal" style="transition-delay: 150ms">
+                <!-- Image Gallery Carousel -->
+                {gallery.length > 0 && (
+                    <div class="relative w-full h-72 md:h-[450px] mb-12 rounded-[2rem] overflow-hidden shadow-2xl shadow-indigo-500/10 dark:shadow-indigo-950/30 border border-white/50 dark:border-white/10 bg-gray-200 dark:bg-gray-900 group/gallery" id="gallery-container">
+                        <!-- Images -->
+                        {gallery.map((img: string, idx: number) => (
+                            <img 
+                                src={img} 
+                                alt={`${device.data.title} - foto ${idx + 1}`} 
+                                class={`gallery-slide absolute inset-0 w-full h-full object-cover transition-all duration-700 ${idx === 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}
+                                data-index={idx}
+                                loading={idx === 0 ? "eager" : "lazy"}
+                            />
+                        ))}
+                        <!-- Overlay gradient -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none z-10"></div>
+                        
+                        {gallery.length > 1 && (
+                            <>
+                            <!-- Prev / Next buttons -->
+                            <button id="gallery-prev" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-md border border-white/50 dark:border-white/10 flex items-center justify-center text-gray-700 dark:text-white hover:bg-white dark:hover:bg-black/70 transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                            </button>
+                            <button id="gallery-next" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-md border border-white/50 dark:border-white/10 flex items-center justify-center text-gray-700 dark:text-white hover:bg-white dark:hover:bg-black/70 transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                            </button>
+                            <!-- Dot indicators -->
+                            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+                                {gallery.map((_: string, idx: number) => (
+                                    <button 
+                                        class={`gallery-dot w-2.5 h-2.5 rounded-full transition-all duration-500 ${idx === 0 ? 'bg-white scale-110 shadow-md' : 'bg-white/40 hover:bg-white/70'}`}
+                                        data-dot={idx}
+                                    ></button>
+                                ))}
+                            </div>
+                            <!-- Counter badge -->
+                            <div class="absolute top-4 right-4 z-20 bg-black/40 backdrop-blur-md text-white text-[10px] font-bold tracking-wider px-3 py-1.5 rounded-full border border-white/10">
+                                <span id="gallery-counter">1</span> / {gallery.length}
+                            </div>
+                            </>
+                        )}
                     </div>
                 )}
 
-                <article class="markdown-content bg-white dark:bg-[#0a0a0a] p-8 md:p-12 lg:p-16 rounded-[2.5rem] shadow-sm border border-gray-200 dark:border-gray-800 w-full overflow-hidden">
+                <article class="markdown-content bg-white/80 dark:bg-white/[0.03] backdrop-blur-2xl p-8 md:p-12 lg:p-16 rounded-[2rem] shadow-xl shadow-indigo-500/5 dark:shadow-indigo-950/30 border border-white/60 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] w-full overflow-hidden relative">
+                    <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-indigo-500/5 dark:bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
                     <Content />
                     
-                    <div class="mt-20 pt-16 border-t border-gray-200 dark:border-gray-800">
+                    <!-- CTA Section -->
+                    <div class="mt-20 pt-16 border-t border-gray-200/50 dark:border-white/5 relative">
                         <div class="text-center mb-10">
                             <h3 class="text-3xl md:text-4xl font-black text-gray-900 dark:text-white uppercase tracking-tighter mb-4">¿Querés el tuyo?</h3>
                             <p class="text-lg text-gray-600 dark:text-gray-400 font-light">Elegí tu método de compra preferido.</p>
@@ -84,35 +124,70 @@ const waLinkDynamic = `https://wa.me/541165361612?text=${encodeURIComponent(waMe
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                             
                             {device.data.mercadolibreUrl ? (
-                                <a href={device.data.mercadolibreUrl} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 transform transition-all duration-700 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-yellow-500/10 hover:border-yellow-400/30">
-                                    <div class="absolute inset-0 bg-gradient-to-b from-yellow-400/0 via-yellow-400/0 to-yellow-400/10 dark:to-yellow-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out"></div>
-                                    <div class="bg-[#FFE600] p-4 rounded-full mb-4 shadow-md shadow-yellow-500/20 transform group-hover:scale-[1.03] transition-transform duration-700 ease-in-out">
+                                <a href={device.data.mercadolibreUrl} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl border border-white/50 dark:border-white/[0.08] transform transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl hover:shadow-yellow-500/15 hover:border-yellow-400/40 ring-1 ring-white/20 dark:ring-white/[0.05]">
+                                    <div class="absolute inset-0 bg-gradient-to-b from-yellow-400/0 to-yellow-400/10 dark:to-yellow-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                    <div class="bg-[#FFE600] p-4 rounded-2xl mb-4 shadow-lg shadow-yellow-500/20 transform group-hover:scale-105 transition-transform duration-700">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2D3277" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                                     </div>
-                                    <span class="text-gray-900 dark:text-white font-black uppercase tracking-[0.15em] text-sm relative z-10 mb-1 transition-colors duration-700 ease-in-out">Mercado Libre</span>
-                                    <span class="text-gray-500 dark:text-gray-400 text-xs font-medium relative z-10 transition-colors duration-700 ease-in-out">Compras en nuestra publicación oficial</span>
+                                    <span class="text-gray-900 dark:text-white font-black uppercase tracking-[0.15em] text-sm relative z-10 mb-1">Mercado Libre</span>
+                                    <span class="text-gray-500 dark:text-gray-400 text-xs font-medium relative z-10">Compras en nuestra publicación oficial</span>
                                 </a>
                             ) : (
-                                <div class="relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-gray-100 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 opacity-60 cursor-not-allowed transition-all duration-700 ease-in-out">
-                                    <div class="bg-gray-300 dark:bg-gray-800 p-4 rounded-full mb-4 transition-all duration-700 ease-in-out">
+                                <div class="relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-gray-100/50 dark:bg-white/[0.01] border border-gray-200/50 dark:border-white/5 opacity-50 cursor-not-allowed">
+                                    <div class="bg-gray-300 dark:bg-gray-800 p-4 rounded-2xl mb-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-gray-500 dark:text-gray-400" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                                     </div>
-                                    <span class="text-gray-500 dark:text-gray-400 font-black uppercase tracking-[0.15em] text-sm relative z-10 mb-1 transition-colors duration-700 ease-in-out">Mercado Libre</span>
-                                    <span class="text-gray-400 dark:text-gray-500 text-xs font-medium relative z-10 transition-colors duration-700 ease-in-out">No disponible actualmente</span>
+                                    <span class="text-gray-500 dark:text-gray-400 font-black uppercase tracking-[0.15em] text-sm relative z-10 mb-1">Mercado Libre</span>
+                                    <span class="text-gray-400 dark:text-gray-500 text-xs font-medium relative z-10">No disponible actualmente</span>
                                 </div>
                             )}
                             
-                            <a href={waLinkDynamic} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 transform transition-all duration-700 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-green-500/10 hover:border-green-400/30">
-                                <div class="absolute inset-0 bg-gradient-to-b from-green-500/0 via-green-500/0 to-green-500/10 dark:to-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out"></div>
-                                <div class="bg-[#25D366] p-4 rounded-full mb-4 shadow-md shadow-green-500/20 transform group-hover:scale-[1.03] transition-transform duration-700 ease-in-out">
+                            <a href={waLinkDynamic} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl border border-white/50 dark:border-white/[0.08] transform transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/15 hover:border-green-400/40 ring-1 ring-white/20 dark:ring-white/[0.05]">
+                                <div class="absolute inset-0 bg-gradient-to-b from-green-500/0 to-green-500/10 dark:to-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                <div class="bg-[#25D366] p-4 rounded-2xl mb-4 shadow-lg shadow-green-500/20 transform group-hover:scale-105 transition-transform duration-700">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>
                                 </div>
-                                <span class="text-gray-900 dark:text-white font-black uppercase tracking-[0.15em] text-sm relative z-10 mb-1 transition-colors duration-700 ease-in-out">WhatsApp Directo</span>
-                                <span class="text-gray-500 dark:text-gray-400 text-xs font-medium relative z-10 transition-colors duration-700 ease-in-out">Descuentos y personalizados</span>
+                                <span class="text-gray-900 dark:text-white font-black uppercase tracking-[0.15em] text-sm relative z-10 mb-1">WhatsApp Directo</span>
+                                <span class="text-gray-500 dark:text-gray-400 text-xs font-medium relative z-10">Descuentos y personalizados</span>
                             </a>
 
                         </div>
                     </div>
+
+                    {device.data.customizable !== false && (
+                        <!-- Personalizá el tuyo -->
+                        <div class="mt-20 pt-16 border-t border-gray-200/50 dark:border-white/5 relative">
+                            <div class="text-center mb-10">
+                                <div class="inline-flex items-center gap-2 mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-fuchsia-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-fuchsia-500">Hecho a medida</span>
+                                </div>
+                                <h3 class="text-3xl md:text-4xl font-black text-gray-900 dark:text-white uppercase tracking-tighter mb-4">Personalizá el tuyo</h3>
+                                <p class="text-lg text-gray-600 dark:text-gray-400 font-light max-w-xl mx-auto">Cada dispositivo puede ser único. Elegí colores, materiales y detalles estéticos a tu gusto.</p>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10 max-w-4xl mx-auto">
+                                <div class="p-6 rounded-2xl bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl border border-white/50 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] text-center">
+                                    <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-fuchsia-500 to-pink-500 flex items-center justify-center shadow-lg shadow-fuchsia-500/20">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="0.5"/><circle cx="17.5" cy="10.5" r="0.5"/><circle cx="8.5" cy="7.5" r="0.5"/><circle cx="6.5" cy="12.5" r="0.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+                                    </div>
+                                    <h4 class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-wider mb-2">Colores & Materiales</h4>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 font-light">Elegí el color de la carcasa, el tipo de material y el acabado.</p>
+                                </div>
+                                <div class="p-6 rounded-2xl bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl border border-white/50 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] text-center">
+                                    <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                                    </div>
+                                    <h4 class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-wider mb-2">Logo & Grabado</h4>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 font-light">Agregá tu logo, iniciales o diseño custom grabado en el dispositivo.</p>
+                                </div>
+                            </div>
+
+                            <a href={waCustomLink} target="_blank" class="block w-full text-center bg-gradient-to-r from-fuchsia-600 to-indigo-500 hover:from-fuchsia-500 hover:to-indigo-400 text-white font-black uppercase py-5 rounded-2xl text-xs tracking-[0.2em] transition-all duration-500 shadow-xl shadow-fuchsia-500/20 hover:shadow-fuchsia-500/30 hover:-translate-y-1">
+                                Consultá por tu versión personalizada
+                            </a>
+                        </div>
+                    )}
                 </article>
             </div>
 
@@ -120,11 +195,54 @@ const waLinkDynamic = `https://wa.me/541165361612?text=${encodeURIComponent(waMe
     </main>
 </Layout>
 
+<script is:inline>
+    // Gallery carousel
+    const slides = document.querySelectorAll('.gallery-slide');
+    const dots = document.querySelectorAll('.gallery-dot');
+    const counter = document.getElementById('gallery-counter');
+    const prevBtn = document.getElementById('gallery-prev');
+    const nextBtn = document.getElementById('gallery-next');
+    
+    if (slides.length > 1) {
+        let current = 0;
+        const total = slides.length;
+
+        function goTo(idx) {
+            slides.forEach((s, i) => {
+                s.classList.toggle('opacity-100', i === idx);
+                s.classList.toggle('scale-100', i === idx);
+                s.classList.toggle('opacity-0', i !== idx);
+                s.classList.toggle('scale-105', i !== idx);
+            });
+            dots.forEach((d, i) => {
+                d.classList.toggle('bg-white', i === idx);
+                d.classList.toggle('scale-110', i === idx);
+                d.classList.toggle('shadow-md', i === idx);
+                d.classList.toggle('bg-white/40', i !== idx);
+            });
+            if (counter) counter.textContent = idx + 1;
+            current = idx;
+        }
+
+        if (prevBtn) prevBtn.addEventListener('click', () => goTo((current - 1 + total) % total));
+        if (nextBtn) nextBtn.addEventListener('click', () => goTo((current + 1) % total));
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => goTo(parseInt(dot.dataset.dot)));
+        });
+    }
+
+    // Scroll reveal
+    const revealObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => revealObs.observe(el));
+</script>
+
 <style>
     .markdown-content :global(h1) { font-weight: 900; font-size: 2.25rem; margin-top: 3rem; margin-bottom: 1.5rem; letter-spacing: -0.025em; color: #111827; }
     html.dark .markdown-content :global(h1) { color: white; }
-    .markdown-content :global(h2) { font-weight: 900; font-size: 1.75rem; margin-top: 3rem; margin-bottom: 1.5rem; letter-spacing: -0.025em; text-transform: uppercase; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.75rem; color: #111827; }
-    html.dark .markdown-content :global(h2) { border-bottom-color: #262626; color: white; }
+    .markdown-content :global(h2) { font-weight: 900; font-size: 1.75rem; margin-top: 3rem; margin-bottom: 1.5rem; letter-spacing: -0.025em; text-transform: uppercase; border-bottom: 1px solid rgba(99, 102, 241, 0.2); padding-bottom: 0.75rem; color: #111827; }
+    html.dark .markdown-content :global(h2) { border-bottom-color: rgba(99, 102, 241, 0.15); color: white; }
     .markdown-content :global(h3) { font-weight: 800; font-size: 1.25rem; margin-top: 2rem; margin-bottom: 1rem; color: #374151; }
     html.dark .markdown-content :global(h3) { color: #d1d5db; }
     .markdown-content :global(p) { margin-bottom: 1.5rem; line-height: 1.8; color: #4b5563; font-size: 1.1rem; }
@@ -134,13 +252,31 @@ const waLinkDynamic = `https://wa.me/541165361612?text=${encodeURIComponent(waMe
     .markdown-content :global(li) { margin-bottom: 0.5rem; }
     .markdown-content :global(strong) { font-weight: 800; color: #111827; }
     html.dark .markdown-content :global(strong) { color: white; }
-    .markdown-content :global(a) { color: #9333ea; text-decoration: none; font-weight: 700; border-bottom: 2px solid transparent; transition: border-color 0.3s; }
-    .markdown-content :global(a:hover) { border-color: #9333ea; }
-    .markdown-content :global(img) { border-radius: 1.5rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); margin: 2rem auto; max-width: 100%; height: auto; border: 1px solid #e5e7eb; }
-    html.dark .markdown-content :global(img) { border-color: #262626; }
+    .markdown-content :global(a) { color: #6366f1; text-decoration: none; font-weight: 700; border-bottom: 2px solid transparent; transition: border-color 0.3s, color 0.3s; }
+    .markdown-content :global(a:hover) { border-color: #6366f1; color: #818cf8; }
+    html.dark .markdown-content :global(a) { color: #67e8f9; }
+    html.dark .markdown-content :global(a:hover) { border-color: #67e8f9; }
+    .markdown-content :global(img) { border-radius: 1.5rem; box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.1); margin: 2rem auto; max-width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.5); }
+    html.dark .markdown-content :global(img) { border-color: rgba(255,255,255,0.08); box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.15); }
 
     /* Galería */
     .markdown-content :global(p:has(img + img)) { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 3rem; margin-bottom: 3rem; }
     .markdown-content :global(p:has(img + img) img) { margin: 0; width: 100%; height: 250px; object-fit: cover; border-radius: 1.5rem; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.6s ease; cursor: pointer; }
-    .markdown-content :global(p:has(img + img) img:hover) { transform: scale(1.03) translateY(-3px); box-shadow: 0 20px 25px -5px rgba(147, 51, 234, 0.2); z-index: 10; position: relative; }
+    .markdown-content :global(p:has(img + img) img:hover) { transform: scale(1.03) translateY(-3px); box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.25); z-index: 10; position: relative; }
+
+    /* Scroll reveal (same as landing) */
+    .scroll-reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .scroll-reveal.revealed { opacity: 1; transform: translateY(0); }
 </style>
+
+<script is:inline>
+    // Scroll reveal for product page
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+</script>
