@@ -1,120 +1,38 @@
 ---
 ---
-<div id="preloader" class="fixed inset-0 z-50 bg-[#02000d] flex flex-col justify-center items-center font-['Fira_Code'] transition-opacity duration-1000">
-    <div class="max-w-xl w-full px-6 flex flex-col items-start relative">
-        <div class="absolute -left-20 top-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none"></div>
-        <div class="absolute -right-20 bottom-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px] pointer-events-none"></div>
-
-        <div class="w-full flex items-center justify-between mb-8 pb-4 border-b border-white/5 relative z-10">
-            <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-green-500/80"></span>
-            </div>
-            <span class="text-[10px] text-gray-600 uppercase tracking-widest">AntaresOS Boot Sequence</span>
-        </div>
-
-        <div id="terminal-lines" class="space-y-2 text-sm md:text-base w-full min-h-[150px] relative z-10">
-            <!-- Lines will be injected here via JS -->
-        </div>
+<div id="fast-preloader" class="fixed inset-0 z-[100] bg-[#030014] flex flex-col justify-center items-center pointer-events-none transition-opacity duration-700 ease-out">
+    <div class="relative flex items-center justify-center">
+        <!-- Logo Text -->
+        <h1 class="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase relative z-10 animate-pulse">
+            Antares<span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-cyan-500">.</span>
+        </h1>
         
-        <div class="mt-8 flex items-center gap-3 relative z-10 opacity-0" id="progress-container">
-            <span class="text-cyan-400">Loading modules</span>
-            <div class="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
-                <div id="progress-bar" class="h-full bg-gradient-to-r from-indigo-500 to-cyan-500 w-0 transition-all duration-300"></div>
-            </div>
-            <span id="progress-text" class="text-cyan-400 font-bold text-xs">0%</span>
-        </div>
+        <!-- Glows -->
+        <div class="absolute w-32 h-32 bg-fuchsia-500/20 blur-[40px] rounded-full"></div>
+        <div class="absolute w-32 h-32 bg-cyan-500/20 blur-[40px] rounded-full translate-x-10"></div>
     </div>
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        // Only run once per session
-        if (sessionStorage.getItem('antares_has_booted')) {
-            const preloader = document.getElementById('preloader');
-            if (preloader) preloader.style.display = 'none';
+        const preloader = document.getElementById('fast-preloader');
+        if (!preloader) return;
+
+        // If user has already seen it this session, fade out instantly
+        if (sessionStorage.getItem('antares_fast_boot')) {
+            preloader.style.opacity = '0';
+            setTimeout(() => { preloader.style.display = 'none'; }, 50);
             return;
         }
 
-        const lines = [
-            { text: "Initializing Antares Custom Peripherals core...", delay: 200, color: "text-gray-400" },
-            { text: "Loading custom firmware [QMK/VIA] ............. OK", delay: 600, color: "text-green-400" },
-            { text: "Checking switch actuation points ................ OK", delay: 400, color: "text-green-400" },
-            { text: "Syncing ARGB profiles vs local config ........... OK", delay: 500, color: "text-green-400" },
-            { text: "Mounting file system and establishing connection.", delay: 300, color: "text-indigo-400" }
-        ];
-
-        const terminalContainer = document.getElementById('terminal-lines');
-        const progressContainer = document.getElementById('progress-container');
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
-        const preloader = document.getElementById('preloader');
-
-        let accumulatedDelay = 0;
-
-        lines.forEach((line, index) => {
-            accumulatedDelay += line.delay;
-            setTimeout(() => {
-                if (!terminalContainer) return;
-                const p = document.createElement('p');
-                p.className = `font-mono ${line.color} opacity-0 translate-y-2 transition-all duration-300`;
-                p.innerHTML = `<span class="text-gray-600 mr-2">›</span> ${line.text}`;
-                terminalContainer.appendChild(p);
-                
-                // Trigger reflow to play animation
-                void p.offsetWidth;
-                p.classList.remove('opacity-0', 'translate-y-2');
-
-                if (index === lines.length - 1) {
-                    // Show progress bar
-                    setTimeout(() => {
-                        if(progressContainer) progressContainer.classList.remove('opacity-0');
-                        simulateProgress();
-                    }, 400);
-                }
-            }, accumulatedDelay);
-        });
-
-        function simulateProgress() {
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.floor(Math.random() * 15) + 5;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                    if(progressBar) progressBar.style.width = '100%';
-                    if(progressText) progressText.innerText = '100%';
-                    
-                    setTimeout(() => finishBoot(), 600);
-                } else {
-                    if(progressBar) progressBar.style.width = `${progress}%`;
-                    if(progressText) progressText.innerText = `${progress}%`;
-                }
-            }, 100);
-        }
-
-        function finishBoot() {
-            if (!preloader) return;
-            // Add a final flash of power
-            const flash = document.createElement('div');
-            flash.className = 'fixed inset-0 bg-white z-[60] opacity-0 transition-opacity duration-500 pointer-events-none';
-            document.body.appendChild(flash);
+        // Show a super fast glowing logo, then fade out seamlessly (total time ~0.6s)
+        setTimeout(() => {
+            preloader.style.opacity = '0';
+            sessionStorage.setItem('antares_fast_boot', 'true');
             
-            requestAnimationFrame(() => {
-                flash.classList.add('opacity-100');
-                setTimeout(() => {
-                    preloader.style.opacity = '0';
-                    flash.classList.remove('opacity-100');
-                    setTimeout(() => {
-                        preloader.style.display = 'none';
-                        flash.remove();
-                        sessionStorage.setItem('antares_has_booted', 'true');
-                        // Dispatch custom event if other scripts want to listen to boot finish
-                        window.dispatchEvent(new CustomEvent('antares_boot_complete'));
-                    }, 1000);
-                }, 200);
-            });
-        }
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 700); // Wait for transition duration
+        }, 300); // Super short delay, barely noticeable
     });
 </script>
