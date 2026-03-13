@@ -2,3 +2,30 @@
 
 /* Esta línea le dice a Tailwind que queremos cambiar el modo con un botón */
 @custom-variant dark (&:is(.dark *));
+
+/* Personalización de la barra de scroll para Chrome, Edge y Safari */
+::-webkit-scrollbar {
+  width: 10px; /* Un poco más fina para que sea elegante */
+}
+
+::-webkit-scrollbar-track {
+  background: #111827; /* Fondo oscuro (gray-950) para que no distraiga */
+}
+
+::-webkit-scrollbar-thumb {
+  /* Degradado RGB sutil: Violeta a Cian */
+  background: linear-gradient(180deg, #9333ea, #06b6d4);
+  border-radius: 10px;
+  border: 2px solid #111827; /* Crea un efecto de separación del borde */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  /* Al pasar el mouse, el degradado brilla más */
+  background: linear-gradient(180deg, #a855f7, #22d3ee);
+}
+
+/* Personalización para Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #9333ea #111827;
+}

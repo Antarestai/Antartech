@@ -1,0 +1,146 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content'; 
+import { Image } from 'astro:assets';
+
+export async function getStaticPaths() {
+  const devices = await getCollection('devices');
+  return devices.map(device => ({
+    params: { id: device.id },
+    props: { device },
+  }));
+}
+
+const { device } = Astro.props;
+const { Content } = await render(device); 
+
+// Generamos el link de WhatsApp dinámico con el nombre del producto
+const waMessage = `Hola, me comunico para comprar un ${device.data.title} que vi por la pagina`;
+const waLinkDynamic = `https://wa.me/541165361612?text=${encodeURIComponent(waMessage)}`;
+---
+
+<Layout title={`${device.data.title} - Setup & Config | Antares Tech`}>
+    <div class="fixed inset-0 -z-10 bg-gray-50 dark:bg-gray-950 transition-colors duration-500"></div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 min-h-screen">
+        
+        <a href="/#store" class="inline-flex items-center text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors mb-12 animate-fade-in">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="m15 18-6-6 6-6"/></svg>
+            Volver a Productos
+        </a>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            
+            <div class="lg:col-span-4 lg:sticky lg:top-32 animate-fade-in">
+                <div class="flex flex-wrap gap-2 mb-6">
+                    {device.data.tags && device.data.tags.map((tag: string) => (
+                        <span class="text-[10px] font-black uppercase tracking-widest text-purple-600 dark:text-purple-400 bg-purple-100/50 dark:bg-purple-900/30 px-3 py-1.5 rounded-md border border-purple-200/50 dark:border-purple-800/50">
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+
+                <h1 class="text-5xl lg:text-6xl font-black text-gray-900 dark:text-white mb-6 tracking-tighter leading-tight break-words">
+                    {device.data.title}
+                </h1>
+                
+                <p class="text-lg text-gray-600 dark:text-gray-400 font-light leading-relaxed mb-10">
+                    {device.data.description}
+                </p>
+
+                <div class="flex flex-col gap-4">
+                    {device.data.firmwareUrl && (
+                        <a href={device.data.firmwareUrl} download class="inline-flex items-center justify-center bg-purple-600 hover:bg-purple-500 text-white px-8 py-5 rounded-2xl font-black uppercase text-xs tracking-[0.1em] transition-all duration-500 ease-in-out shadow-xl shadow-purple-500/20 w-full hover:-translate-y-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                            Descargar JSON (VIA)
+                        </a>
+                    )}
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 w-full animate-fade-in">
+                {device.data.image && (
+                    <div class="w-full h-72 md:h-[450px] mb-12 rounded-[2.5rem] overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-800 bg-gray-200 dark:bg-gray-800">
+                        <Image 
+                            src={device.data.image as any} 
+                            alt={`Vista de ${device.data.title}`} 
+                            width={1200}
+                            height={800}
+                            class="w-full h-full object-cover"
+                            format="webp"
+                        />
+                    </div>
+                )}
+
+                <article class="markdown-content bg-white dark:bg-[#0a0a0a] p-8 md:p-12 lg:p-16 rounded-[2.5rem] shadow-sm border border-gray-200 dark:border-gray-800 w-full overflow-hidden">
+                    <Content />
+                    
+                    <div class="mt-20 pt-16 border-t border-gray-200 dark:border-gray-800">
+                        <div class="text-center mb-10">
+                            <h3 class="text-3xl md:text-4xl font-black text-gray-900 dark:text-white uppercase tracking-tighter mb-4">¿Querés el tuyo?</h3>
+                            <p class="text-lg text-gray-600 dark:text-gray-400 font-light">Elegí tu método de compra preferido.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                            
+                            {device.data.mercadolibreUrl ? (
+                                <a href={device.data.mercadolibreUrl} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 transform transition-all duration-700 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-yellow-500/10 hover:border-yellow-400/30">
+                                    <div class="absolute inset-0 bg-gradient-to-b from-yellow-400/0 via-yellow-400/0 to-yellow-400/10 dark:to-yellow-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out"></div>
+                                    <div class="bg-[#FFE600] p-4 rounded-full mb-4 shadow-md shadow-yellow-500/20 transform group-hover:scale-[1.03] transition-transform duration-700 ease-in-out">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2D3277" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                    </div>
+                                    <span class="text-gray-900 dark:text-white font-black uppercase tracking-[0.15em] text-sm relative z-10 mb-1 transition-colors duration-700 ease-in-out">Mercado Libre</span>
+                                    <span class="text-gray-500 dark:text-gray-400 text-xs font-medium relative z-10 transition-colors duration-700 ease-in-out">Compras en nuestra publicación oficial</span>
+                                </a>
+                            ) : (
+                                <div class="relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-gray-100 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 opacity-60 cursor-not-allowed transition-all duration-700 ease-in-out">
+                                    <div class="bg-gray-300 dark:bg-gray-800 p-4 rounded-full mb-4 transition-all duration-700 ease-in-out">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-gray-500 dark:text-gray-400" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                    </div>
+                                    <span class="text-gray-500 dark:text-gray-400 font-black uppercase tracking-[0.15em] text-sm relative z-10 mb-1 transition-colors duration-700 ease-in-out">Mercado Libre</span>
+                                    <span class="text-gray-400 dark:text-gray-500 text-xs font-medium relative z-10 transition-colors duration-700 ease-in-out">No disponible actualmente</span>
+                                </div>
+                            )}
+                            
+                            <a href={waLinkDynamic} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 transform transition-all duration-700 ease-in-out hover:-translate-y-1 hover:shadow-xl hover:shadow-green-500/10 hover:border-green-400/30">
+                                <div class="absolute inset-0 bg-gradient-to-b from-green-500/0 via-green-500/0 to-green-500/10 dark:to-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-in-out"></div>
+                                <div class="bg-[#25D366] p-4 rounded-full mb-4 shadow-md shadow-green-500/20 transform group-hover:scale-[1.03] transition-transform duration-700 ease-in-out">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>
+                                </div>
+                                <span class="text-gray-900 dark:text-white font-black uppercase tracking-[0.15em] text-sm relative z-10 mb-1 transition-colors duration-700 ease-in-out">WhatsApp Directo</span>
+                                <span class="text-gray-500 dark:text-gray-400 text-xs font-medium relative z-10 transition-colors duration-700 ease-in-out">Descuentos y personalizados</span>
+                            </a>
+
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .markdown-content :global(h1) { font-weight: 900; font-size: 2.25rem; margin-top: 3rem; margin-bottom: 1.5rem; letter-spacing: -0.025em; color: #111827; }
+    html.dark .markdown-content :global(h1) { color: white; }
+    .markdown-content :global(h2) { font-weight: 900; font-size: 1.75rem; margin-top: 3rem; margin-bottom: 1.5rem; letter-spacing: -0.025em; text-transform: uppercase; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.75rem; color: #111827; }
+    html.dark .markdown-content :global(h2) { border-bottom-color: #262626; color: white; }
+    .markdown-content :global(h3) { font-weight: 800; font-size: 1.25rem; margin-top: 2rem; margin-bottom: 1rem; color: #374151; }
+    html.dark .markdown-content :global(h3) { color: #d1d5db; }
+    .markdown-content :global(p) { margin-bottom: 1.5rem; line-height: 1.8; color: #4b5563; font-size: 1.1rem; }
+    html.dark .markdown-content :global(p) { color: #9ca3af; }
+    .markdown-content :global(ul), .markdown-content :global(ol) { padding-left: 1.5rem; margin-bottom: 2rem; color: #4b5563; font-size: 1.1rem; line-height: 1.8; }
+    html.dark .markdown-content :global(ul), html.dark .markdown-content :global(ol) { color: #9ca3af; }
+    .markdown-content :global(li) { margin-bottom: 0.5rem; }
+    .markdown-content :global(strong) { font-weight: 800; color: #111827; }
+    html.dark .markdown-content :global(strong) { color: white; }
+    .markdown-content :global(a) { color: #9333ea; text-decoration: none; font-weight: 700; border-bottom: 2px solid transparent; transition: border-color 0.3s; }
+    .markdown-content :global(a:hover) { border-color: #9333ea; }
+    .markdown-content :global(img) { border-radius: 1.5rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); margin: 2rem auto; max-width: 100%; height: auto; border: 1px solid #e5e7eb; }
+    html.dark .markdown-content :global(img) { border-color: #262626; }
+
+    /* Galería */
+    .markdown-content :global(p:has(img + img)) { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 3rem; margin-bottom: 3rem; }
+    .markdown-content :global(p:has(img + img) img) { margin: 0; width: 100%; height: 250px; object-fit: cover; border-radius: 1.5rem; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.6s ease; cursor: pointer; }
+    .markdown-content :global(p:has(img + img) img:hover) { transform: scale(1.03) translateY(-3px); box-shadow: 0 20px 25px -5px rgba(147, 51, 234, 0.2); z-index: 10; position: relative; }
+</style>
