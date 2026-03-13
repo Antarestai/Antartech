@@ -40,6 +40,23 @@ const gallery = device.data.gallery || [device.data.image];
             <!-- Sidebar info -->
             <div class="lg:col-span-4 lg:sticky lg:top-32 scroll-reveal">
                 <div class="flex flex-wrap gap-2 mb-6">
+                    {/* Stock Badge */}
+                    {device.data.stock && (
+                        <span class={`
+                            px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest border border-white/10
+                            ${device.data.stock === 'En Stock' ? 'bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20' : ''}
+                            ${device.data.stock === 'A Pedido' ? 'bg-yellow-500/10 text-yellow-700 dark:text-yellow-400 border-yellow-500/20' : ''}
+                            ${device.data.stock === 'Sold Out' ? 'bg-red-500/10 text-red-700 dark:text-red-400 border-red-500/20' : ''}
+                        `}>
+                            <span class={`inline-block w-1.5 h-1.5 rounded-full mr-1 
+                                ${device.data.stock === 'En Stock' ? 'bg-green-500 animate-[ping_3s_ease-in-out_infinite]' : ''}
+                                ${device.data.stock === 'A Pedido' ? 'bg-yellow-500' : ''}
+                                ${device.data.stock === 'Sold Out' ? 'bg-red-500' : ''}
+                            `}></span>
+                            {device.data.stock}
+                        </span>
+                    )}
+                    
                     {device.data.tags && device.data.tags.map((tag: string) => (
                         <span class="text-[10px] font-black uppercase tracking-widest text-indigo-600 dark:text-cyan-400 bg-indigo-50 dark:bg-cyan-500/10 px-3 py-1.5 rounded-lg border border-indigo-200/50 dark:border-cyan-500/20">
                             {tag}

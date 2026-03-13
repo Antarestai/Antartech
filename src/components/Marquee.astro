@@ -1,0 +1,51 @@
+---
+// src/components/Marquee.astro
+---
+<div id="marquee-ticker" class="relative z-20 overflow-hidden py-6 bg-white/30 dark:bg-[#030014]/60 backdrop-blur-md border-y border-gray-200/50 dark:border-white/5">
+    <div class="marquee-track flex gap-12 whitespace-nowrap">
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>QMK / VIA Compatible</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-fuchsia-500 animate-pulse"></span>Argentina</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>Custom Keyboards</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>Macropads</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-fuchsia-500 animate-pulse"></span>Productividad</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>Impresión 3D</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>Hardware Design</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-fuchsia-500 animate-pulse"></span>Electrónica</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>SimRacing</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>ARGB Personalizable</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-fuchsia-500 animate-pulse"></span>Plug & Play</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>USB-C</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>Open Source</span>
+        <!-- Duplicated for seamless loop -->
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>QMK / VIA Compatible</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-fuchsia-500 animate-pulse"></span>Argentina</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>Custom Keyboards</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>Macropads</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-fuchsia-500 animate-pulse"></span>Productividad</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>Impresión 3D</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>Hardware Design</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-fuchsia-500 animate-pulse"></span>Electrónica</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>SimRacing</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>ARGB Personalizable</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-fuchsia-500 animate-pulse"></span>Plug & Play</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>USB-C</span>
+        <span class="marquee-item text-[11px] font-black uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>Open Source</span>
+    </div>
+</div>
+
+<style>
+    .marquee-track {
+        display: flex;
+        width: max-content;
+        animation: marquee 30s linear infinite;
+    }
+    
+    .marquee-track:hover {
+        animation-play-state: paused;
+    }
+    
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-50% - 1.5rem)); }
+    }
+</style>

@@ -8,6 +8,7 @@ customizable: true
 tags: ["QMK/VIA", "Mechanical", "Personalizable","Wired"]
 firmwareUrl: "/files/macropad-12-1.json"
 mercadolibreUrl: ""
+stock: "A Pedido"
 ---
 
 ### El control total en tu escritorio

@@ -1,0 +1,108 @@
+---
+// src/components/SoundManager.astro
+// Este componente integra feedback de audio subtil global.
+---
+<!-- Hidden audio elements -->
+<audio id="audio-hover" preload="auto">
+    <source src="data:audio/mp3;base64,//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq" type="audio/mpeg" />
+</audio>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // En Astro no podemos garantizar que el usuario haya interactuado aún,
+        // por lo que el audio Context debe crearse tras el primer click/interacción.
+        
+        let audioContext: AudioContext;
+        let isMuted = localStorage.getItem('antares_mute') === 'true';
+
+        // Synth function for a mechanical click/thock sound instead of base64
+        function playHoverSound() {
+            if (isMuted) return;
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+            }
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+
+            const osc = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            const filter = audioContext.createBiquadFilter();
+
+            osc.type = "sine";
+            // Emular sonido "thock" grave o click agudo de switch
+            osc.frequency.setValueAtTime(400, audioContext.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.05);
+
+            filter.type = "lowpass";
+            filter.frequency.value = 1000;
+
+            gainNode.gain.setValueAtTime(0.015, audioContext.currentTime); // Volumen muy sutil (1.5%)
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.05);
+
+            osc.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            osc.start();
+            osc.stop(audioContext.currentTime + 0.05);
+        }
+
+        // Click sound synth (higher pitch, more "clack")
+        function playClickSound() {
+            if (isMuted) return;
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+            }
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+
+            const osc = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(800, audioContext.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.1);
+
+            gainNode.gain.setValueAtTime(0.03, audioContext.currentTime); // Volumen 3%
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
+
+            osc.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            osc.start();
+            osc.stop(audioContext.currentTime + 0.1);
+        }
+
+        // Adjuntar event listeners globalmente
+        const attachAudioFeedback = () => {
+            const interactables = document.querySelectorAll('a, button, input[type="submit"], [role="button"]');
+            
+            interactables.forEach(el => {
+                // Prevenir múltiples listeners si la función se llama de nuevo tras navegaciones
+                if (el.getAttribute('data-audio-attached')) return;
+                
+                el.addEventListener('mouseenter', () => {
+                    playHoverSound();
+                });
+                
+                el.addEventListener('mousedown', () => {
+                    playClickSound();
+                });
+
+                el.setAttribute('data-audio-attached', 'true');
+            });
+        };
+
+        // Escuchar init y también tras la página cargada en transiciones (si se usa view transitions o Barba.js)
+        attachAudioFeedback();
+
+        // Expone toggle para mute
+        (window as any).toggleAntaresAudio = () => {
+            isMuted = !isMuted;
+            localStorage.setItem('antares_mute', isMuted.toString());
+            return isMuted;
+        };
+    });
+</script>

@@ -11,6 +11,7 @@ const devicesCollection = defineCollection({
     firmwareUrl: z.string().optional(),
     mercadolibreUrl: z.string().optional(),
     featured: z.boolean().default(false),
+    stock: z.enum(["En Stock", "A Pedido", "Sold Out"]).default("En Stock"),
   }),
 });
 

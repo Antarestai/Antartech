@@ -8,6 +8,7 @@ firmwareUrl: "/downloads/knob_via.json"
 mercadolibreUrl: "https://www.mercadolibre.com.ar/controlador-de-volumen-para-pc-programable-rgb-antaknob/up/MLAU3795618968?pdp_filters=seller_id%3A119316055#polycard_client=search-desktop&search_layout=grid&position=4&type=product&tracking_id=3ed99576-e6b5-4608-a043-a5f3742458c9&wid=MLA2860036316&sid=search"
 featured: true
 customizable: true
+stock: "En Stock"
 ---
 
 

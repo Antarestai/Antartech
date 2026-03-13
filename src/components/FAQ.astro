@@ -1,0 +1,48 @@
+---
+// src/components/FAQ.astro
+const faqs = [
+    { 
+        q: "¿Cómo puedo comprar y qué métodos de pago aceptan?", 
+        a: "Podés comprar por Mercado Libre para mayor seguridad, o contactarme directo para aprovechar descuentos. Acepto efectivo, tarjetas, transferencias, Mercado Pago y criptomonedas." 
+    },
+    { 
+        q: "¿Hacen envíos a todo el país?", 
+        a: "Sí, despachamos a toda Argentina a través del correo de tu preferencia para que elijas el que más te convenga." 
+    },
+    { 
+        q: "¿Son difíciles de configurar y dónde veo las instrucciones?", 
+        a: "Son totalmente plug & play en Windows y Mac. Cada producto tiene su manual en el botón 'Setup & Config' para que puedas personalizar macros con VIA sin saber programar. Si te trabás, te brindo soporte directo por Discord." 
+    },
+    { 
+        q: "¿Realizan pedidos o diseños personalizados?", 
+        a: "¡Claro! Si necesitás un formato específico, colores y keycaps particulares o un diseño a medida, escribime y armamos el equipo ideal para vos." 
+    }
+];
+---
+<section id="faq" class="py-24 bg-gray-50 dark:bg-[#05030a] transition-colors duration-700 relative z-20">
+    <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-fuchsia-500/30 to-transparent"></div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center mb-16 scroll-reveal">
+            <h2 class="text-3xl font-black text-gray-900 dark:text-white mr-8 uppercase tracking-tighter">Preguntas Frecuentes</h2>
+            <div class="h-px bg-gradient-to-r from-fuchsia-500/30 to-transparent flex-grow"></div>
+        </div>
+        
+        <div class="space-y-4">
+            {faqs.map((faq, index) => (
+                <details class={`group relative bg-white/80 dark:bg-white/[0.03] backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-lg hover:shadow-fuchsia-500/10 hover:border-fuchsia-300 dark:hover:border-fuchsia-500/50 scroll-reveal`} style={`transition-delay: ${index * 100}ms`}>
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none font-bold text-gray-900 dark:text-gray-100 group-hover:text-fuchsia-600 dark:group-hover:text-fuchsia-400 transition-colors duration-300">
+                        <span class="transform group-hover:translate-x-2 transition-transform duration-300">{faq.q}</span>
+                        <span class="text-fuchsia-600 transform transition-transform duration-500 group-open:rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </span>
+                    </summary>
+                    <div class="overflow-hidden max-h-0 group-open:max-h-[300px] opacity-0 group-open:opacity-100 transition-all duration-700 ease-in-out bg-fuchsia-50/50 dark:bg-fuchsia-900/10">
+                        <div class="p-6 pt-2 text-gray-600 dark:text-gray-300 font-light leading-relaxed transform -translate-y-4 group-open:translate-y-0 transition-transform duration-700">
+                            {faq.a}
+                        </div>
+                    </div>
+                </details>
+            ))}
+        </div>
+    </div>
+</section>

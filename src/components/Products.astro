@@ -1,0 +1,73 @@
+---
+// src/components/Products.astro
+import { Image } from 'astro:assets';
+
+const { featuredDevices } = Astro.props;
+---
+
+<section id="store" class="py-24 bg-white/50 dark:bg-[#030014]/50 backdrop-blur-3xl transition-colors duration-700 relative z-20 overflow-hidden">
+    <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"></div>
+    <div class="absolute -left-40 top-40 w-80 h-80 rounded-full bg-indigo-500/10 dark:bg-indigo-600/10 blur-[100px] pointer-events-none animate-float-slow"></div>
+    <div class="absolute right-0 bottom-20 w-64 h-64 rounded-full bg-fuchsia-500/5 dark:bg-fuchsia-600/10 blur-[100px] pointer-events-none animate-float-slow-reverse"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center mb-16 px-4 scroll-reveal">
+            <h2 class="text-3xl font-black text-gray-900 dark:text-white mr-8 uppercase tracking-tighter">Productos / Proyectos</h2>
+            <div class="h-px bg-gradient-to-r from-indigo-500/50 to-transparent flex-grow"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-4">
+            {featuredDevices.map((device: any, index: number) => (
+                <div class={`card-glow group relative bg-white/90 dark:bg-white/[0.06] backdrop-blur-3xl border border-white/60 dark:border-white/[0.08] rounded-[2.5rem] overflow-hidden shadow-xl shadow-indigo-500/5 dark:shadow-2xl dark:shadow-indigo-950/50 transition-all duration-700 hover:-translate-y-4 hover:shadow-2xl hover:shadow-indigo-500/25 hover:border-indigo-400/60 dark:hover:border-indigo-400/30 ring-1 ring-white/20 dark:ring-white/[0.05] flex flex-col will-change-transform scroll-reveal`} style={`transition-delay: ${index * 150}ms`}>
+                    <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/10 to-transparent transition-transform duration-[1.5s] ease-in-out pointer-events-none z-20"></div>
+
+                    <div class="h-80 overflow-hidden relative z-10 bg-gray-100 dark:bg-gray-900/50">
+                        {device.data.image ? (
+                            <Image src={device.data.image as any} alt={device.data.title} width={800} height={600} format="webp" class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-110 will-change-transform" />
+                        ) : (
+                            <div class="w-full h-full flex items-center justify-center text-7xl bg-gray-200 dark:bg-gray-800">🛠️</div>
+                        )}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                        
+                        {/* Stock Badge */}
+                        {device.data.stock && (
+                            <div class="absolute top-4 right-4 z-30">
+                                <span class={`
+                                    px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg backdrop-blur-md border outline outline-1 outline-white/10
+                                    ${device.data.stock === 'En Stock' ? 'bg-green-500/20 text-green-700 dark:text-green-400 border-green-500/30' : ''}
+                                    ${device.data.stock === 'A Pedido' ? 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-400 border-yellow-500/30' : ''}
+                                    ${device.data.stock === 'Sold Out' ? 'bg-red-500/20 text-red-700 dark:text-red-400 border-red-500/30' : ''}
+                                `}>
+                                    <span class="inline-block w-1.5 h-1.5 rounded-full mr-1 
+                                        ${device.data.stock === 'En Stock' ? 'bg-green-500 animate-pulse' : ''}
+                                        ${device.data.stock === 'A Pedido' ? 'bg-yellow-500' : ''}
+                                        ${device.data.stock === 'Sold Out' ? 'bg-red-500' : ''}
+                                    "></span>
+                                    {device.data.stock}
+                                </span>
+                            </div>
+                        )}
+                    </div>
+
+                    <div class="p-10 flex flex-col flex-grow relative z-10">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            {device.data.tags && device.data.tags.map((tag: string) => (
+                                <span class="text-[9px] font-black uppercase tracking-widest text-indigo-600 dark:text-cyan-400 bg-indigo-100/80 dark:bg-cyan-900/40 px-3 py-1.5 rounded-md border border-indigo-200 dark:border-cyan-800/50 backdrop-blur-md shadow-sm">{tag}</span>
+                            ))}
+                        </div>
+                        <h3 class="text-3xl font-black text-gray-900 dark:text-white mb-3 uppercase tracking-tighter leading-tight font-sans text-ellipsis overflow-hidden group-hover:text-indigo-600 dark:group-hover:text-cyan-400 transition-colors duration-500">{device.data.title}</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-base mb-10 leading-relaxed font-light line-clamp-3">{device.data.description}</p>
+                        <div class="mt-auto flex items-center gap-4">
+                            <a href={`/devices/${device.id}`} class="flex-grow flex justify-center items-center bg-gray-900 dark:bg-white text-white dark:text-gray-900 py-4.5 rounded-2xl font-black uppercase text-xs tracking-[0.1em] transition-all duration-500 hover:bg-gradient-to-r hover:from-fuchsia-600 hover:to-indigo-600 dark:hover:from-fuchsia-500 dark:hover:to-cyan-500 dark:hover:text-white shadow-lg hover:shadow-indigo-500/30">Setup & Config</a>
+                            {device.data.mercadolibreUrl && (
+                                <a href={device.data.mercadolibreUrl} target="_blank" aria-label={`Comprar ${device.data.title}`} class="flex items-center justify-center w-14 h-14 bg-white/80 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-400/10 hover:text-yellow-600 text-gray-500 transition-all duration-500 shrink-0 hover:shadow-lg hover:shadow-yellow-500/20 group/ml">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" class="group-hover/ml:scale-110 transition-transform duration-500" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.56-7.43H5.05"/></svg>
+                                </a>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
