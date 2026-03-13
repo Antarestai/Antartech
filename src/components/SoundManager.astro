@@ -15,38 +15,7 @@
         let audioContext: AudioContext;
         let isMuted = localStorage.getItem('antares_mute') === 'true';
 
-        // Synth function for a mechanical click/thock sound instead of base64
-        function playHoverSound() {
-            if (isMuted) return;
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-            }
-            if (audioContext.state === 'suspended') {
-                audioContext.resume();
-            }
-
-            const osc = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            const filter = audioContext.createBiquadFilter();
-
-            osc.type = "sine";
-            // Emular sonido "thock" grave o click agudo de switch
-            osc.frequency.setValueAtTime(400, audioContext.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.05);
-
-            filter.type = "lowpass";
-            filter.frequency.value = 1000;
-
-            gainNode.gain.setValueAtTime(0.015, audioContext.currentTime); // Volumen muy sutil (1.5%)
-            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.05);
-
-            osc.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-
-            osc.start();
-            osc.stop(audioContext.currentTime + 0.05);
-        }
+        // El sonido por hover se eliminó a petición del usuario para evitar bloqueos de autoplay y saturación.
 
         // Click sound synth (higher pitch, more "clack")
         function playClickSound() {
@@ -82,10 +51,6 @@
             interactables.forEach(el => {
                 // Prevenir múltiples listeners si la función se llama de nuevo tras navegaciones
                 if (el.getAttribute('data-audio-attached')) return;
-                
-                el.addEventListener('mouseenter', () => {
-                    playHoverSound();
-                });
                 
                 el.addEventListener('mousedown', () => {
                     playClickSound();

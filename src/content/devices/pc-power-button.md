@@ -26,6 +26,6 @@ La instalación es muy sencilla y totalmente reversible:
 3. Ubicá en la parte inferior de tu motherboard el bloque de pines del panel frontal (suele decir `JFP1` o `PANEL`).
 4. Identificá los 2 pines marcados como `PWR_SW` o `POWER_SW` (si ya tenés conectado el botón de tu gabinete original, desconectalo con cuidado).
 5. Conectá los 2 terminales del cable del Switch PC en esos dos pines (no importa la polaridad).
-6. Pasá el cable por alguna ranura trasera del gabinete, cerrá el panel, enchufá la fuente y ¡listo!
+6. Pasá el cable por alguna ranura trasera del gabinete, cerrá el panel y ¡listo!
 
 *Ideal para setups minimalistas o gabinetes ubicados en zonas inalcanzables.*

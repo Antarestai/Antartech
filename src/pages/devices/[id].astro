@@ -22,11 +22,61 @@ const gallery = device.data.gallery || [device.data.image];
 ---
 
 <Layout title={`${device.data.title} - Setup & Config | Antares Tech`}>
-    <div class="fixed inset-0 -z-10 bg-gray-50 dark:bg-[#030014] transition-colors duration-700"></div>
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-gray-50 dark:bg-[#030014] transition-colors duration-700">
+        <canvas id="particles-canvas" class="absolute inset-0 w-full h-full"></canvas>
+        <div 
+            class="absolute inset-0 opacity-[0.25] dark:opacity-[0.7] transition-opacity duration-700" 
+            style="background: 
+                linear-gradient(135deg, var(--pcb-line) 2px, transparent 2px),
+                linear-gradient(225deg, var(--pcb-line) 2px, transparent 2px),
+                radial-gradient(var(--pcb-pad) 4px, transparent 4px);
+                background-size: 60px 60px, 60px 60px, 60px 60px;
+                background-position: 0 0, 30px 0, 30px 30px;
+                background-color: var(--pcb-bg);"
+        ></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-white/40 via-white/80 to-white dark:from-transparent dark:via-[#030014]/80 dark:to-[#030014] transition-colors duration-700"></div>
+        <div class="absolute top-0 right-0 -mr-40 -mt-20 w-[600px] h-[600px] rounded-full bg-indigo-500/15 dark:bg-indigo-600/15 blur-[120px] pointer-events-none animate-float-slow"></div>
+        <div class="absolute bottom-0 left-0 -ml-40 -mb-20 w-[600px] h-[600px] rounded-full bg-cyan-500/15 dark:bg-cyan-600/15 blur-[120px] pointer-events-none animate-float-slow-reverse"></div>
+        
+        <!-- Abstract Tech Elements Background -->
+        <div class="absolute inset-0 z-[1] pointer-events-none overflow-hidden hidden md:block opacity-30 dark:opacity-40">
+            <!-- Microcontroller / Arduino-like vector  -->
+            <svg class="absolute top-[15%] left-[5%] w-48 h-48 text-indigo-500/10 dark:text-indigo-400/10 animate-float-slow transform -rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5">
+                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
+                <rect x="9" y="9" width="6" height="6"/>
+                <line x1="9" y1="1" x2="9" y2="4"/>
+                <line x1="15" y1="1" x2="15" y2="4"/>
+                <line x1="9" y1="20" x2="9" y2="23"/>
+                <line x1="15" y1="20" x2="15" y2="23"/>
+                <line x1="20" y1="9" x2="23" y2="9"/>
+                <line x1="20" y1="14" x2="23" y2="14"/>
+                <line x1="1" y1="9" x2="4" y2="9"/>
+                <line x1="1" y1="14" x2="4" y2="14"/>
+                <circle cx="6" cy="6" r="0.5" fill="currentColor"/>
+                <circle cx="18" cy="18" r="0.5" fill="currentColor"/>
+            </svg>
 
-    <!-- Ambient glow blobs -->
-    <div class="fixed top-0 left-1/4 w-[600px] h-[600px] bg-indigo-500/10 dark:bg-indigo-600/15 rounded-full blur-[150px] pointer-events-none -z-5"></div>
-    <div class="fixed bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-500/10 dark:bg-cyan-600/10 rounded-full blur-[150px] pointer-events-none -z-5"></div>
+            <!-- Raspberry / CPU Chip -->
+            <svg class="absolute bottom-[20%] right-[5%] w-64 h-64 text-fuchsia-500/10 dark:text-fuchsia-400/10 animate-float-slow-reverse transform rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5">
+                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
+                <rect x="9" y="9" width="6" height="6"/>
+                <path d="M4 12h16M12 4v16"/>
+                <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                <path d="M2.5 8h1.5M2.5 16h1.5M20 8h1.5M20 16h1.5M8 2.5v1.5M16 2.5v1.5M8 20v1.5M16 20v1.5"/>
+            </svg>
+            
+            <!-- PCB Traces / Signals -->
+            <svg class="absolute top-[40%] text-cyan-500/10 dark:text-cyan-400/10 animate-pulse w-full h-auto max-w-[800px] left-1/2 -translate-x-1/2" viewBox="0 0 100 20" fill="none" stroke="currentColor" stroke-width="0.2">
+                <path d="M0 10h15l5-5h10l5 5h15l5-5h10l5 5h15"/>
+                <path d="M0 15h20l5-5h15l5-5h10l5 5h15"/>
+                <circle cx="15" cy="10" r="0.5" fill="currentColor"/>
+                <circle cx="35" cy="5" r="0.5" fill="currentColor"/>
+                <circle cx="65" cy="5" r="0.5" fill="currentColor"/>
+                <circle cx="20" cy="15" r="0.5" fill="currentColor"/>
+                <circle cx="45" cy="10" r="0.5" fill="currentColor"/>
+            </svg>
+        </div>
+    </div>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 min-h-screen relative z-10">
         
@@ -253,6 +303,76 @@ const gallery = device.data.gallery || [device.data.image];
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.scroll-reveal').forEach(el => revealObs.observe(el));
+
+    // Floating Particles Canvas
+    const canvas = document.getElementById('particles-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const PARTICLE_COUNT = 60; // Doblado para mayor densidad
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas, { passive: true });
+
+        function createParticle() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const colors = isDark
+                ? ['rgba(168,85,247,', 'rgba(6,182,212,', 'rgba(99,102,241,']
+                : ['rgba(99,102,241,', 'rgba(168,85,247,', 'rgba(6,182,212,'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            return {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 3 + 1, // Partículas ligeramente más grandes (1 a 4px)
+                speedX: (Math.random() - 0.5) * 0.4,
+                speedY: (Math.random() - 0.5) * 0.4,
+                opacity: Math.random() * 0.6 + 0.3, // Mucho más opacas de base
+                color: color
+            };
+        }
+
+        for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color + p.opacity + ')';
+                ctx.fill();
+            });
+
+            // Draw connections between nearby particles (más fuertes)
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 180) { // Mayor distancia de conexión
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        const lineOpacity = (1 - dist / 180) * 0.4; // Líneas mucho más visibles (hasta 40% opacidad)
+                        ctx.strokeStyle = particles[i].color + lineOpacity + ')';
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+    }
 </script>
 
 <style>
