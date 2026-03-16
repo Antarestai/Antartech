@@ -4,12 +4,20 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Hero from '../components/Hero.astro';
 import Marquee from '../components/Marquee.astro';
+import Gallery from '../components/Gallery.astro';
 import Products from '../components/Products.astro';
 import FAQ from '../components/FAQ.astro';
 import Contact from '../components/Contact.astro';
 
 const allDevices = await getCollection('devices');
-const featuredDevices = allDevices.filter(device => device.data.featured);
+let featuredDevices = allDevices.filter(device => device.data.featured);
+
+// Sort devices by 'order' if it exists, otherwise put them at the end
+featuredDevices.sort((a, b) => {
+    const orderA = a.data.order ?? 999;
+    const orderB = b.data.order ?? 999;
+    return orderA - orderB;
+});
 
 const mlPerfilLink = "https://listado.mercadolibre.com.ar/_CustId_119316055?item_id=MLA1996684374&category_id=MLA432881&seller_id=119316055&client=recoview-selleritems&recos_listing=true#origin=vip&component=sellerData&typeSeller=classic";
 const discordLink = "https://discord.gg/antarestai";
@@ -22,8 +30,9 @@ const discordLink = "https://discord.gg/antarestai";
     <Products featuredDevices={featuredDevices} />
     <FAQ />
     <Contact />
+    <Gallery />
 
-    <footer class="relative z-20 bg-gray-50 dark:bg-[#02000d] transition-colors duration-700 overflow-hidden font-['Fira_Code']">
+    <footer class="relative z-20 bg-[#d5d0c8] dark:bg-[#02000d] transition-colors duration-700 overflow-hidden font-['Fira_Code']">
         <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent"></div>
         <div class="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-indigo-500/5 dark:bg-indigo-600/5 blur-[120px] pointer-events-none"></div>
 

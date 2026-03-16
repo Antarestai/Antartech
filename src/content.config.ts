@@ -15,6 +15,10 @@ const devicesCollection = defineCollection({
     featured: z.boolean().default(false),
     stock: z.enum(["En Stock", "A Pedido", "Sold Out"]).default("En Stock"),
     customizable: z.boolean().optional(),
+    instructionSteps: z.array(z.object({
+      text: z.string(),
+      image: z.string().optional(),
+    })).optional(),
   }),
 });
 

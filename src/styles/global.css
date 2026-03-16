@@ -9,7 +9,10 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #111827; /* Fondo oscuro (gray-950) para que no distraiga */
+  background: #c5c0b8;
+}
+html.dark ::-webkit-scrollbar-track {
+  background: #111827;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -27,5 +30,8 @@
 /* Personalización para Firefox */
 * {
   scrollbar-width: thin;
+  scrollbar-color: #6366f1 #c5c0b8;
+}
+html.dark * {
   scrollbar-color: #9333ea #111827;
 }

@@ -206,9 +206,14 @@
         
         if (clearBtn) {
             clearBtn.addEventListener('click', () => {
-                if (confirm('¿Estás seguro de vaciar tu pedido?')) {
-                    cartStore.clearCart();
-                }
+                cartStore.clearCart();
+                const originalText = clearBtn.innerText;
+                clearBtn.innerText = '😢 Pedido vaciado';
+                clearBtn.classList.add('text-red-500');
+                setTimeout(() => {
+                    clearBtn.innerText = originalText;
+                    clearBtn.classList.remove('text-red-500');
+                }, 1500);
             });
         }
 

@@ -10,9 +10,15 @@ featured: true
 customizable: true
 price: 40000
 stock: "En Stock"
+instructionSteps:
+  - text: "Conectá el dispositivo a tu PC usando un cable USB-C."
+  - text: "Ingresá a usevia.app desde tu navegador (se recomienda Chrome o Edge). Hacé clic en el ícono de la ruedita (Settings) y activá la opción de mostrar pestaña de diseño (Show Design tab)."
+    image: "/images/paso2_via.jpg"
+  - text: "En la pestaña de diseño (Design), cargá el archivo JSON disponible para descargar en esta misma página. Si el navegador te pide permiso para conectarse al dispositivo (AntaKnob), autorizalo."
+    image: "/images/paso3_via.jpg"
+  - text: "¡Listo! Ya podés ir a la pestaña de configuración (Configure) y personalizar todo a tu gusto."
+    image: "/images/paso4_via.jpg"
 ---
-
-
 
 ## Especificaciones Técnicas
 
@@ -21,20 +27,6 @@ El AntaKnob está diseñado para ser el centro de control de tu setup.
 * **Encoder:** Rotativo con click integrado y soporte para múltiples capas.
 * **Funciones:** Girar para subir y bajar el volumen, un click para silenciar (mute), y mantener presionado el click mientras girás para pasar a la siguiente o anterior canción.
 * **Conectividad:** USB-C (Plug & Play).
-
-
-## Instructivo de Configuración
-
-1 Conectá el dispositivo a tu PC usando un cable USB-C.
-2 Ingresá a [usevia.app](https://usevia.app/) desde tu navegador (se recomienda Chrome o Edge).
-3 Hacé clic en el ícono de la ruedita (Settings) y activá la opción de mostrar pestaña de diseño (*Show Design tab*).
-![Paso 2 en usevia.app](/images/paso2_via.jpg)
-
-4 En la pestaña de diseño (*Design*), cargá el archivo JSON disponible para descargar en esta misma página. Si el navegador te pide permiso para conectarse al dispositivo (AntaKnob), autorizalo.
-
-![Paso 3 en usevia.app](/images/paso3_via.jpg)
-5 ¡Listo! Ya podés ir a la pestaña de configuración (*Configure*) y personalizar todo a tu gusto.
-![Paso 4 en usevia.app, activando la pestaña Design](/images/paso4_via.jpg)
 
 # Pasanos fotos del AntaKnob en tu setup y las subimos.
 

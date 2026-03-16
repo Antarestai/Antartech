@@ -10,6 +10,13 @@ mercadolibreUrl: "https://www.mercadolibre.com.ar/boton-encendido-apagado-extern
 firmwareUrl: "" 
 price: 24000
 stock: "En Stock"
+instructionSteps:
+  - text: "Apagá tu PC y desconectá la fuente de la corriente."
+  - text: "Abrí el panel lateral de tu gabinete."
+  - text: "Ubicá en la parte inferior de tu motherboard el bloque de pines del panel frontal (suele decir JFP1 o PANEL)."
+  - text: "Identificá los 2 pines marcados como PWR_SW o POWER_SW (si ya tenés conectado el botón de tu gabinete original, desconectalo con cuidado)."
+  - text: "Conectá los 2 terminales del cable del Switch PC en esos dos pines (no importa la polaridad)."
+  - text: "Pasá el cable por alguna ranura trasera del gabinete, cerrá el panel y ¡listo!"
 ---
 
 ### Switch de Encendido Externo
@@ -18,15 +25,5 @@ Este proyecto nace de la necesidad de tener el control de encendido al alcance d
 - **Switch Mecánico:** Utiliza un interruptor de alta durabilidad con respuesta táctil.
 - **Plug & Play:** Se conecta directamente a los pines `PWR_SW` de cualquier motherboard.
 - **Diseño 3D:** Carcasa diseñada estable en el escritorio.
-### Instalación en tu PC
-
-La instalación es muy sencilla y totalmente reversible:
-
-1. **Apagá tu PC y desconectá la fuente de la corriente.** 
-2. Abrí el panel lateral de tu gabinete.
-3. Ubicá en la parte inferior de tu motherboard el bloque de pines del panel frontal (suele decir `JFP1` o `PANEL`).
-4. Identificá los 2 pines marcados como `PWR_SW` o `POWER_SW` (si ya tenés conectado el botón de tu gabinete original, desconectalo con cuidado).
-5. Conectá los 2 terminales del cable del Switch PC en esos dos pines (no importa la polaridad).
-6. Pasá el cable por alguna ranura trasera del gabinete, cerrá el panel y ¡listo!
 
 *Ideal para setups minimalistas o gabinetes ubicados en zonas inalcanzables.*

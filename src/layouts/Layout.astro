@@ -26,15 +26,27 @@ const { title } = Astro.props;
         
 		<title>{title} | Antares Tech</title>
         
+        <style>
+            html.no-transitions, html.no-transitions *, html.no-transitions *::before, html.no-transitions *::after {
+                transition: none !important;
+                animation-duration: 0s !important;
+            }
+        </style>
         <script is:inline>
+            document.documentElement.classList.add('no-transitions');
             if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 document.documentElement.classList.add('dark');
             } else {
                 document.documentElement.classList.remove('dark');
             }
+            window.addEventListener('DOMContentLoaded', function() {
+                requestAnimationFrame(function() {
+                    document.documentElement.classList.remove('no-transitions');
+                });
+            });
         </script>
 	</head>
-	<body class="bg-gray-50 dark:bg-[#030014] text-gray-900 dark:text-gray-200 font-sans antialiased selection:bg-fuchsia-500/30 transition-colors duration-700">
+	<body class="bg-[#d5d0c8] dark:bg-[#030014] text-gray-800 dark:text-gray-200 font-sans antialiased selection:bg-fuchsia-500/30 transition-colors duration-700">
         <Preloader />
         <Cursor />
         <SoundManager />

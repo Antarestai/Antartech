@@ -1,0 +1,279 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const devices = await getCollection('devices');
+const viaDevices = devices.filter(d => d.data.firmwareUrl);
+---
+
+<Layout title="Software - VIA Configurator">
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-[#d5d0c8] dark:bg-[#030014] transition-colors duration-700">
+        <canvas id="particles-canvas" class="absolute inset-0 w-full h-full"></canvas>
+        <div 
+            class="absolute inset-0 opacity-[0.25] dark:opacity-[0.7] transition-opacity duration-700" 
+            style="background: 
+                linear-gradient(135deg, var(--pcb-line) 2px, transparent 2px),
+                linear-gradient(225deg, var(--pcb-line) 2px, transparent 2px),
+                radial-gradient(var(--pcb-pad) 4px, transparent 4px);
+                background-size: 60px 60px, 60px 60px, 60px 60px;
+                background-position: 0 0, 30px 0, 30px 30px;
+                background-color: var(--pcb-bg);"
+        ></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#d5d0c8]/40 via-[#d5d0c8]/80 to-[#d5d0c8] dark:from-transparent dark:via-[#030014]/80 dark:to-[#030014] transition-colors duration-700"></div>
+        <div class="absolute top-0 right-0 -mr-40 -mt-20 w-[600px] h-[600px] rounded-full bg-indigo-500/15 dark:bg-indigo-600/15 blur-[120px] pointer-events-none animate-float-slow"></div>
+        <div class="absolute bottom-0 left-0 -ml-40 -mb-20 w-[600px] h-[600px] rounded-full bg-cyan-500/15 dark:bg-cyan-600/15 blur-[120px] pointer-events-none animate-float-slow-reverse"></div>
+    </div>
+
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 min-h-screen relative z-10">
+        
+        <a href="/" class="inline-flex items-center text-[10px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 transition-all duration-300 mb-12 group/back">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 group-hover/back:-translate-x-1 transition-transform duration-300"><path d="m15 18-6-6 6-6"/></svg>
+            Volver al inicio
+        </a>
+
+        <!-- Hero Section -->
+        <div class="scroll-reveal mb-20">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                        <line x1="12" y1="22.08" x2="12" y2="12"/>
+                    </svg>
+                </div>
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-600 dark:text-cyan-400">Software</span>
+            </div>
+
+            <h1 class="text-5xl lg:text-7xl font-black text-gray-900 dark:text-white tracking-tighter leading-[0.9] mb-8">
+                VIA<br/>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-cyan-500 dark:from-indigo-400 dark:to-cyan-400">Configurator</span>
+            </h1>
+
+            <p class="text-xl text-gray-600 dark:text-gray-400 font-light leading-relaxed max-w-2xl mb-4">
+                La mayoría de nuestros dispositivos se configuran con <strong class="text-gray-900 dark:text-white font-bold">VIA</strong>, un software open-source que funciona directamente desde tu navegador. Sin instalaciones, sin drivers.
+            </p>
+            <p class="text-lg text-gray-500 dark:text-gray-500 font-light leading-relaxed max-w-2xl">
+                Con VIA podés personalizar cada tecla, ajustar funciones del encoder, crear macros y cambiar la iluminación RGB — todo en tiempo real.
+            </p>
+        </div>
+
+        <!-- What is VIA -->
+        <div class="scroll-reveal mb-20" style="transition-delay: 100ms">
+            <div class="bg-white/60 dark:bg-white/[0.03] backdrop-blur-2xl p-8 md:p-12 rounded-[2rem] shadow-xl shadow-indigo-500/5 dark:shadow-indigo-950/30 border border-white/60 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] overflow-hidden relative">
+                <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-indigo-500/5 dark:bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+                
+                <h2 class="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tight mb-8 flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-indigo-500 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4"/>
+                        <path d="M12 8h.01"/>
+                    </svg>
+                    ¿Qué es VIA?
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div class="p-5 rounded-2xl bg-white/50 dark:bg-white/[0.03] border border-white/50 dark:border-white/[0.06]">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center mb-4 shadow-lg shadow-indigo-500/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                <line x1="8" y1="21" x2="16" y2="21"/>
+                                <line x1="12" y1="17" x2="12" y2="21"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-wider mb-2">100% Web</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 font-light leading-relaxed">Funciona desde el navegador. Entrás a <a href="https://usevia.app" target="_blank" class="text-indigo-600 dark:text-cyan-400 font-semibold hover:underline">usevia.app</a> y listo.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/50 dark:bg-white/[0.03] border border-white/50 dark:border-white/[0.06]">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-cyan-600 flex items-center justify-center mb-4 shadow-lg shadow-cyan-500/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="16 18 22 12 16 6"/>
+                                <polyline points="8 6 2 12 8 18"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-wider mb-2">Open Source</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 font-light leading-relaxed">Proyecto de código abierto mantenido por la comunidad QMK.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/50 dark:bg-white/[0.03] border border-white/50 dark:border-white/[0.06]">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-fuchsia-500 to-fuchsia-600 flex items-center justify-center mb-4 shadow-lg shadow-fuchsia-500/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 20h9"/>
+                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-wider mb-2">Tiempo Real</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 font-light leading-relaxed">Los cambios se aplican al instante. Modificás una tecla y ya está funcionando.</p>
+                    </div>
+                </div>
+
+                <!-- VIA Screenshots -->
+                <h3 class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-wider mb-4">Así se ve VIA en acción</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="rounded-2xl overflow-hidden border border-white/50 dark:border-white/[0.08] shadow-lg group">
+                        <img src="/images/paso2_via.jpg" alt="Configuración en VIA - Settings" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                        <div class="p-3 bg-white/60 dark:bg-white/[0.03] text-center">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">Settings</span>
+                        </div>
+                    </div>
+                    <div class="rounded-2xl overflow-hidden border border-white/50 dark:border-white/[0.08] shadow-lg group">
+                        <img src="/images/paso3_via.jpg" alt="Cargar JSON en VIA - Design" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                        <div class="p-3 bg-white/60 dark:bg-white/[0.03] text-center">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">Design</span>
+                        </div>
+                    </div>
+                    <div class="rounded-2xl overflow-hidden border border-white/50 dark:border-white/[0.08] shadow-lg group">
+                        <img src="/images/paso4_via.jpg" alt="Personalización en VIA - Configure" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                        <div class="p-3 bg-white/60 dark:bg-white/[0.03] text-center">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">Configure</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download Section -->
+        <div class="scroll-reveal" style="transition-delay: 200ms">
+            <div class="flex items-center gap-3 mb-8">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-500 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" x2="12" y1="15" y2="3"/>
+                </svg>
+                <h2 class="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tight">Descargá el archivo de tu producto</h2>
+            </div>
+            <p class="text-gray-500 dark:text-gray-400 font-light mb-10 max-w-2xl">
+                Cada dispositivo necesita su propio archivo JSON para que VIA lo reconozca. Descargá el que corresponda a tu producto y seguí las instrucciones de configuración desde la página del dispositivo.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                
+                <!-- AntaKnob -->
+                <div class="group relative bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl border border-white/50 dark:border-white/[0.08] rounded-[2rem] p-8 ring-1 ring-white/20 dark:ring-white/[0.05] overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1">
+                    <div class="absolute top-0 right-0 w-[200px] h-[200px] bg-indigo-500/5 dark:bg-indigo-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+                    <div class="flex items-start gap-5 mb-6 relative z-10">
+                        <div class="w-16 h-16 rounded-2xl overflow-hidden border border-white/50 dark:border-white/10 shadow-md shrink-0">
+                            <img src="/images/antaknob.jpg" alt="AntaKnob" class="w-full h-full object-cover" />
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-black text-gray-900 dark:text-white">AntaKnob</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 font-light mt-1">Controlador multimedia de 5 funciones</p>
+                        </div>
+                    </div>
+                    <a href="/downloads/knob_via.json" download class="relative z-10 flex items-center justify-center gap-3 w-full bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white px-6 py-4 rounded-2xl font-black uppercase text-xs tracking-[0.1em] transition-all duration-500 shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:-translate-y-0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                        Descargar JSON (VIA)
+                    </a>
+                </div>
+
+                <!-- Macropad 12+1 -->
+                <div class="relative bg-white/40 dark:bg-white/[0.02] backdrop-blur-xl border border-white/30 dark:border-white/[0.05] rounded-[2rem] p-8 ring-1 ring-white/10 dark:ring-white/[0.03] overflow-hidden opacity-70">
+                    <div class="flex items-start gap-5 mb-6 relative z-10">
+                        <div class="w-16 h-16 rounded-2xl overflow-hidden border border-white/50 dark:border-white/10 shadow-md shrink-0 grayscale">
+                            <img src="/images/macropad.jpg" alt="Macropad 12+1" class="w-full h-full object-cover" />
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-black text-gray-900 dark:text-white">Macropad 12+1</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 font-light mt-1">Teclado de macros con 12 teclas y encoder</p>
+                        </div>
+                    </div>
+                    <div class="relative z-10 flex items-center justify-center gap-3 w-full bg-gray-300/50 dark:bg-white/[0.05] text-gray-400 dark:text-gray-500 px-6 py-4 rounded-2xl font-black uppercase text-xs tracking-[0.1em] cursor-not-allowed border border-gray-300/50 dark:border-white/5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        No disponible aún
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Nota -->
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-8 text-center font-light">
+                ¿No ves tu producto? Los dispositivos Plug & Play como el <strong>Switch PC</strong> y el <strong>Handbrake</strong> no necesitan configuración de software.
+            </p>
+        </div>
+
+    </main>
+</Layout>
+
+<script is:inline>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+            }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    // Floating Particles Canvas (same as other pages)
+    const canvas = document.getElementById('particles-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const PARTICLE_COUNT = 40;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas, { passive: true });
+
+        function createParticle() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const colors = isDark
+                ? ['rgba(168,85,247,', 'rgba(6,182,212,', 'rgba(99,102,241,']
+                : ['rgba(99,102,241,', 'rgba(168,85,247,', 'rgba(6,182,212,'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            return {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 3 + 1,
+                speedX: (Math.random() - 0.5) * 0.4,
+                speedY: (Math.random() - 0.5) * 0.4,
+                opacity: Math.random() * 0.6 + 0.3,
+                color: color
+            };
+        }
+
+        for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color + p.opacity + ')';
+                ctx.fill();
+            });
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 180) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        const lineOpacity = (1 - dist / 180) * 0.4;
+                        ctx.strokeStyle = particles[i].color + lineOpacity + ')';
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+    }
+</script>
+
+<style>
+    .scroll-reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .scroll-reveal.revealed { opacity: 1; transform: translateY(0); }
+</style>

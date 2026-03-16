@@ -1,0 +1,385 @@
+---
+interface Step {
+    text: string;
+    image?: string;
+}
+interface Props {
+    steps: Step[];
+    productTitle: string;
+    firmwareUrl?: string;
+}
+const { steps, productTitle, firmwareUrl } = Astro.props;
+---
+
+<div id="instruction-modal" class="instruction-modal-overlay" aria-hidden="true">
+    <div class="instruction-modal-backdrop"></div>
+    <div class="instruction-modal-container">
+        <!-- Header -->
+        <div class="instruction-modal-header">
+            <div class="instruction-modal-header-left">
+                <div class="instruction-modal-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="instruction-modal-title">Instrucciones</h2>
+                    <p class="instruction-modal-subtitle">{productTitle}</p>
+                </div>
+            </div>
+            <button id="instruction-modal-close" class="instruction-modal-close" aria-label="Cerrar instructivo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Steps -->
+        <div class="instruction-modal-body">
+            {steps.map((step: Step, idx: number) => (
+                <div class="instruction-step">
+                    <div class="instruction-step-number">
+                        <span>{idx + 1}</span>
+                    </div>
+                    <div class="instruction-step-content">
+                        <p class="instruction-step-text">{step.text}</p>
+                        {step.image && (
+                            <img 
+                                src={step.image} 
+                                alt={`Paso ${idx + 1}`} 
+                                class="instruction-step-image"
+                                loading="lazy"
+                            />
+                        )}
+                    </div>
+                </div>
+            ))}
+
+            {firmwareUrl && (
+                <a href={firmwareUrl} download class="instruction-download-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/>
+                    </svg>
+                    Descargar archivo de configuración (VIA)
+                </a>
+            )}
+
+            <div class="instruction-done">
+                <div class="instruction-done-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                </div>
+                <p class="instruction-done-text">¡Eso es todo! Tu dispositivo está listo.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .instruction-modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+    }
+    .instruction-modal-overlay.is-open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .instruction-modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+    .instruction-modal-container {
+        position: relative;
+        width: 95%;
+        max-width: 640px;
+        max-height: 85vh;
+        display: flex;
+        flex-direction: column;
+        border-radius: 2rem;
+        overflow: hidden;
+        transform: scale(0.92) translateY(20px);
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+        /* Light mode */
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 
+            0 25px 50px -12px rgba(0, 0, 0, 0.15),
+            0 0 0 1px rgba(99, 102, 241, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+    :global(html.dark) .instruction-modal-container {
+        background: rgba(15, 10, 40, 0.92);
+        border-color: rgba(255, 255, 255, 0.08);
+        box-shadow: 
+            0 25px 50px -12px rgba(0, 0, 0, 0.5),
+            0 0 0 1px rgba(99, 102, 241, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .instruction-modal-overlay.is-open .instruction-modal-container {
+        transform: scale(1) translateY(0);
+    }
+
+    /* Header */
+    .instruction-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    :global(html.dark) .instruction-modal-header {
+        border-bottom-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .instruction-modal-header-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .instruction-modal-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #6366f1, #06b6d4);
+        color: white;
+        box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.4);
+    }
+
+    .instruction-modal-title {
+        font-size: 1.1rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #111827;
+    }
+    :global(html.dark) .instruction-modal-title {
+        color: white;
+    }
+
+    .instruction-modal-subtitle {
+        font-size: 0.75rem;
+        color: #6b7280;
+        font-weight: 500;
+        margin-top: 2px;
+    }
+    :global(html.dark) .instruction-modal-subtitle {
+        color: #9ca3af;
+    }
+
+    .instruction-modal-close {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: rgba(0, 0, 0, 0.03);
+        color: #6b7280;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .instruction-modal-close:hover {
+        background: rgba(0, 0, 0, 0.08);
+        color: #111827;
+        transform: rotate(90deg);
+    }
+    :global(html.dark) .instruction-modal-close {
+        border-color: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+        color: #9ca3af;
+    }
+    :global(html.dark) .instruction-modal-close:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    /* Body */
+    .instruction-modal-body {
+        padding: 2rem;
+        overflow-y: auto;
+        flex: 1;
+    }
+
+    /* Steps */
+    .instruction-step {
+        display: flex;
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+        position: relative;
+    }
+    .instruction-step:not(:last-of-type)::before {
+        content: '';
+        position: absolute;
+        left: 19px;
+        top: 44px;
+        bottom: -2rem;
+        width: 2px;
+        background: linear-gradient(to bottom, rgba(99, 102, 241, 0.3), rgba(6, 182, 212, 0.1));
+    }
+    :global(html.dark) .instruction-step:not(:last-of-type)::before {
+        background: linear-gradient(to bottom, rgba(99, 102, 241, 0.4), rgba(6, 182, 212, 0.1));
+    }
+
+    .instruction-step-number {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 0.875rem;
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.1));
+        color: #6366f1;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    :global(html.dark) .instruction-step-number {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(6, 182, 212, 0.1));
+        color: #818cf8;
+        border-color: rgba(99, 102, 241, 0.25);
+    }
+
+    .instruction-step-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .instruction-step-text {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: #374151;
+        padding-top: 8px;
+    }
+    :global(html.dark) .instruction-step-text {
+        color: #d1d5db;
+    }
+
+    .instruction-step-image {
+        margin-top: 1rem;
+        width: 100%;
+        border-radius: 1rem;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    :global(html.dark) .instruction-step-image {
+        border-color: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Download link */
+    .instruction-download-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        width: 100%;
+        padding: 1rem 1.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+        border-radius: 1rem;
+        font-weight: 800;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        text-decoration: none;
+        color: white;
+        background: linear-gradient(135deg, #6366f1, #06b6d4);
+        box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.35);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: pointer;
+    }
+    .instruction-download-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px -4px rgba(99, 102, 241, 0.5);
+    }
+
+    /* Done */
+    .instruction-done {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 2rem 1rem 1rem;
+        margin-top: 1rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    :global(html.dark) .instruction-done {
+        border-top-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .instruction-done-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #22c55e, #10b981);
+        color: white;
+        margin-bottom: 1rem;
+        box-shadow: 0 8px 20px -4px rgba(34, 197, 94, 0.4);
+    }
+
+    .instruction-done-text {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #374151;
+    }
+    :global(html.dark) .instruction-done-text {
+        color: #d1d5db;
+    }
+</style>
+
+<script is:inline>
+    (function() {
+        const modal = document.getElementById('instruction-modal');
+        const closeBtn = document.getElementById('instruction-modal-close');
+        const backdrop = modal?.querySelector('.instruction-modal-backdrop');
+
+        function openModal() {
+            if (!modal) return;
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            if (!modal) return;
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        // Open from external button
+        window.addEventListener('open-instructions', openModal);
+
+        // Close handlers
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (backdrop) backdrop.addEventListener('click', closeModal);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    })();
+</script>
