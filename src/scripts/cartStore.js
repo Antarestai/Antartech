@@ -8,9 +8,9 @@ class CartStore {
     constructor() {
         this.items = [];
         this.loadCart();
-        this.easterEggTriggered = false; 
+        this.easterEggTriggered = false;
         this.clearCount = 0; // Para el easter egg de vaciar el carrito
-        
+
         // Items IDs esperados para el "Full Setup"
         this.antaresProducts = ['antaknob', 'macropad-12-1', 'pc-power-button'];
     }
@@ -23,7 +23,7 @@ class CartStore {
         if (typeof document === 'undefined') return;
 
         const toast = document.createElement('div');
-        toast.className = 'fixed bottom-20 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-3 px-6 py-4 bg-indigo-600/90 dark:bg-cyan-600/90 text-white backdrop-blur-xl rounded-2xl shadow-2xl shadow-indigo-500/50 transform translate-y-10 opacity-0 transition-all duration-500 border border-white/20';
+        toast.className = 'fixed top-20 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-indigo-600/90 dark:bg-cyan-600/90 text-white backdrop-blur-xl rounded-2xl shadow-2xl shadow-indigo-500/50 transform -translate-y-10 opacity-0 transition-all duration-500 border border-white/20 max-w-[90vw] sm:max-w-md';
         toast.innerHTML = `
             <span class="text-2xl animate-bounce">${emoji}</span>
             <div class="flex flex-col">
@@ -36,14 +36,14 @@ class CartStore {
 
         // Animate In
         requestAnimationFrame(() => {
-            toast.classList.remove('translate-y-10', 'opacity-0');
+            toast.classList.remove('-translate-y-10', 'opacity-0');
         });
 
         // Animate Out & Remove
         setTimeout(() => {
-            toast.classList.add('translate-y-10', 'opacity-0');
+            toast.classList.add('-translate-y-10', 'opacity-0');
             setTimeout(() => toast.remove(), 500);
-            
+
             // Cooldown largo para easter eggs
             setTimeout(() => this.easterEggTriggered = false, 15000);
         }, 4000);
@@ -77,7 +77,7 @@ class CartStore {
            { id: string, title: string, price: number, image: string }
         */
         const existingItem = this.items.find(item => item.id === product.id);
-        
+
         if (existingItem) {
             existingItem.quantity += 1;
             if (existingItem.quantity === 5) {
@@ -85,7 +85,7 @@ class CartStore {
             }
         } else {
             this.items.push({ ...product, quantity: 1 });
-            
+
             // Check for Full Setup Easter Egg
             const currentIds = this.items.map(i => i.id);
             const hasAll = this.antaresProducts.every(id => currentIds.includes(id));
@@ -93,7 +93,7 @@ class CartStore {
                 this.showToast('🔥', '¡Full Setup Antares!', 'Te estás armando el set definitivo. ¡Épico!');
             }
         }
-        
+
         this.saveCart();
     }
 
@@ -103,7 +103,7 @@ class CartStore {
             this.removeItem(productId);
             return;
         }
-        
+
         const item = this.items.find(item => item.id === productId);
         if (item) {
             item.quantity = newQuantity;
@@ -129,7 +129,7 @@ class CartStore {
                 this.clearCount = 0; // Reset
             }
         }
-        
+
         this.items = [];
         this.saveCart();
     }
@@ -147,15 +147,15 @@ class CartStore {
     // Generar link de WhatsApp
     generateWhatsAppLink() {
         const phoneNumber = "5491165361612"; // Número provisto por el usuario
-        
+
         if (this.items.length === 0) return `https://wa.me/${phoneNumber}?text=Hola!`;
 
         let message = `Hola! Quiero armar el siguiente pedido en Antares Tech:%0A%0A`;
-        
+
         this.items.forEach(item => {
             message += `- ${item.quantity}x ${item.title} ($${item.price.toLocaleString('es-AR')})%0A`;
         });
-        
+
         message += `%0A*Total estimado: $${this.getTotalPrice().toLocaleString('es-AR')}*`;
         message += `%0A%0AMe avisas cómo seguimos?`;
 
