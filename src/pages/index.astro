@@ -9,6 +9,7 @@ import Products from '../components/Products.astro';
 import About from '../components/About.astro';
 import FAQ from '../components/FAQ.astro';
 import Contact from '../components/Contact.astro';
+import UseCases from '../components/UseCases.astro';
 
 const allDevices = await getCollection('devices');
 let featuredDevices = allDevices.filter(device => device.data.featured);
@@ -32,10 +33,11 @@ const discordLink = "https://discord.gg/antarestai";
     <Hero />
     <Marquee />
     <Products featuredDevices={featuredDevices} />
-    <FAQ />
+    <UseCases />
     <Contact />
-    <Gallery />
     <About />
+    <Gallery />
+    <FAQ />
 
     <footer class="relative z-20 bg-[#d5d0c8] dark:bg-[#02000d] transition-colors duration-700 overflow-hidden font-['Fira_Code']">
         <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent"></div>

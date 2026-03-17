@@ -2,7 +2,7 @@
 title: "AntaKnob"
 description: "Controlador multimedia de 5 funciones, con comandos totalmente personalizables."
 image: "/images/antaknob.jpg"
-gallery: ["/images/antaknob.jpg", "/images/antaknob-rosa.jpg", "/images/antaknob-blanco.jpg", "/images/antaknob-mix1.jpg", "/images/antaknob-mix2.jpg", "/images/macropad-ludmi1.jpg", "/images/antaknob-setup4.jpg", "/images/antaknob-setup5.jpg", "/images/antaknob-15.jpg"]
+gallery: ["/images/antaknob.jpg", "/images/antaknob-rosa.jpg", "/images/antaknob-blanco.jpg", "/images/antaknob-mix1.jpg", "/images/antaknob-mix2.jpg"]
 tags: ["QMK/VIA", "Personalizable", "Macro", "Wired", "RGB"]
 firmwareUrl: "/downloads/knob_via.json"
 mercadolibreUrl: "https://www.mercadolibre.com.ar/controlador-de-volumen-para-pc-programable-rgb-antaknob/up/MLAU3795618968?pdp_filters=seller_id%3A119316055#polycard_client=search-desktop&search_layout=grid&position=4&type=product&tracking_id=3ed99576-e6b5-4608-a043-a5f3742458c9&wid=MLA2860036316&sid=search"
@@ -29,6 +29,3 @@ El AntaKnob está diseñado para ser el centro de control de tu setup.
 * **Conectividad:** USB-C (Plug & Play).
 
 # Pasanos fotos del AntaKnob en tu setup y las subimos.
-
-![El AntaKnob brillando con RGB en un setup minimalista](/images/antaknob_setup.jpg)
-![El AntaKnob brillando con RGB en un setup minimalista](/images/antaknob_setup3.jpg)
