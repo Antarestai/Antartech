@@ -1,0 +1,152 @@
+---
+// src/components/About.astro
+const almamiaIg = "https://www.instagram.com/almamia3d/";
+const mlPerfilLink = "https://listado.mercadolibre.com.ar/_CustId_119316055?item_id=MLA1996684374&category_id=MLA432881&seller_id=119316055&client=recoview-selleritems&recos_listing=true#origin=vip&component=sellerData&typeSeller=classic";
+---
+
+<section id="about" class="py-24 bg-white dark:bg-[#02000d] relative z-20 transition-colors duration-700 overflow-hidden border-t border-gray-100 dark:border-white/5">
+    <!-- Background accents - more subtle -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.02)_0%,transparent_70%)] pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <div class="flex items-center gap-4 mb-16 scroll-reveal">
+            <div class="h-px bg-gray-200 dark:bg-white/10 flex-grow"></div>
+            <h2 class="text-[10px] font-black uppercase tracking-[0.5em] text-gray-400 dark:text-gray-500">System Information / About</h2>
+            <div class="h-px bg-gray-200 dark:bg-white/10 flex-grow"></div>
+        </div>
+
+        <!-- Terminal Window - Serious Edition -->
+        <div class="relative scroll-reveal" id="terminal-trigger">
+            <div class="relative bg-[#0a0a0a] rounded-xl border border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden font-mono">
+                <!-- Header - Sleek & Neutral -->
+                <div class="flex items-center justify-between px-4 py-2.5 bg-[#141414] border-b border-white/5">
+                    <div class="flex gap-1.5">
+                        <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                    </div>
+                    <div class="text-[9px] text-white/40 uppercase tracking-[0.2em] font-medium">session: Antares@antartech.sys</div>
+                    <div class="w-10"></div>
+                </div>
+
+                <!-- Body -->
+                <div class="p-6 md:p-12 min-h-[460px] text-sm md:text-[15px] leading-relaxed">
+                    <!-- Command line -->
+                    <div class="flex items-center gap-2 mb-10">
+                        <span class="text-emerald-400 font-bold">[Antares@antartech</span>
+                        <span class="text-white">~</span>
+                        <span class="text-emerald-400 font-bold">]$</span>
+                        <span id="terminal-input" class="text-white font-medium ml-1"></span>
+                        <span id="terminal-cursor" class="w-2.5 h-4.5 bg-white/60 animate-terminal-blink inline-block align-middle"></span>
+                    </div>
+
+                    <!-- Output (Initially Hidden) -->
+                    <div id="terminal-output" class="hidden space-y-8 opacity-0 transition-opacity duration-700">
+                        <div class="space-y-6 text-white/90">
+                            <div>
+                                <p class="text-[10px] text-white/30 uppercase tracking-[0.3em] mb-3">// USER_PROFILE_METADATA</p>
+                                <div class="space-y-1 text-xs">
+                                    <p><span class="text-white/20 uppercase tracking-widest text-[9px] w-20 inline-block">Location:</span> <span class="text-white/70">Argentina, Buenos Aires, Ciudad Evita</span></p>
+                                    <p><span class="text-white/20 uppercase tracking-widest text-[9px] w-20 inline-block">Status:</span> <span class="text-indigo-400 font-bold">Active</span></p>
+                                </div>
+                            </div>
+
+                            <p class="font-light max-w-2xl leading-relaxed">
+                                Todo comenzó en AlmaMia, un espacio al que le sumé impresión 3D y que rápidamente se terminó convirtiendo en mi laboratorio personal. Un lugar para materializar ideas cruzando el diseño físico con la electrónica.
+                            </p>
+
+                            <p class="font-light max-w-2xl leading-relaxed">
+                                AntarTech nace de la necesidad de ir un paso más allá del 3D tradicional y aplicar conocimientos de ingeniería más complejos. Es mi forma de compartir las herramientas custom que diseño y uso todos los días en mi propio setup.
+                            </p>
+
+                            <div class="pt-4 space-y-4">
+                                <p class="text-xs text-white/40 italic">
+                                    > Podés ver el resto de nuestros productos en:
+                                </p>
+                                <div class="flex items-center gap-4 text-[11px] font-black tracking-widest uppercase">
+                                    <a href={almamiaIg} target="_blank" class="text-indigo-400 hover:text-white transition-colors">[ INSTAGRAM ]</a>
+                                    <span class="text-white/10">/</span>
+                                    <a href={mlPerfilLink} target="_blank" class="text-cyan-400 hover:text-white transition-colors">[ MERCADOLIBRE ]</a>
+                                </div>
+                            </div>
+
+                            <div class="pt-6 border-t border-white/5">
+                                <p class="text-indigo-400 font-medium">
+                                    > Fabricamos lo que pensamos.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Final Prompt Line -->
+                        <div class="flex items-center gap-2 pt-8 border-t border-white/5">
+                            <span class="text-emerald-400 font-bold text-xs">[Antares@antartech</span>
+                            <span class="text-white text-xs">~</span>
+                            <span class="text-emerald-400 font-bold text-xs">]$</span>
+                            <span class="w-2.5 h-4.5 bg-white/60 animate-terminal-blink inline-block ml-1 align-middle"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script is:inline>
+    (function() {
+        const trigger = document.getElementById('terminal-trigger');
+        const input = document.getElementById('terminal-input');
+        const cursor = document.getElementById('terminal-cursor');
+        const output = document.getElementById('terminal-output');
+        
+        if (!trigger || !input || !output || !cursor) return;
+
+        const cmd = "whoami";
+        let index = 0;
+        let isStarted = false;
+
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !isStarted) {
+                isStarted = true;
+                setTimeout(type, 800);
+            }
+        }, { threshold: 0.2 });
+
+        observer.observe(trigger);
+
+        function type() {
+            if (index < cmd.length) {
+                input.textContent += cmd.charAt(index);
+                index++;
+                setTimeout(type, 80 + Math.random() * 100);
+            } else {
+                setTimeout(showResult, 500);
+            }
+        }
+
+        function showResult() {
+            cursor.style.display = 'none';
+            output.classList.remove('hidden');
+            setTimeout(() => {
+                output.classList.add('opacity-100');
+            }, 50);
+        }
+    })();
+</script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+    
+    .font-mono {
+        font-family: 'JetBrains Mono', monospace;
+    }
+
+    @keyframes terminal-blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+    
+    .animate-terminal-blink {
+        animation: terminal-blink 1.2s step-end infinite;
+    }
+</style>
