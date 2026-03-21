@@ -6,7 +6,7 @@ const devices = await getCollection('devices');
 const viaDevices = devices.filter(d => d.data.firmwareUrl);
 ---
 
-<Layout title="Software - VIA Configurator">
+<Layout title="Software - VIA Configurator" description="Configurá tus periféricos Antares Tech con VIA, el software open-source que funciona desde el navegador. Sin instalaciones, sin drivers.">
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-[#d5d0c8] dark:bg-[#030014] transition-colors duration-700">
         <canvas id="particles-canvas" class="absolute inset-0 w-full h-full"></canvas>
         <div 
@@ -30,8 +30,6 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 group-hover/back:-translate-x-1 transition-transform duration-300"><path d="m15 18-6-6 6-6"/></svg>
             Volver al inicio
         </a>
-
-        <!-- Hero Section -->
         <div class="scroll-reveal mb-20">
             <div class="flex items-center gap-3 mb-6">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
@@ -56,8 +54,6 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
                 Con VIA podés personalizar cada tecla, ajustar funciones del encoder, crear macros y cambiar la iluminación RGB — todo en tiempo real.
             </p>
         </div>
-
-        <!-- What is VIA -->
         <div class="scroll-reveal mb-20" style="transition-delay: 100ms">
             <div class="bg-white/60 dark:bg-white/[0.03] backdrop-blur-2xl p-8 md:p-12 rounded-[2rem] shadow-xl shadow-indigo-500/5 dark:shadow-indigo-950/30 border border-white/60 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] overflow-hidden relative">
                 <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-indigo-500/5 dark:bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
@@ -104,8 +100,6 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
                         <p class="text-xs text-gray-500 dark:text-gray-400 font-light leading-relaxed">Los cambios se aplican al instante. Modificás una tecla y ya está funcionando.</p>
                     </div>
                 </div>
-
-                <!-- VIA Screenshots -->
                 <h3 class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-wider mb-4">Así se ve VIA en acción</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="rounded-2xl overflow-hidden border border-white/50 dark:border-white/[0.08] shadow-lg group">
@@ -129,8 +123,6 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
                 </div>
             </div>
         </div>
-
-        <!-- Download Section -->
         <div class="scroll-reveal" style="transition-delay: 200ms">
             <div class="flex items-center gap-3 mb-8">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-500 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -145,8 +137,6 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
             </p>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                
-                <!-- AntaKnob -->
                 <div class="group relative bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl border border-white/50 dark:border-white/[0.08] rounded-[2rem] p-8 ring-1 ring-white/20 dark:ring-white/[0.05] overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1">
                     <div class="absolute top-0 right-0 w-[200px] h-[200px] bg-indigo-500/5 dark:bg-indigo-600/10 rounded-full blur-[80px] pointer-events-none"></div>
                     <div class="flex items-start gap-5 mb-6 relative z-10">
@@ -163,8 +153,6 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
                         Descargar JSON (VIA)
                     </a>
                 </div>
-
-                <!-- Macropad 12+1 -->
                 <div class="relative bg-white/40 dark:bg-white/[0.02] backdrop-blur-xl border border-white/30 dark:border-white/[0.05] rounded-[2rem] p-8 ring-1 ring-white/10 dark:ring-white/[0.03] overflow-hidden opacity-70">
                     <div class="flex items-start gap-5 mb-6 relative z-10">
                         <div class="w-16 h-16 rounded-2xl overflow-hidden border border-white/50 dark:border-white/10 shadow-md shrink-0 grayscale">
@@ -182,8 +170,6 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
                 </div>
 
             </div>
-            
-            <!-- Nota -->
             <p class="text-xs text-gray-400 dark:text-gray-500 mt-8 text-center font-light">
                 ¿No ves tu producto? Los dispositivos Plug & Play como el <strong>Switch PC</strong> y el <strong>Handbrake</strong> no necesitan configuración de software.
             </p>

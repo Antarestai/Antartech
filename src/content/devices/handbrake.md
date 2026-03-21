@@ -19,7 +19,7 @@ instructionSteps:
 ---
 
 ### Precisión y Realismo en cada curva
-Este Handbrake fue diseñado a medida pensando en corredores de simulación que necesitan una respuesta inmediata y táctil al derrapar o bloquear el vehículo.
+Este freno de mano fue diseñado a medida para simracing con respuesta progresiva para derrapar o bloquear el vehículo.
 
 #### Características Principales
 - **100% Plug and Play**: Se conecta por cable USB directamente a tu PC. No requiere que instales programas pesados ni drivers de ningún tipo en segundo plano. Windows te lo reconoce al instante como un dispositivo de juego.

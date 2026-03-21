@@ -1,0 +1,64 @@
+{
+  "entries": [
+    {
+      "keywords": ["atajo", "atajos", "shortcut", "shortcuts", "tecla", "teclas", "keybind", "keybinds", "macro", "macros", "comando", "comandos"],
+      "answer": "🎹 Atajos comunes en QMK/VIA:\n\n• **Girar encoder** → Volumen arriba/abajo\n• **Click encoder** → Mute/Unmute\n• **Click + Girar** → Canción siguiente/anterior\n• **Capas (Layers)** → Podés crear hasta 4 capas de funciones distintas desde VIA\n• **Macros** → Grabá secuencias de teclas desde la pestaña Macros de VIA\n\nConfigurá todo desde usevia.app sin instalar nada."
+    },
+    {
+      "keywords": ["antaknob", "knob", "encoder", "controlador", "volumen", "perilla"],
+      "answer": "🎛️ **AntaKnob** — Controlador multimedia de 5 funciones con encoder rotativo, personalizable vía QMK/VIA. Ideal para controlar volumen, reproducción y macros.\n\n→ Más info: /devices/antaknob"
+    },
+    {
+      "keywords": ["macropad", "macro pad", "teclado", "12+1", "teclas"],
+      "answer": "⌨️ **Macropad 12+1** — Teclado de macros con 12 teclas programables + encoder. Próximamente disponible.\n\n→ Mirá todos los productos: /#store"
+    },
+    {
+      "keywords": ["handbrake", "freno", "freno de mano", "simracing", "racing"],
+      "answer": "🏎️ **Handbrake** — Freno de mano USB analógico para simracing. Plug & Play, sin configuración necesaria.\n\n→ Más info: /devices/handbrake"
+    },
+    {
+      "keywords": ["switch", "power", "boton", "botón", "encendido", "pc"],
+      "answer": "⚡ **Switch PC** — Botón de encendido externo para PC. Plug & Play, sin configuración.\n\n→ Más info: /devices/pc-power-button"
+    },
+    {
+      "keywords": ["envio", "envios", "envío", "envíos", "shipping", "despacho", "correo", "entrega", "llega"],
+      "answer": "📦 Hacemos envíos a todo el país desde Ciudad Evita, Buenos Aires.\n\n• **MercadoLibre** → Envío incluido por Mercado Envíos\n• **WhatsApp** → Coordinamos envío por correo o moto (CABA/GBA)\n• **Retiro en persona** → Coordinar por WhatsApp\n\nTiempo estimado: 2 a 5 días hábiles según la zona."
+    },
+    {
+      "keywords": ["precio", "precios", "costo", "costos", "cuanto", "cuánto", "vale", "sale", "valor"],
+      "answer": "💰 Los precios están actualizados en cada producto de la tienda.\n\n• Por **WhatsApp** ofrecemos descuentos y precios especiales\n• Por **MercadoLibre** tenés la garantía de la plataforma\n\n→ Mirá la tienda: /#store"
+    },
+    {
+      "keywords": ["pago", "pagos", "pagar", "transferencia", "efectivo", "tarjeta", "mercadopago"],
+      "answer": "💳 Métodos de pago disponibles:\n\n• **MercadoLibre** → Tarjeta, débito, MercadoPago, cuotas\n• **WhatsApp** → Transferencia bancaria o MercadoPago\n\nConsultanos por el método que más te convenga."
+    },
+    {
+      "keywords": ["via", "configurar", "configuracion", "configuración", "firmware", "json", "software", "programar"],
+      "answer": "⚙️ La mayoría de nuestros dispositivos se configuran con **VIA**, un software open-source que funciona desde el navegador.\n\n1. Entrá a usevia.app\n2. Cargá el archivo JSON del producto\n3. Personalizá teclas, encoder y macros\n\n→ Más info y archivos: /software"
+    },
+    {
+      "keywords": ["personalizar", "personalizado", "custom", "color", "colores", "material", "grabado", "logo"],
+      "answer": "🎨 Todos nuestros dispositivos se pueden personalizar:\n\n• **Colores** de carcasa y keycaps\n• **Materiales** y acabados\n• **Grabado** con tu logo o diseño\n\nConsultanos por WhatsApp para armar tu versión única."
+    },
+    {
+      "keywords": ["garantia", "garantía", "roto", "falla", "problema", "devolucion", "devolución", "reparar"],
+      "answer": "🛡️ Todos nuestros productos tienen soporte directo del fabricante.\n\nSi tenés algún problema, escribinos por WhatsApp y lo resolvemos. Somos fabricantes, no revendedores."
+    },
+    {
+      "keywords": ["contacto", "contactar", "hablar", "consulta", "consultar", "whatsapp", "mensaje"],
+      "answer": "📱 Podés contactarnos por:\n\n• **WhatsApp** → wa.me/541165361612\n• **Instagram** → @almamia3d\n• **Discord** → discord.gg/32RFVHPGYU\n\nRespondemos todos los días."
+    },
+    {
+      "keywords": ["producto", "productos", "catalogo", "catálogo", "tienda", "store", "comprar"],
+      "answer": "🛒 Nuestros productos actuales:\n\n• **AntaKnob** — Controlador multimedia\n• **Handbrake** — Freno de mano USB\n• **Switch PC** — Botón de encendido\n• **Macropad 12+1** — Próximamente\n\n→ Mirá todo en: /#store"
+    },
+    {
+      "keywords": ["qmk", "firmware", "flash", "flashear"],
+      "answer": "🔧 Nuestros dispositivos vienen con firmware QMK pre-instalado. No necesitás flashear nada.\n\nSolo usá VIA desde el navegador para configurar todo.\n\n→ Guía completa: /software"
+    },
+    {
+      "keywords": ["hola", "buenas", "hey", "ey", "che", "hi", "hello"],
+      "answer": "👋 ¡Hola! Soy el asistente de AntarTech.\n\nPodés preguntarme sobre:\n• Productos y precios\n• Envíos y pagos\n• Configuración VIA/QMK\n• Personalización\n\n¿Qué necesitás saber?"
+    }
+  ]
+}

@@ -11,7 +11,7 @@ customizable: true
 price: 40000
 stock: "En Stock"
 instructionSteps:
-  - text: "Conectá el dispositivo a tu PC usando un cable USB-C."
+  - text: "Conectá el dispositivo a tu PC usando el cable USB-C."
   - text: "Ingresá a usevia.app desde tu navegador (se recomienda Chrome o Edge). Hacé clic en el ícono de la ruedita (Settings) y activá la opción de mostrar pestaña de diseño (Show Design tab)."
     image: "/images/paso2_via.jpg"
   - text: "En la pestaña de diseño (Design), cargá el archivo JSON disponible para descargar en esta misma página. Si el navegador te pide permiso para conectarse al dispositivo (AntaKnob), autorizalo."
@@ -26,6 +26,6 @@ El AntaKnob está diseñado para ser el centro de control de tu setup.
 
 * **Encoder:** Rotativo con click integrado y soporte para múltiples capas.
 * **Funciones:** Girar para subir y bajar el volumen, un click para silenciar (mute), y mantener presionado el click mientras girás para pasar a la siguiente o anterior canción.
-* **Conectividad:** USB-C (Plug & Play).
+* **Conectividad:** Cable USB-C incluido (Plug & Play).
 
 # Pasanos fotos del AntaKnob en tu setup y las subimos.

@@ -7,12 +7,8 @@
 </div>
 
 <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white/80 dark:bg-[#05001a]/80 backdrop-blur-3xl border-l border-white/40 dark:border-white/10 shadow-2xl z-[101] translate-x-full transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col">
-    
-    <!-- Abstract Glows para mantener la estética -->
     <div class="absolute top-0 right-0 w-64 h-64 bg-fuchsia-500/10 blur-[80px] rounded-full pointer-events-none -mt-32 -mr-32"></div>
     <div class="absolute bottom-0 left-0 w-64 h-64 bg-cyan-500/10 blur-[80px] rounded-full pointer-events-none -mb-32 -mx-32"></div>
-
-    <!-- Header -->
     <div class="flex items-center justify-between p-6 border-b border-gray-200/50 dark:border-white/10 relative z-10">
         <h2 class="text-xl font-black uppercase tracking-widest text-gray-900 dark:text-white flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-500 dark:text-cyan-400"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.56-7.43H5.05"/></svg>
@@ -22,18 +18,13 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
     </div>
-
-    <!-- Items List (Scrollable) -->
     <div id="cart-items-container" class="flex-grow p-6 overflow-y-auto space-y-4 relative z-10 custom-scrollbar">
-        <!-- El contenido se inyecta por JS desde cartStore -->
         <div id="empty-cart-message" class="flex flex-col items-center justify-center h-full text-center opacity-50">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mb-4"><path d="m2 2 20 20"/><path d="M15.4 15.4a2 2 0 0 1-1.4.6H8a2 2 0 0 1-2-2V7.5L2.5 4h-1"/><path d="M17 17a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H8"/><path d="M8 21a2 2 0 0 0 2-2"/><path d="M17 21a2 2 0 0 0 2-2"/></svg>
             <p class="font-bold text-lg">Tu carrito está vacío</p>
             <p class="text-xs mt-1">¿Qué estás esperando?</p>
         </div>
     </div>
-
-    <!-- Footer / Checkout area -->
     <div class="p-6 bg-gray-50/80 dark:bg-black/40 backdrop-blur-xl border-t border-gray-200/50 dark:border-white/10 relative z-10">
         <div class="flex justify-between items-end mb-6">
             <div>

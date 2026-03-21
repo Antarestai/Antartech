@@ -1,0 +1,126 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 — Página no encontrada | Antares Tech" description="La página que buscás no existe o fue movida.">
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-[#d5d0c8] dark:bg-[#030014] transition-colors duration-700">
+        <div 
+            class="absolute inset-0 opacity-[0.25] dark:opacity-[0.7] transition-opacity duration-700" 
+            style="background: 
+                linear-gradient(135deg, var(--pcb-line) 2px, transparent 2px),
+                linear-gradient(225deg, var(--pcb-line) 2px, transparent 2px),
+                radial-gradient(var(--pcb-pad) 4px, transparent 4px);
+                background-size: 60px 60px, 60px 60px, 60px 60px;
+                background-position: 0 0, 30px 0, 30px 30px;
+                background-color: var(--pcb-bg);"
+        ></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#d5d0c8]/40 via-[#d5d0c8]/80 to-[#d5d0c8] dark:from-transparent dark:via-[#030014]/80 dark:to-[#030014] transition-colors duration-700"></div>
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-indigo-500/20 dark:bg-indigo-600/20 blur-[150px] pointer-events-none animate-pulse-glow"></div>
+    </div>
+
+    <section class="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 py-20 font-['Fira_Code']">
+        <div class="max-w-lg w-full text-center space-y-8">
+            <div class="relative select-none">
+                <h1 class="text-[8rem] sm:text-[10rem] md:text-[12rem] font-black leading-none tracking-tighter bg-clip-text text-transparent bg-gradient-to-br from-indigo-600 via-fuchsia-500 to-cyan-500 dark:from-indigo-400 dark:via-fuchsia-400 dark:to-cyan-400 animate-gradient-x glitch-text" data-text="404">
+                    404
+                </h1>
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-indigo-500/20 dark:border-cyan-500/20 animate-[spin_20s_linear_infinite]"></div>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <h2 class="text-xl sm:text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
+                    Señal no encontrada
+                </h2>
+                <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400 font-light leading-relaxed max-w-md mx-auto">
+                    El recurso que buscás no existe, fue movido o quizás nunca existió. Revisá la URL o volvé al inicio.
+                </p>
+            </div>
+            <div class="bg-white/50 dark:bg-white/[0.03] backdrop-blur-xl border border-white/50 dark:border-white/[0.08] rounded-2xl p-5 sm:p-6 text-left ring-1 ring-white/20 dark:ring-white/[0.05]">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                    <span class="text-[10px] text-gray-400 dark:text-gray-500 ml-2 font-mono">terminal</span>
+                </div>
+                <div class="text-xs sm:text-sm space-y-1 font-mono">
+                    <p class="text-gray-500 dark:text-gray-500">
+                        <span class="text-green-500 dark:text-green-400">antares@tech</span><span class="text-gray-400">:</span><span class="text-indigo-500 dark:text-cyan-400">~</span><span class="text-gray-400">$</span> <span class="text-gray-700 dark:text-gray-300">find page</span>
+                    </p>
+                    <p class="text-red-500 dark:text-red-400">
+                        error: recurso no encontrado (404)
+                    </p>
+                    <p class="text-gray-500 dark:text-gray-500">
+                        <span class="text-green-500 dark:text-green-400">antares@tech</span><span class="text-gray-400">:</span><span class="text-indigo-500 dark:text-cyan-400">~</span><span class="text-gray-400">$</span> <span class="text-gray-700 dark:text-gray-300 blink-cursor">_</span>
+                    </p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+                <a href="/" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-[0.15em] transition-all duration-500 shadow-xl shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:-translate-y-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    Volver al inicio
+                </a>
+                <a href="/#store" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white/50 dark:bg-white/[0.05] border border-gray-200 dark:border-white/10 hover:bg-indigo-50 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-[0.15em] transition-all duration-500 hover:-translate-y-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    Ver productos
+                </a>
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<style>
+    /* Blinking cursor effect */
+    .blink-cursor {
+        animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
+    /* Glitch text effect (subtle) */
+    .glitch-text {
+        position: relative;
+    }
+    .glitch-text::before,
+    .glitch-text::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        opacity: 0;
+    }
+    .glitch-text:hover::before {
+        animation: glitch-1 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+        opacity: 0.8;
+        color: #6366f1;
+    }
+    .glitch-text:hover::after {
+        animation: glitch-2 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both;
+        opacity: 0.8;
+        color: #06b6d4;
+    }
+    @keyframes glitch-1 {
+        0% { clip-path: inset(40% 0 61% 0); transform: translate(-2px, 2px); }
+        20% { clip-path: inset(92% 0 1% 0); transform: translate(2px, -1px); }
+        40% { clip-path: inset(43% 0 1% 0); transform: translate(-1px, 3px); }
+        60% { clip-path: inset(25% 0 58% 0); transform: translate(3px, 1px); }
+        80% { clip-path: inset(54% 0 7% 0); transform: translate(-3px, -2px); }
+        100% { clip-path: inset(58% 0 43% 0); transform: translate(0); }
+    }
+    @keyframes glitch-2 {
+        0% { clip-path: inset(65% 0 13% 0); transform: translate(3px, -1px); }
+        20% { clip-path: inset(14% 0 72% 0); transform: translate(-2px, 3px); }
+        40% { clip-path: inset(76% 0 24% 0); transform: translate(1px, -2px); }
+        60% { clip-path: inset(2% 0 86% 0); transform: translate(-3px, 1px); }
+        80% { clip-path: inset(32% 0 55% 0); transform: translate(2px, 2px); }
+        100% { clip-path: inset(89% 0 3% 0); transform: translate(0); }
+    }
+</style>

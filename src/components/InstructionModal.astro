@@ -14,7 +14,6 @@ const { steps, productTitle, firmwareUrl } = Astro.props;
 <div id="instruction-modal" class="instruction-modal-overlay" aria-hidden="true">
     <div class="instruction-modal-backdrop"></div>
     <div class="instruction-modal-container">
-        <!-- Header -->
         <div class="instruction-modal-header">
             <div class="instruction-modal-header-left">
                 <div class="instruction-modal-icon">
@@ -34,8 +33,6 @@ const { steps, productTitle, firmwareUrl } = Astro.props;
                 </svg>
             </button>
         </div>
-
-        <!-- Steps -->
         <div class="instruction-modal-body">
             {steps.map((step: Step, idx: number) => (
                 <div class="instruction-step">

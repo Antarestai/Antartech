@@ -33,9 +33,43 @@ const waMessage = `Hola, me comunico para comprar un ${device.data.title} que vi
 const waLinkDynamic = `https://wa.me/541165361612?text=${encodeURIComponent(waMessage)}`;
 const waCustomMessage = `Hola, me interesa personalizar un ${device.data.title}. ¿Qué opciones hay?`;
 const waCustomLink = `https://wa.me/541165361612?text=${encodeURIComponent(waCustomMessage)}`;
+
+// Stock → Schema.org availability mapping
+const stockToAvailability: Record<string, string> = {
+    'En Stock': 'https://schema.org/InStock',
+    'A Pedido': 'https://schema.org/PreOrder',
+    'Sold Out': 'https://schema.org/OutOfStock',
+    'Próximamente': 'https://schema.org/PreOrder',
+};
+
+const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": device.data.title,
+    "description": device.data.description,
+    "image": device.data.image ? new URL(device.data.image, Astro.site).href : undefined,
+    "brand": {
+        "@type": "Brand",
+        "name": "Antares Tech"
+    },
+    ...(device.data.price ? {
+        "offers": {
+            "@type": "Offer",
+            "price": device.data.price,
+            "priceCurrency": "ARS",
+            "availability": stockToAvailability[device.data.stock || 'En Stock'] || 'https://schema.org/InStock',
+            "url": new URL(`/devices/${device.id}`, Astro.site).href,
+            "seller": {
+                "@type": "Organization",
+                "name": "Antares Tech by AlmaMia3D"
+            }
+        }
+    } : {})
+};
 ---
 
-<Layout title={`${device.data.title} - Setup & Config | Antares Tech`}>
+<Layout title={`${device.data.title} - Setup & Config | Antares Tech`} description={device.data.description}>
+    <script type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-[#d5d0c8] dark:bg-[#030014] transition-colors duration-700">
         <canvas id="particles-canvas" class="absolute inset-0 w-full h-full"></canvas>
         <div 
@@ -52,9 +86,9 @@ const waCustomLink = `https://wa.me/541165361612?text=${encodeURIComponent(waCus
         <div class="absolute top-0 right-0 -mr-40 -mt-20 w-[600px] h-[600px] rounded-full bg-indigo-500/15 dark:bg-indigo-600/15 blur-[120px] pointer-events-none animate-float-slow"></div>
         <div class="absolute bottom-0 left-0 -ml-40 -mb-20 w-[600px] h-[600px] rounded-full bg-cyan-500/15 dark:bg-cyan-600/15 blur-[120px] pointer-events-none animate-float-slow-reverse"></div>
         
-        <!-- Abstract Tech Elements Background -->
+
         <div class="absolute inset-0 z-[1] pointer-events-none overflow-hidden hidden md:block opacity-30 dark:opacity-40">
-            <!-- Microcontroller / Arduino-like vector  -->
+
             <svg class="absolute top-[15%] left-[5%] w-48 h-48 text-indigo-500/10 dark:text-indigo-400/10 animate-float-slow transform -rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5">
                 <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
                 <rect x="9" y="9" width="6" height="6"/>
@@ -70,7 +104,7 @@ const waCustomLink = `https://wa.me/541165361612?text=${encodeURIComponent(waCus
                 <circle cx="18" cy="18" r="0.5" fill="currentColor"/>
             </svg>
 
-            <!-- Raspberry / CPU Chip -->
+
             <svg class="absolute bottom-[20%] right-[5%] w-64 h-64 text-fuchsia-500/10 dark:text-fuchsia-400/10 animate-float-slow-reverse transform rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5">
                 <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
                 <rect x="9" y="9" width="6" height="6"/>
@@ -79,7 +113,7 @@ const waCustomLink = `https://wa.me/541165361612?text=${encodeURIComponent(waCus
                 <path d="M2.5 8h1.5M2.5 16h1.5M20 8h1.5M20 16h1.5M8 2.5v1.5M16 2.5v1.5M8 20v1.5M16 20v1.5"/>
             </svg>
             
-            <!-- PCB Traces / Signals -->
+
             <svg class="absolute top-[40%] text-cyan-500/10 dark:text-cyan-400/10 animate-pulse w-full h-auto max-w-[800px] left-1/2 -translate-x-1/2" viewBox="0 0 100 20" fill="none" stroke="currentColor" stroke-width="0.2">
                 <path d="M0 10h15l5-5h10l5 5h15l5-5h10l5 5h15"/>
                 <path d="M0 15h20l5-5h15l5-5h10l5 5h15"/>
@@ -101,7 +135,7 @@ const waCustomLink = `https://wa.me/541165361612?text=${encodeURIComponent(waCus
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             
-            <!-- Sidebar info -->
+
             <div class="lg:col-span-4 lg:sticky lg:top-32 scroll-reveal">
                 <div class="flex flex-wrap gap-2 mb-6">
                     {/* Stock Badge */}
@@ -166,7 +200,7 @@ const waCustomLink = `https://wa.me/541165361612?text=${encodeURIComponent(waCus
                                 </span>
                             </div>
                         )}
-                        <!-- ADD TO CART SECONDARY BUTTON -->
+
                         <button 
                         class="add-to-cart-btn inline-flex items-center justify-center bg-white/50 dark:bg-white/[0.05] border border-gray-200 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 px-8 py-5 rounded-2xl font-black uppercase text-xs tracking-[0.1em] transition-all duration-300 w-full group/btn"
                         data-id={device.id}
@@ -184,14 +218,14 @@ const waCustomLink = `https://wa.me/541165361612?text=${encodeURIComponent(waCus
                     </button>
                     </div>
                 </div>
-            </div> <!-- CIERRA EL LG:COL-SPAN-4 (SIDEBAR) -->
+            </div>
 
-            <!-- Main content -->
+
             <div class="lg:col-span-8 w-full scroll-reveal" style="transition-delay: 150ms">
-                <!-- Image Gallery Carousel -->
+
                 {gallery.length > 0 && (
                     <div class="relative w-full h-72 md:h-[450px] mb-12 rounded-[2rem] overflow-hidden shadow-2xl shadow-indigo-500/10 dark:shadow-indigo-950/30 border border-white/50 dark:border-white/10 bg-gray-200 dark:bg-gray-900 group/gallery" id="gallery-container">
-                        <!-- Images -->
+
                         {gallery.map((img: string, idx: number) => (
                             <img 
                                 src={img} 
@@ -201,19 +235,19 @@ const waCustomLink = `https://wa.me/541165361612?text=${encodeURIComponent(waCus
                                 loading={idx === 0 ? "eager" : "lazy"}
                             />
                         ))}
-                        <!-- Overlay gradient -->
+
                         <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none z-10"></div>
                         
                         {gallery.length > 1 && (
                             <>
-                            <!-- Prev / Next buttons -->
+
                             <button id="gallery-prev" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-md border border-white/50 dark:border-white/10 flex items-center justify-center text-gray-700 dark:text-white hover:bg-white dark:hover:bg-black/70 transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                             </button>
                             <button id="gallery-next" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-md border border-white/50 dark:border-white/10 flex items-center justify-center text-gray-700 dark:text-white hover:bg-white dark:hover:bg-black/70 transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                             </button>
-                            <!-- Dot indicators -->
+
                             <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
                                 {gallery.map((_: string, idx: number) => (
                                     <button 
@@ -222,7 +256,7 @@ const waCustomLink = `https://wa.me/541165361612?text=${encodeURIComponent(waCus
                                     ></button>
                                 ))}
                             </div>
-                            <!-- Counter badge -->
+
                             <div class="absolute top-4 right-4 z-20 bg-black/40 backdrop-blur-md text-white text-[10px] font-bold tracking-wider px-3 py-1.5 rounded-full border border-white/10">
                                 <span id="gallery-counter">1</span> / {gallery.length}
                             </div>
@@ -235,7 +269,7 @@ const waCustomLink = `https://wa.me/541165361612?text=${encodeURIComponent(waCus
                     <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-indigo-500/5 dark:bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
                     <Content />
                     
-                    <!-- CTA Section -->
+
                     <div class="mt-20 pt-16 border-t border-gray-200/50 dark:border-white/5 relative">
                         <div class="text-center mb-10">
                             <h3 class="text-3xl md:text-4xl font-black text-gray-900 dark:text-white uppercase tracking-tighter mb-4">¿Querés el tuyo?</h3>
@@ -276,7 +310,7 @@ const waCustomLink = `https://wa.me/541165361612?text=${encodeURIComponent(waCus
                     </div>
 
                     {device.data.customizable !== false && (
-                        <!-- Personalizá el tuyo -->
+
                         <div class="mt-20 pt-16 border-t border-gray-200/50 dark:border-white/5 relative">
                             <div class="text-center mb-10">
                                 <div class="inline-flex items-center gap-2 mb-4">
