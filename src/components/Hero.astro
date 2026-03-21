@@ -27,6 +27,42 @@
     </div>
 </div>
 
+<style>
+    /* Keycap Entrance Animations */
+    @keyframes keycap-enter-left {
+        from { opacity: 0; transform: translateX(-40px) scale(0.8) rotate(-10deg); }
+        to { opacity: 1; transform: translateX(0) scale(1) rotate(0); }
+    }
+    @keyframes keycap-enter-right {
+        from { opacity: 0; transform: translateX(40px) scale(0.8) rotate(10deg); }
+        to { opacity: 1; transform: translateX(0) scale(1) rotate(0); }
+    }
+    @keyframes keycap-enter-top {
+        from { opacity: 0; transform: translateY(-40px) scale(0.8) rotate(-5deg); }
+        to { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+    }
+    @keyframes keycap-enter-bottom {
+        from { opacity: 0; transform: translateY(40px) scale(0.8) rotate(5deg); }
+        to { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+    }
+
+    .keycap {
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+
+    .keycap.animate-in[data-enter-from="left"] { animation: keycap-enter-left 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .keycap.animate-in[data-enter-from="right"] { animation: keycap-enter-right 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .keycap.animate-in[data-enter-from="top"] { animation: keycap-enter-top 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .keycap.animate-in[data-enter-from="bottom"] { animation: keycap-enter-bottom 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+    /* Performance optimization: hardware acceleration */
+    #hero-bg, #keycaps-container {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+    }
+</style>
+
 <!-- Floating Keycaps decorativos — deletrean A·N·T·A·R·E·S -->
 <div id="keycaps-container" class="fixed inset-0 pointer-events-none z-[2] overflow-hidden hidden lg:block">
     <!-- A — izquierda arriba -->
@@ -306,12 +342,16 @@
         }, { passive: true });
     }
 
+    // --- Media Query Check ---
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
     // --- Floating Particles Canvas ---
     const canvas = document.getElementById('particles-canvas');
     if (canvas) {
         const ctx = canvas.getContext('2d');
         let particles = [];
-        const PARTICLE_COUNT = 40;
+        const PARTICLE_COUNT = isMobile ? 15 : 40;
+        const SHOW_CONNECTIONS = !isMobile;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -354,20 +394,22 @@
                 ctx.fill();
             });
 
-            // Draw connections between nearby particles
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 150) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        const lineOpacity = (1 - dist / 150) * 0.15;
-                        ctx.strokeStyle = particles[i].color + lineOpacity + ')';
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
+            // Draw connections between nearby particles (Disabled on mobile for performance)
+            if (SHOW_CONNECTIONS) {
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 150) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            const lineOpacity = (1 - dist / 150) * 0.15;
+                            ctx.strokeStyle = particles[i].color + lineOpacity + ')';
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
                     }
                 }
             }
@@ -376,35 +418,39 @@
         drawParticles();
     }
 
-    // --- Mouse Parallax Effect ---
-    document.addEventListener('mousemove', (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 2;
-        const y = (e.clientY / window.innerHeight - 0.5) * 2;
-
-        const layer1 = document.getElementById('parallax-layer-1');
-        const layer2 = document.getElementById('parallax-layer-2');
-        const layer3 = document.getElementById('parallax-layer-3');
-
-        if (layer1) layer1.style.transform = `translate(${x * -60}px, ${y * -60}px)`; 
-        if (layer2) layer2.style.transform = `translate(${x * -30}px, ${y * -30}px)`; 
-        if (layer3) layer3.style.transform = `translate(${x * -90}px, ${y * -90}px)`; 
-    });
+    // --- Mouse Parallax Effect --- (Disabled on mobile)
+    if (!isMobile) {
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+    
+            const layer1 = document.getElementById('parallax-layer-1');
+            const layer2 = document.getElementById('parallax-layer-2');
+            const layer3 = document.getElementById('parallax-layer-3');
+    
+            if (layer1) layer1.style.transform = `translate(${x * -60}px, ${y * -60}px)`; 
+            if (layer2) layer2.style.transform = `translate(${x * -30}px, ${y * -30}px)`; 
+            if (layer3) layer3.style.transform = `translate(${x * -90}px, ${y * -90}px)`; 
+        });
+    }
 
     // --- Keycap Entrance + Enhanced Floating ---
     const keycaps = document.querySelectorAll('.keycap');
-    if (keycaps.length > 0) {
-        // Clean entrance: simple staggered fade-in with subtle scale
+    const keycapsContainer = document.getElementById('keycaps-container');
+    
+    // Check if container is visible (it's hidden on mobile via CSS hidden lg:block)
+    const containerVisible = keycapsContainer && window.getComputedStyle(keycapsContainer).display !== 'none';
+
+    if (keycaps.length > 0 && containerVisible) {
+        // Clean entrance using CSS animations
         keycaps.forEach((kc, idx) => {
-            const delay = parseFloat(getComputedStyle(kc).getPropertyValue('--enter-delay')) || (idx * 0.15 + 0.3);
+            const delay = kc.style.getPropertyValue('--enter-delay') || `${idx * 0.15 + 0.3}s`;
+            kc.style.animationDelay = delay;
             
-            kc.style.transform = 'scale(0.7)';
-            kc.style.transition = `transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease-out`;
-            kc.style.transitionDelay = `${delay}s`;
-            
-            setTimeout(() => {
-                kc.style.opacity = '1';
-                kc.style.transform = 'scale(1)';
-            }, 100);
+            // Trigger animation
+            requestAnimationFrame(() => {
+                kc.classList.add('animate-in');
+            });
         });
         
         // Enhanced floating with JS (starts after entrance completes)
@@ -413,7 +459,10 @@
             
             const keycapData = [];
             keycaps.forEach(kc => {
-                kc.style.transition = 'none';
+                // Remove animation class before starting JS floating to avoid conflicts
+                kc.style.animation = 'none';
+                kc.style.opacity = '1';
+
                 keycapData.push({
                     el: kc,
                     speed: parseFloat(kc.dataset.floatSpeed) || 0.7,
@@ -425,27 +474,33 @@
             });
             
             function animateKeycaps(now) {
+                // Extra safety: stop if container becomes hidden (e.g. resize)
+                if (window.getComputedStyle(keycapsContainer).display === 'none') return;
+
                 const elapsed = (now - startTime) / 1000;
+                // Ramp up intensity from 0 to 1 over 2 seconds for a seamless transition
+                const ramp = Math.min(1, elapsed / 2.0);
                 
                 keycapData.forEach(data => {
                     const { el, speed, range, phaseX, phaseY, phaseR } = data;
                     const t = elapsed * speed;
                     
-                    const x = Math.sin(t * 0.7 + phaseX) * range * 0.6 
-                            + Math.sin(t * 1.3 + phaseX * 2) * range * 0.3;
-                    const y = Math.sin(t * 0.5 + phaseY) * range 
-                            + Math.cos(t * 0.9 + phaseY * 1.5) * range * 0.4;
-                    const rotZ = Math.sin(t * 0.4 + phaseR) * 6 
-                               + Math.cos(t * 0.8 + phaseR * 2) * 3;
+                    // Subtract initial value (Math.sin(phase)) to ensure we start at exactement 0,0
+                    const x = (Math.sin(t * 0.7 + phaseX) - Math.sin(phaseX)) * range * 0.6 
+                            + (Math.sin(t * 1.3 + phaseX * 2) - Math.sin(phaseX * 2)) * range * 0.3;
+                    const y = (Math.sin(t * 0.5 + phaseY) - Math.sin(phaseY)) * range 
+                            + (Math.cos(t * 0.9 + phaseY * 1.5) - Math.cos(phaseY * 1.5)) * range * 0.4;
+                    const rotZ = (Math.sin(t * 0.4 + phaseR) - Math.sin(phaseR)) * 6 
+                               + (Math.cos(t * 0.8 + phaseR * 2) - Math.cos(phaseR * 2)) * 3;
                     
-                    el.style.transform = `translate(${x}px, ${y}px) rotate(${rotZ}deg)`;
+                    el.style.transform = `translate3d(${x * ramp}px, ${y * ramp}px, 0) rotate(${rotZ * ramp}deg)`;
                 });
                 
                 requestAnimationFrame(animateKeycaps);
             }
             
             requestAnimationFrame(animateKeycaps);
-        }, 2000);
+        }, 1200); // Shorter wait, start as they finish entering
     }
 </script>
 

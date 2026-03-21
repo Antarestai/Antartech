@@ -19,18 +19,21 @@ body {
   outline: 2px solid rgba(6, 182, 212, 0.85);
   outline-offset: 3px;
 }
+
 html.dark :where(a, button, input, textarea, select, summary):focus-visible {
   outline-color: rgba(168, 85, 247, 0.9);
 }
 
 /* Personalización de la barra de scroll para Chrome, Edge y Safari */
 ::-webkit-scrollbar {
-  width: 10px; /* Un poco más fina para que sea elegante */
+  width: 10px;
+  /* Un poco más fina para que sea elegante */
 }
 
 ::-webkit-scrollbar-track {
   background: #c5c0b8;
 }
+
 html.dark ::-webkit-scrollbar-track {
   background: #111827;
 }
@@ -39,7 +42,8 @@ html.dark ::-webkit-scrollbar-track {
   /* Degradado RGB sutil: Indigo a Cyan */
   background: linear-gradient(180deg, #6366f1, #06b6d4);
   border-radius: 10px;
-  border: 2px solid #030014; /* Crea un efecto de separación del borde oscuro profundo */
+  border: 2px solid #030014;
+  /* Crea un efecto de separación del borde oscuro profundo */
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -52,6 +56,7 @@ html.dark ::-webkit-scrollbar-track {
   scrollbar-width: thin;
   scrollbar-color: #6366f1 #c5c0b8;
 }
+
 html.dark * {
   scrollbar-color: #9333ea #111827;
 }
