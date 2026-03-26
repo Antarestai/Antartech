@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://antartech.vercel.app',
+  site: 'https://antartech.com.ar',
 
   vite: {
     plugins: [tailwindcss()]
