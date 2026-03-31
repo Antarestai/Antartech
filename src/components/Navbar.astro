@@ -27,53 +27,59 @@
                     <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-to-r from-indigo-500 to-cyan-400 transition-all duration-300 group-hover:w-full"></span>
                 </a>
             </div>
-            <div class="flex items-center gap-2">
+
+            <!-- Desktop: only cart button -->
+            <div class="hidden md:flex items-center gap-2">
                 <button id="nav-cart-btn" class="relative text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 focus:outline-none rounded-lg p-2 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                     <span id="nav-cart-badge" class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white shadow-lg shadow-red-500/50 scale-0 transition-transform duration-300">
                         0
                     </span>
                 </button>
+            </div>
 
-                <div class="w-px h-4 bg-gray-300 dark:bg-gray-700"></div>
-
-                <button id="theme-toggle" type="button" class="text-gray-600 dark:text-gray-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 focus:outline-none rounded-lg text-sm p-2 transition-colors">
-                    <svg id="theme-toggle-dark-icon" class="hidden w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                    <svg id="theme-toggle-light-icon" class="hidden w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
+            <!-- Mobile: hamburger menu button -->
+            <div class="flex md:hidden items-center">
+                <button id="mobile-menu-btn" class="relative text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 focus:outline-none rounded-lg p-2 transition-colors">
+                    <svg id="mobile-menu-icon-open" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                    <svg id="mobile-menu-icon-close" class="hidden" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    <!-- Mobile cart badge on hamburger -->
+                    <span id="mobile-cart-badge" class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white shadow-lg shadow-red-500/50 scale-0 transition-transform duration-300">0</span>
                 </button>
             </div>
             
         </div>
     </div>
+
+    <!-- Mobile dropdown menu -->
+    <div id="mobile-menu" class="md:hidden hidden border-t border-gray-400/30 dark:border-gray-800/50 bg-[#ccc7bf]/90 dark:bg-gray-950/90 backdrop-blur-xl">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-1">
+            <a href="/#store" id="mobile-link-store" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                Productos
+            </a>
+            <a href="/software" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                Software
+            </a>
+            <a href="/#contact" id="mobile-link-contact" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Contacto
+            </a>
+            <div class="h-px bg-gray-300/50 dark:bg-gray-700/50 my-1"></div>
+            <button id="mobile-cart-btn" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 transition-colors w-full text-left">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                Ver Carrito
+                <span id="mobile-cart-count" class="ml-auto bg-red-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full hidden">0</span>
+            </button>
+        </div>
+    </div>
 </nav>
 
 <script is:inline>
-    // --- LÓGICA TEMA ---
-    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-    const themeToggleBtn = document.getElementById('theme-toggle');
-
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        themeToggleLightIcon?.classList.remove('hidden');
-        document.documentElement.classList.add('dark');
-    } else {
-        themeToggleDarkIcon?.classList.remove('hidden');
-        document.documentElement.classList.remove('dark');
-    }
-
-    themeToggleBtn?.addEventListener('click', function() {
-        themeToggleDarkIcon.classList.toggle('hidden');
-        themeToggleLightIcon.classList.toggle('hidden');
-        if (localStorage.getItem('color-theme') === 'light') {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('color-theme', 'dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('color-theme', 'light');
-        }
-    });
-
-
+    // --- FORCE DARK MODE (theme toggle removed) ---
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('color-theme', 'dark');
 
     // --- LÓGICA ANCLAR NAVBAR (se "detiene" al llegar al marquee) ---
     const nav = document.getElementById('navbar');
@@ -99,6 +105,34 @@
         window.addEventListener('resize', updateNavPosition, { passive: true });
         updateNavPosition(); // Estado inicial
     }
+
+    // --- MOBILE MENU TOGGLE ---
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('mobile-menu-icon-open');
+    const iconClose = document.getElementById('mobile-menu-icon-close');
+
+    mobileMenuBtn?.addEventListener('click', () => {
+        const isOpen = !mobileMenu.classList.contains('hidden');
+        if (isOpen) {
+            mobileMenu.classList.add('hidden');
+            iconOpen.classList.remove('hidden');
+            iconClose.classList.add('hidden');
+        } else {
+            mobileMenu.classList.remove('hidden');
+            iconOpen.classList.add('hidden');
+            iconClose.classList.remove('hidden');
+        }
+    });
+
+    // Close menu when clicking nav links
+    ['mobile-link-store', 'mobile-link-contact'].forEach(id => {
+        document.getElementById(id)?.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            iconOpen.classList.remove('hidden');
+            iconClose.classList.add('hidden');
+        });
+    });
 </script>
 
 <script>
@@ -108,28 +142,68 @@
     const initNavCart = () => {
         const cartBtn = document.getElementById('nav-cart-btn');
         const badge = document.getElementById('nav-cart-badge');
+        const mobileCartBtn = document.getElementById('mobile-cart-btn');
+        const mobileCartBadgeHamburger = document.getElementById('mobile-cart-badge');
+        const mobileCartCount = document.getElementById('mobile-cart-count');
 
         const updateBadge = () => {
-            if (!badge) return;
             const totalItems = cartStore.getTotalItems();
-            badge.innerText = totalItems.toString();
-            
-            if (totalItems > 0) {
-                badge.classList.remove('scale-0');
-                badge.classList.add('scale-100', 'animate-pulse');
-                setTimeout(() => badge.classList.remove('animate-pulse'), 500);
-            } else {
-                badge.classList.remove('scale-100', 'animate-pulse');
-                badge.classList.add('scale-0');
+
+            // Desktop badge
+            if (badge) {
+                badge.innerText = totalItems.toString();
+                if (totalItems > 0) {
+                    badge.classList.remove('scale-0');
+                    badge.classList.add('scale-100', 'animate-pulse');
+                    setTimeout(() => badge.classList.remove('animate-pulse'), 500);
+                } else {
+                    badge.classList.remove('scale-100', 'animate-pulse');
+                    badge.classList.add('scale-0');
+                }
+            }
+
+            // Mobile hamburger badge
+            if (mobileCartBadgeHamburger) {
+                mobileCartBadgeHamburger.innerText = totalItems.toString();
+                if (totalItems > 0) {
+                    mobileCartBadgeHamburger.classList.remove('scale-0');
+                    mobileCartBadgeHamburger.classList.add('scale-100');
+                } else {
+                    mobileCartBadgeHamburger.classList.remove('scale-100');
+                    mobileCartBadgeHamburger.classList.add('scale-0');
+                }
+            }
+
+            // Mobile cart count inside menu
+            if (mobileCartCount) {
+                mobileCartCount.innerText = totalItems.toString();
+                if (totalItems > 0) {
+                    mobileCartCount.classList.remove('hidden');
+                } else {
+                    mobileCartCount.classList.add('hidden');
+                }
             }
         };
 
         window.addEventListener(CART_UPDATED_EVENT, updateBadge);
-        
         setTimeout(updateBadge, 50);
 
         if (cartBtn) {
             cartBtn.addEventListener('click', () => {
+                window.dispatchEvent(new CustomEvent('antares_open_cart'));
+            });
+        }
+
+        if (mobileCartBtn) {
+            mobileCartBtn.addEventListener('click', () => {
+                // Close menu first
+                const mobileMenu = document.getElementById('mobile-menu');
+                const iconOpen = document.getElementById('mobile-menu-icon-open');
+                const iconClose = document.getElementById('mobile-menu-icon-close');
+                mobileMenu?.classList.add('hidden');
+                iconOpen?.classList.remove('hidden');
+                iconClose?.classList.add('hidden');
+                // Open cart
                 window.dispatchEvent(new CustomEvent('antares_open_cart'));
             });
         }
