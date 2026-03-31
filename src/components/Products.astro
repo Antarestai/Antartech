@@ -11,7 +11,7 @@ const formatter = new Intl.NumberFormat('es-AR', {
 });
 ---
 
-<section id="store" class="py-24 bg-white/50 dark:bg-[#030014]/50 md:backdrop-blur-3xl transition-colors duration-700 relative z-20 overflow-hidden">
+<section id="store" class="py-24 bg-white dark:bg-[#030014] md:bg-white/50 md:dark:bg-[#030014]/50 md:backdrop-blur-3xl transition-colors duration-700 relative z-20 overflow-hidden">
     <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"></div>
     <div class="absolute -left-40 top-40 w-80 h-80 rounded-full bg-indigo-500/10 dark:bg-indigo-600/10 blur-[100px] pointer-events-none animate-float-slow"></div>
     <div class="absolute right-0 bottom-20 w-64 h-64 rounded-full bg-fuchsia-500/5 dark:bg-fuchsia-600/10 blur-[100px] pointer-events-none animate-float-slow-reverse"></div>
@@ -24,8 +24,8 @@ const formatter = new Intl.NumberFormat('es-AR', {
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-4">
             {featuredDevices.map((device: any, index: number) => (
-                <div class={`card-glow group relative bg-white dark:bg-[#0e0c1e] md:bg-white/90 md:dark:bg-white/[0.06] md:backdrop-blur-3xl border border-white/60 dark:border-white/[0.08] rounded-[2.5rem] overflow-hidden shadow-xl shadow-indigo-500/5 dark:shadow-2xl dark:shadow-indigo-950/50 transition-all duration-700 hover:-translate-y-4 hover:shadow-2xl hover:shadow-indigo-500/25 hover:border-indigo-400/60 dark:hover:border-indigo-400/30 ring-1 ring-white/20 dark:ring-white/[0.05] flex flex-col will-change-transform scroll-reveal`} style={`transition-delay: ${index * 75}ms`}>
-                    <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/10 to-transparent transition-transform duration-[1.5s] ease-in-out pointer-events-none z-20"></div>
+                <div class={`product-card group relative bg-white dark:bg-[#0e0c1e] md:bg-white/90 md:dark:bg-white/[0.06] md:backdrop-blur-3xl border border-gray-200/80 dark:border-white/[0.08] rounded-[2.5rem] overflow-hidden shadow-lg dark:shadow-indigo-950/50 md:shadow-xl md:shadow-indigo-500/5 md:dark:shadow-2xl transition-colors duration-300 md:transition-all md:duration-700 md:hover:-translate-y-4 md:hover:shadow-2xl md:hover:shadow-indigo-500/25 md:hover:border-indigo-400/60 md:dark:hover:border-indigo-400/30 flex flex-col scroll-reveal`} style={`transition-delay: ${index * 75}ms`}>
+                    <div class="hidden md:block absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/10 to-transparent transition-transform duration-[1.5s] ease-in-out pointer-events-none z-20"></div>
 
                     <div class="h-80 overflow-hidden relative z-10 bg-gray-100 dark:bg-gray-900/50">
                         {device.data.image ? (
@@ -97,7 +97,7 @@ const formatter = new Intl.NumberFormat('es-AR', {
             ))}
 
             {/* Tarjeta de Próximamente / General Teaser */}
-            <div class={`card-glow group relative bg-gradient-to-br from-indigo-500/5 to-fuchsia-500/5 dark:from-indigo-500/10 dark:to-fuchsia-500/10 md:backdrop-blur-3xl border-2 border-dashed border-indigo-200 dark:border-white/10 rounded-[2.5rem] overflow-hidden transition-all duration-700 hover:-translate-y-4 hover:border-indigo-400/50 flex flex-col will-change-transform scroll-reveal`} style={`transition-delay: ${featuredDevices.length * 75}ms`}>
+            <div class={`product-card group relative bg-indigo-50/50 dark:bg-[#0e0c1e] md:bg-gradient-to-br md:from-indigo-500/5 md:to-fuchsia-500/5 md:dark:from-indigo-500/10 md:dark:to-fuchsia-500/10 md:backdrop-blur-3xl border-2 border-dashed border-indigo-200 dark:border-white/10 rounded-[2.5rem] overflow-hidden transition-colors duration-300 md:transition-all md:duration-700 md:hover:-translate-y-4 md:hover:border-indigo-400/50 flex flex-col scroll-reveal`} style={`transition-delay: ${featuredDevices.length * 75}ms`}>
                 <div class="h-80 flex items-center justify-center bg-gray-50/50 dark:bg-white/[0.02] relative overflow-hidden group">
                     <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-fuchsia-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
                     <div class="relative z-10 text-center space-y-4">
