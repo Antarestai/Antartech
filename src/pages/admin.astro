@@ -1,0 +1,521 @@
+---
+// /admin — Honeypot. Portal interno falso.
+// Flujo de 2 factores: credenciales → OTP. Todo estático.
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AntarTech — Sistema de Gestión</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <!--
+        AntarTech Internal Management System v3.1.4
+        Authorized personnel only. All access is logged.
+
+        API endpoints (internal):
+          POST /api/v1/auth/session
+          POST /api/v1/auth/verify-otp
+          GET  /api/v1/users
+          GET  /api/v1/audit-log
+          POST /api/v1/admin/reset
+
+        Session TTL: 3600s
+        MFA required: yes (TOTP RFC 6238)
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            height: 100%;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #0f1117;
+            color: #d1d5db;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1rem;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.013) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.013) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .container { width: 100%; max-width: 380px; }
+
+        .brand { text-align: center; margin-bottom: 2rem; }
+        .brand-mark {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 44px; height: 44px;
+            background: #1a1f30; border: 1px solid #252d47;
+            border-radius: 10px; margin-bottom: 0.875rem;
+        }
+        .brand-mark svg { width: 22px; height: 22px; color: #6366f1; }
+        .brand-name { font-size: 0.9375rem; font-weight: 600; color: #f9fafb; }
+        .brand-desc { font-size: 0.7rem; color: #374151; margin-top: 0.25rem; letter-spacing: 0.03em; }
+
+        .step { display: none; }
+        .step.active { display: block; }
+
+        .card {
+            background: #161b27; border: 1px solid #1f2940;
+            border-radius: 14px; padding: 1.875rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+        .card-header { margin-bottom: 1.5rem; }
+        .card-title { font-size: 1rem; font-weight: 600; color: #f9fafb; }
+        .card-subtitle { font-size: 0.75rem; color: #4b5563; margin-top: 0.3rem; line-height: 1.5; }
+
+        .field { margin-bottom: 1.125rem; }
+        label {
+            display: block; font-size: 0.72rem; font-weight: 500;
+            color: #6b7280; margin-bottom: 0.4rem;
+        }
+        input[type="text"], input[type="password"], input[type="tel"] {
+            width: 100%; background: #0d1118;
+            border: 1px solid #1f2940; border-radius: 8px;
+            padding: 0.7rem 0.875rem; color: #f9fafb;
+            font-size: 0.875rem; font-family: inherit; outline: none;
+            transition: border-color 0.15s;
+        }
+        input:focus { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.12); }
+        input::placeholder { color: #2d3748; }
+
+        .otp-input {
+            letter-spacing: 0.5em;
+            text-align: center;
+            font-size: 1.25rem !important;
+            font-weight: 600 !important;
+            font-family: 'Courier New', monospace !important;
+        }
+
+        .checkbox-row {
+            display: flex; align-items: center; gap: 0.625rem;
+            margin-bottom: 1.25rem;
+        }
+        .checkbox-row input[type="checkbox"] {
+            width: 14px; height: 14px; accent-color: #4f46e5;
+        }
+        .checkbox-row label { font-size: 0.72rem; color: #4b5563; margin: 0; }
+
+        .submit-btn {
+            width: 100%; background: #4f46e5; color: #fff;
+            border: none; border-radius: 8px;
+            padding: 0.7rem 1rem; font-size: 0.875rem;
+            font-weight: 500; font-family: inherit; cursor: pointer;
+            transition: background 0.15s, opacity 0.15s;
+        }
+        .submit-btn:hover { background: #4338ca; }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .alert {
+            display: none; background: #160d0d;
+            border: 1px solid #2e1212;
+            border-left: 3px solid #7f1d1d;
+            border-radius: 7px; padding: 0.75rem 0.875rem;
+            margin-bottom: 1rem; font-size: 0.75rem;
+        }
+        .alert.show { display: block; }
+        .alert-code {
+            font-family: 'Courier New', monospace;
+            color: #b91c1c; font-size: 0.7rem;
+            margin-bottom: 0.25rem; letter-spacing: 0.02em;
+        }
+        .alert-msg { color: #9ca3af; line-height: 1.5; }
+        .alert-ref {
+            font-family: 'Courier New', monospace;
+            color: #2d3748; font-size: 0.64rem; margin-top: 0.5rem;
+        }
+
+        .divider {
+            display: flex; align-items: center; gap: 0.75rem;
+            margin: 1.25rem 0;
+        }
+        .divider-line { flex: 1; height: 1px; background: #1f2940; }
+        .divider-text { font-size: 0.65rem; color: #374151; white-space: nowrap; }
+
+        .form-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 1.25rem; padding-top: 1.25rem;
+            border-top: 1px solid #1a2035;
+        }
+        .footer-link {
+            font-size: 0.72rem; color: #374151;
+            cursor: pointer; transition: color 0.15s;
+        }
+        .footer-link:hover { color: #6b7280; }
+
+        .footer-note {
+            text-align: center; margin-top: 1.875rem;
+            font-size: 0.67rem; color: #1a2035; letter-spacing: 0.04em;
+        }
+
+        /* Rate limit bar */
+        .rl-wrap { display: none; margin-top: 0.875rem; }
+        .rl-wrap.show { display: block; }
+        .rl-label {
+            font-size: 0.65rem; color: #374151;
+            margin-bottom: 0.35rem; font-family: 'Courier New', monospace;
+        }
+        .rl-bar { height: 2px; background: #1f2940; border-radius: 2px; overflow: hidden; }
+        .rl-fill { height: 100%; background: #7f1d1d; width: 0%; transition: width 0.4s ease; }
+
+        /* Last-login info chip (step 2) */
+        .last-login-chip {
+            display: flex; align-items: flex-start; gap: 0.625rem;
+            background: #0d1118; border: 1px solid #1f2940;
+            border-radius: 8px; padding: 0.75rem 0.875rem;
+            margin-bottom: 1.25rem; font-size: 0.72rem; color: #4b5563;
+        }
+        .last-login-chip svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 1px; color: #374151; }
+        .last-login-chip strong { color: #6b7280; display: block; margin-bottom: 0.15rem; }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-size: 0.72rem; color: #374151; cursor: pointer;
+            transition: color 0.15s; background: none; border: none;
+            font-family: inherit; padding: 0;
+        }
+        .back-link:hover { color: #6b7280; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="brand">
+        <div class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+                <path d="M2 12l10 5 10-5"/>
+            </svg>
+        </div>
+        <div class="brand-name">AntarTech</div>
+    </div>
+
+    <!-- ── PASO 1: Credenciales ── -->
+    <div class="step active" id="step-1">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Iniciar sesión</div>
+                <div class="card-subtitle">Ingresá con tu cuenta de administración.</div>
+            </div>
+
+            <div class="alert" id="alert-1">
+                <div class="alert-code" id="code-1"></div>
+                <div class="alert-msg" id="msg-1"></div>
+                <div class="alert-ref" id="ref-1"></div>
+            </div>
+
+            <form onsubmit="return false;" autocomplete="off">
+                <!-- session tokens — visible in source for curious pentesters -->
+                <input type="hidden" name="_csrf" id="csrf-1" />
+                <input type="hidden" name="_session_init" id="sess-init" />
+                <input type="hidden" name="app" value="mgs-web-v3" />
+
+                <div class="field">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" name="username"
+                        placeholder="usuario" autocomplete="off"
+                        autocorrect="off" autocapitalize="none" spellcheck="false" />
+                </div>
+                <div class="field">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" />
+                </div>
+
+                <div class="checkbox-row">
+                    <input type="checkbox" id="remember" name="remember" />
+                    <label for="remember">Recordar en este equipo (30 días)</label>
+                </div>
+
+                <button type="button" class="submit-btn" id="btn-1" onclick="submitStep1()">
+                    Continuar
+                </button>
+
+                <div class="rl-wrap" id="rl-1">
+                    <div class="rl-label" id="rl-label-1">rate_limit: cooldown activo</div>
+                    <div class="rl-bar"><div class="rl-fill" id="rl-fill-1"></div></div>
+                </div>
+            </form>
+
+            <div class="form-footer">
+                <span class="footer-link" onclick="forgotPwd()">¿Olvidaste tu contraseña?</span>
+                <span class="footer-link" onclick="ssoClick()">Ingreso SSO →</span>
+            </div>
+        </div>
+
+    <!-- ── PASO 2: Verificación OTP ── -->
+    <div class="step" id="step-2">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Verificación en dos pasos</div>
+                <div class="card-subtitle" id="otp-subtitle">
+                    Ingresá el código de 6 dígitos de tu app de autenticación.
+                </div>
+            </div>
+
+            <!-- Último acceso — se genera dinámicamente -->
+            <div class="last-login-chip" id="last-login-chip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <div>
+                    <strong>Último acceso registrado</strong>
+                    <span id="last-login-text"></span>
+                </div>
+            </div>
+
+            <div class="alert" id="alert-2">
+                <div class="alert-code" id="code-2"></div>
+                <div class="alert-msg" id="msg-2"></div>
+                <div class="alert-ref" id="ref-2"></div>
+            </div>
+
+            <form onsubmit="return false;" autocomplete="off">
+                <input type="hidden" name="_csrf" id="csrf-2" />
+                <input type="hidden" name="_partial_token" id="partial-token" />
+
+                <div class="field">
+                    <label for="otp">Código de verificación</label>
+                    <input type="tel" id="otp" name="otp"
+                        class="otp-input"
+                        placeholder="000000"
+                        maxlength="6"
+                        autocomplete="one-time-code"
+                        inputmode="numeric"
+                        pattern="[0-9]{6}" />
+                </div>
+
+                <button type="button" class="submit-btn" id="btn-2" onclick="submitStep2()">
+                    Verificar
+                </button>
+
+                <div class="rl-wrap" id="rl-2">
+                    <div class="rl-label" id="rl-label-2">rate_limit: cooldown activo</div>
+                    <div class="rl-bar"><div class="rl-fill" id="rl-fill-2"></div></div>
+                </div>
+            </form>
+
+            <div class="divider">
+                <div class="divider-line"></div>
+                <span class="divider-text">¿No recibís el código?</span>
+                <div class="divider-line"></div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center">
+                <button class="back-link" onclick="goBack()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+                    Volver
+                </button>
+                <span class="footer-link" onclick="resendCode()">Reenviar código</span>
+            </div>
+        </div>
+</div>
+
+<script>
+    // ── Fake tokens ──
+    function rndHex(n) {
+        return Array.from({length:n}, () => Math.floor(Math.random()*16).toString(16)).join('');
+    }
+    function newCSRF() {
+        return [rndHex(8),rndHex(4),rndHex(4),rndHex(4),rndHex(12)].join('-');
+    }
+    function traceId() {
+        return 'trace_' + rndHex(6) + '_' + Math.floor(Date.now()/1000);
+    }
+    function partialToken() {
+        return 'pt_' + rndHex(20);
+    }
+
+    // Init tokens
+    document.getElementById('csrf-1').value = newCSRF();
+    document.getElementById('sess-init').value = Date.now().toString(36);
+
+    // ── State ──
+    let failsStep1 = 0;
+    let failsStep2 = 0;
+    let locked1 = false;
+    let locked2 = false;
+
+    // ── Show alert helpers ──
+    function showAlert(n, code, msg, ref) {
+        document.getElementById('code-'+n).textContent = code;
+        document.getElementById('msg-'+n).textContent = msg;
+        document.getElementById('ref-'+n).textContent = ref ? 'trace: ' + ref : '';
+        document.getElementById('alert-'+n).classList.add('show');
+    }
+    function hideAlert(n) {
+        document.getElementById('alert-'+n).classList.remove('show');
+    }
+
+    // ── Rate limit ──
+    function startCooldown(n, secs) {
+        const btnLocked = n === 1 ? locked1 = true : locked2 = true;
+        const btn = document.getElementById('btn-'+n);
+        const wrap = document.getElementById('rl-'+n);
+        const fill = document.getElementById('rl-fill-'+n);
+        const lbl  = document.getElementById('rl-label-'+n);
+        btn.disabled = true;
+        wrap.classList.add('show');
+        fill.style.width = '100%';
+        let rem = secs;
+        const iv = setInterval(() => {
+            rem--;
+            fill.style.width = ((rem/secs)*100) + '%';
+            lbl.textContent = 'rate_limit: retry_after=' + rem + 's';
+            if (rem <= 0) {
+                clearInterval(iv);
+                if (n===1) locked1 = false; else locked2 = false;
+                btn.disabled = false;
+                wrap.classList.remove('show');
+                lbl.textContent = 'rate_limit: cooldown activo';
+                fill.style.width = '0%';
+                document.getElementById('csrf-'+n).value = newCSRF();
+            }
+        }, 1000);
+    }
+
+    // ── PASO 1 ──
+    const step1Errors = [
+        { code: '401 No autorizado',       msg: 'Credenciales inválidas. Verificá tu usuario y contraseña.' },
+        { code: '401 No autorizado',       msg: 'Autenticación fallida. Revisá tus datos de acceso.' },
+        { code: '401 No autorizado',       msg: 'Usuario o contraseña incorrectos.' },
+        { code: '429 Demasiadas solicitudes', msg: 'Demasiados intentos fallidos. Acceso suspendido temporalmente.', lock: true },
+    ];
+
+    function submitStep1() {
+        if (locked1) return;
+        const user = document.getElementById('username').value.trim();
+        const pass = document.getElementById('password').value;
+        const btn = document.getElementById('btn-1');
+        if (!user || !pass) return;
+
+        btn.disabled = true;
+        btn.textContent = 'Verificando...';
+        hideAlert(1);
+
+        const delay = 700 + Math.floor(Math.random() * 900);
+        setTimeout(() => {
+            failsStep1++;
+            if (failsStep1 >= 4) {
+                showAlert(1, step1Errors[3].code, step1Errors[3].msg, traceId());
+                startCooldown(1, 30);
+                failsStep1 = 0;
+            } else {
+                const e = step1Errors[Math.min(failsStep1-1, 2)];
+                showAlert(1, e.code, e.msg, failsStep1 > 1 ? traceId() : null);
+                btn.disabled = false;
+                btn.textContent = 'Continuar';
+            }
+            document.getElementById('csrf-1').value = newCSRF();
+            document.getElementById('sess-init').value = Date.now().toString(36);
+        }, delay);
+    }
+
+    // ── PASO 2 (MFA) ──
+    const step2Errors = [
+        { code: '401 No autorizado',       msg: 'Código incorrecto. Asegurate de usar el código actual de tu app.' },
+        { code: '401 No autorizado',       msg: 'Código de verificación inválido o expirado.' },
+        { code: '401 No autorizado',       msg: 'El código ingresado no coincide. Los códigos expiran cada 30 segundos.' },
+        { code: '429 Demasiadas solicitudes', msg: 'Límite de intentos alcanzado. Sesión bloqueada por 60 segundos.', lock: true },
+    ];
+
+    function submitStep2() {
+        if (locked2) return;
+        const otp = document.getElementById('otp').value.trim();
+        const btn = document.getElementById('btn-2');
+        if (otp.length < 6) return;
+
+        btn.disabled = true;
+        btn.textContent = 'Verificando...';
+        hideAlert(2);
+
+        const delay = 500 + Math.floor(Math.random() * 700);
+        setTimeout(() => {
+            failsStep2++;
+            if (failsStep2 >= 4) {
+                showAlert(2, step2Errors[3].code, step2Errors[3].msg, traceId());
+                startCooldown(2, 60);
+                failsStep2 = 0;
+            } else {
+                const e = step2Errors[Math.min(failsStep2-1, 2)];
+                showAlert(2, e.code, e.msg, traceId());
+                btn.disabled = false;
+                btn.textContent = 'Verificar';
+            }
+            document.getElementById('otp').value = '';
+            document.getElementById('csrf-2').value = newCSRF();
+        }, delay);
+    }
+
+    // ── Navegación entre pasos ──
+    // En realidad nunca se llega al paso 2 desde el paso 1 por flow normal.
+    // El paso 2 existe para confundir, pero lo podemos "activar" después de muchos intentos.
+    // Nota: dejamos esto como dead code visible en source — el pentester lo va a buscar.
+    function goToStep2() {
+        const username = document.getElementById('username').value.trim();
+
+        // Fake "último acceso" — siempre hace tiempo y en IP genérica
+        const candidates = [
+            'hace 3 días · IP 181.45.xxx.xxx · Buenos Aires, AR',
+            'hace 12 días · IP 200.114.xxx.xxx · Córdoba, AR',
+            'hace 1 día · IP 190.210.xxx.xxx · Buenos Aires, AR',
+        ];
+        document.getElementById('last-login-text').textContent =
+            candidates[Math.floor(Math.random() * candidates.length)];
+
+        // Generar tokens del paso 2
+        document.getElementById('csrf-2').value = newCSRF();
+        document.getElementById('partial-token').value = partialToken();
+
+        document.getElementById('step-1').classList.remove('active');
+        document.getElementById('step-2').classList.add('active');
+        document.getElementById('otp').focus();
+    }
+
+    function goBack() {
+        document.getElementById('step-2').classList.remove('active');
+        document.getElementById('step-1').classList.add('active');
+        hideAlert(1);
+        document.getElementById('otp').value = '';
+        failsStep2 = 0;
+    }
+
+    function forgotPwd() {
+        showAlert(1, '403 Prohibido', 'La recuperación de contraseña está deshabilitada en este portal. Contactá al administrador del sistema.', null);
+    }
+
+    function ssoClick() {
+        showAlert(1, '503 Servicio no disponible', 'El proveedor SSO no responde. Intentá con credenciales o contactá a soporte.', traceId());
+    }
+
+    function resendCode() {
+        showAlert(2, '429 Demasiadas solicitudes', 'Ya se envió un código recientemente. Esperá 60 segundos antes de solicitar otro.', null);
+    }
+
+    // ── Enter key ──
+    document.addEventListener('keydown', e => {
+        if (e.key !== 'Enter') return;
+        if (document.getElementById('step-1').classList.contains('active')) submitStep1();
+        else submitStep2();
+    });
+
+    // ── OTP: solo números ──
+    document.getElementById('otp').addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, '').slice(0, 6);
+    });
+</script>
+
+</body>
+</html>
