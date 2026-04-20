@@ -6,10 +6,10 @@ gallery: ["/images/handbrake.jpg"]
 featured: true
 customizable: false
 tags: ["SimRacing", "Plug & Play", "USB", "Wired"]
-mercadolibreUrl: ""
+mercadolibreUrl: "https://www.mercadolibre.com.ar/freno-de-mano-para-simulador-usb-simracing-pc-handbrake/up/MLAU3903154023?pdp_filters=item_id:MLA1753619707"
 firmwareUrl: "" 
 price: 45000
-stock: "A Pedido"
+stock: "En Stock"
 instructionSteps:
   - text: "Lo conectás por USB a tu PC o Hub USB."
   - text: "Entrás a tu simulador o juego de autos favorito."
