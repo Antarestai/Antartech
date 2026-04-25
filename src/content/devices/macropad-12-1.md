@@ -8,7 +8,7 @@ customizable: true
 tags: ["QMK/VIA", "Mechanical", "Personalizable","Wired"]
 firmwareUrl: "/files/macropad-12-1.json"
 mercadolibreUrl: ""
-price: 60000
+price: 50000
 stock: "A Pedido"
 ---
 

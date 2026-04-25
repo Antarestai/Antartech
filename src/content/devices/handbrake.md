@@ -1,5 +1,5 @@
 ---
-title: "Handbrake V1"
+title: "Handbrake"
 description: "Freno de mano USB Plug & Play para todo tipo de simuladores de carreras (SimRacing). Alta precisión y robustez para llevar tu nivel competitivo al máximo."
 image: "/images/handbrake.jpg" 
 gallery: ["/images/handbrake.jpg"]
@@ -11,7 +11,8 @@ firmwareUrl: ""
 price: 45000
 stock: "En Stock"
 instructionSteps:
-  - text: "Lo conectás por USB a tu PC o Hub USB."
+  - text: "Conectá el freno por USB sin tenerlo presionado. La PC lo detectará inmediatamente como \"PICO\" o \"ANTABRAKE\"."
+  - text: "(Opcional) Calibración: Si bien es plug and play, podés ajustar la calibración presionandoWin + R y escribiendo joy.cpl. Seleccioná el freno, andá a Propiedades -> Configuración -> Calibrar, y ajustá el eje Z presionando al máximo y soltando."
   - text: "Entrás a tu simulador o juego de autos favorito."
   - text: "Vas a Opciones -> Controles / Asignación de botones."
   - text: "Buscas la opción \"Freno de mano\" o \"Handbrake\", hacés clic para asignarlo y tirás de la palanca del dispositivo para que quede configurado."
