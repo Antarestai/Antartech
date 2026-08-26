@@ -3,7 +3,6 @@ import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Cursor from '../components/Cursor.astro';
 import Preloader from '../components/Preloader.astro';
-import SoundManager from '../components/SoundManager.astro';
 import CartDrawer from '../components/CartDrawer.astro';
 import Analytics from '@vercel/analytics/astro';
 import AntaresHelper from '../components/react/AntaresHelper.tsx';
@@ -98,7 +97,6 @@ const ogImageURL = new URL('/logo.png', Astro.site);
 		</a>
         <Preloader />
         <Cursor />
-        <SoundManager />
         
         <Navbar />
         <CartDrawer />
