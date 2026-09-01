@@ -3,12 +3,12 @@
 ---
 
 <div id="hero-bg" class="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-[#d5d0c8] dark:bg-[#030014] transition-colors duration-700">
-    <div id="parallax-layer-1" class="absolute inset-0 w-full h-full transition-transform duration-300 ease-out will-change-transform">
+    <div id="parallax-layer-1" class="absolute inset-0 w-full h-full">
         <canvas id="particles-canvas" class="absolute inset-0 w-full h-full"></canvas>
     </div>
     
     <div id="parallax-layer-2"
-        class="absolute inset-0 opacity-[0.3] dark:opacity-[0.8] transition-all duration-700 ease-out will-change-transform" 
+        class="absolute inset-0 opacity-[0.3] dark:opacity-[0.8] transition-opacity duration-700" 
         style="background: 
             linear-gradient(135deg, var(--pcb-line) 2px, transparent 2px),
             linear-gradient(225deg, var(--pcb-line) 2px, transparent 2px),
@@ -20,7 +20,7 @@
     
     <div class="absolute inset-0 bg-gradient-to-b from-[#d5d0c8]/40 via-[#d5d0c8]/80 to-[#d5d0c8] dark:from-transparent dark:via-[#030014]/60 dark:to-[#030014] transition-colors duration-700"></div>
     
-    <div id="parallax-layer-3" class="absolute inset-0 w-full h-full transition-transform duration-500 ease-out will-change-transform">
+    <div id="parallax-layer-3" class="absolute inset-0 w-full h-full">
         <div class="absolute top-0 right-[-10%] -mt-40 w-[500px] h-[500px] rounded-full bg-fuchsia-500/15 dark:bg-fuchsia-600/15 blur-[120px] pointer-events-none animate-float-slow"></div>
         <div class="absolute bottom-0 left-[-10%] -mb-40 w-[500px] h-[500px] rounded-full bg-cyan-500/15 dark:bg-cyan-600/15 blur-[120px] pointer-events-none animate-float-slow-reverse"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-indigo-500/5 dark:bg-indigo-600/10 blur-[150px] pointer-events-none animate-pulse-glow"></div>
@@ -132,364 +132,174 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-400 dark:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
     </div>
 
-    <div id="reveal-text" class="mt-32 max-w-4xl opacity-0 translate-y-10 transition-all duration-1000 ease-out border-y border-gray-200 dark:border-gray-800 py-12">
+    <div id="reveal-text" class="mt-32 max-w-4xl scroll-reveal border-y border-gray-200 dark:border-gray-800 py-12">
         <blockquote id="quote-dissolve" class="text-xl md:text-3xl font-light text-gray-500 dark:text-gray-400 leading-relaxed">
             "Todo lo que ves acá nace de la curiosidad y necesidad. No solo diseño estos periféricos, sino que <span class="text-gray-900 dark:text-white font-medium italic">son los mismos que uso en mi día a día</span> para trabajar, estudiar y jugar."
         </blockquote>
     </div>
-</section>
 
 <script>
-    // --- 3D Parallax Title Effect ---
-    const title = document.getElementById('interactive-title');
-    if (title) {
-        const text = title.innerText;
-        title.innerHTML = '';
-        // Add perspective container
-        title.style.perspective = '1200px';
-        title.style.perspectiveOrigin = '50% 50%';
-        
-        const letterSpans = [];
-        let i = 0;
-        [...text].forEach(char => {
-            if (char === '\n') {
-                title.appendChild(document.createElement('br'));
-            } else {
-                const span = document.createElement('span');
-                span.innerText = char === ' ' ? '\u00A0' : char;
-                span.className = 'inline-block cursor-default transition-colors duration-200 hover:text-cyan-500 dark:hover:text-fuchsia-400';
-                span.style.willChange = 'transform, opacity';
-                span.style.transformStyle = 'preserve-3d';
-                span.dataset.index = i;
-                title.appendChild(span);
-                letterSpans.push(span);
-                i++;
-            }
-        });
+    // --- Intersection Observer to pause animations when Hero is off-screen ---
+    const heroBg = document.getElementById('hero-bg');
+    let isHeroVisible = true;
 
-        const totalLetters = letterSpans.length;
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    const scrollY = window.scrollY;
-                    const triggerStart = 50;
-                    const triggerEnd = 600;
-                    const progress = Math.max(0, Math.min(1, (scrollY - triggerStart) / (triggerEnd - triggerStart)));
-                    
-                    // Smooth easing
-                    const easeOut = 1 - Math.pow(1 - progress, 3);
-                    
-                    letterSpans.forEach((span, idx) => {
-                        const wave = idx / totalLetters;
-                        // Each letter starts its animation slightly later (cascade effect)
-                        const letterProgress = Math.max(0, Math.min(1, (easeOut - wave * 0.2) / (1 - wave * 0.2)));
-                        
-                        if (letterProgress <= 0) {
-                            span.style.transform = '';
-                            span.style.opacity = '';
-                            return;
-                        }
-                        
-                        // 3D perspective: tilt backward into the screen
-                        const rotateX = letterProgress * 45; // Tilt back
-                        // Parallax: each letter moves at a different speed
-                        const parallaxY = letterProgress * (-15 - wave * 40);
-                        // Depth: letters recede into the screen (z-axis)
-                        const translateZ = letterProgress * (-80 - wave * 120);
-                        // Slight horizontal spread for drama
-                        const spreadX = letterProgress * (idx - totalLetters / 2) * 1.5;
-                        
-                        const opacity = Math.max(0, 1 - letterProgress * 1.2);
-                        
-                        span.style.transform = `translate3d(${spreadX}px, ${parallaxY}px, ${translateZ}px) rotateX(${rotateX}deg)`;
-                        span.style.opacity = opacity;
-                    });
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }, { passive: true });
-    }
+    // --- Lightweight Floating Particles Canvas ---
+    const canvas = document.getElementById('particles-canvas') as HTMLCanvasElement | null;
+    let particlesRaf = 0;
 
-    // --- 3D Parallax Quote Effect ---
-    const quoteEl = document.getElementById('quote-dissolve');
-    if (quoteEl) {
-        const rawText = quoteEl.innerText;
-        const highlightPhrase = 'son los mismos que uso en mi día a día';
-        
-        // Add perspective to quote container
-        quoteEl.style.perspective = '800px';
-        quoteEl.style.perspectiveOrigin = '50% 100%';
-        
-        quoteEl.innerHTML = '';
-        const words = rawText.split(/\s+/);
-        const wordSpans = [];
-        const highlightWords = highlightPhrase.split(/\s+/);
-        let hlIdx = 0;
-        let inHighlight = false;
-        
-        words.forEach((word, idx) => {
-            if (!inHighlight && word === highlightWords[0]) {
-                let match = true;
-                for (let k = 0; k < highlightWords.length && idx + k < words.length; k++) {
-                    if (words[idx + k] !== highlightWords[k]) { match = false; break; }
-                }
-                if (match) { inHighlight = true; hlIdx = 0; }
-            }
-            
-            const span = document.createElement('span');
-            span.innerText = word;
-            span.className = 'inline-block';
-            span.style.marginRight = '0.3em';
-            span.style.willChange = 'transform, opacity';
-            span.style.transformStyle = 'preserve-3d';
-            
-            if (inHighlight && hlIdx < highlightWords.length) {
-                span.classList.add('font-medium', 'italic');
-                span.dataset.highlight = 'true';
-                hlIdx++;
-                if (hlIdx >= highlightWords.length) inHighlight = false;
-            }
-            
-            quoteEl.appendChild(span);
-            wordSpans.push(span);
-        });
-        
-        const totalWords = wordSpans.length;
-        const centerIdx = totalWords / 2;
-        let quoteTicking = false;
-        
-        window.addEventListener('scroll', () => {
-            if (!quoteTicking) {
-                requestAnimationFrame(() => {
-                    const rect = quoteEl.getBoundingClientRect();
-                    const vh = window.innerHeight;
-                    
-                    const triggerTop = vh * 0.4;
-                    const endTop = -rect.height * 0.5;
-                    
-                    let progress;
-                    if (rect.top > triggerTop) {
-                        progress = 0;
-                    } else if (rect.top < endTop) {
-                        progress = 1;
-                    } else {
-                        progress = (triggerTop - rect.top) / (triggerTop - endTop);
-                    }
-                    
-                    // Smooth cubic ease
-                    const eased = progress * progress * (3 - 2 * progress);
-                    
-                    wordSpans.forEach((span, idx) => {
-                        // Stagger: words at the edges dissolve faster than center
-                        const distFromCenter = Math.abs(idx - centerIdx) / centerIdx;
-                        const wordDelay = (1 - distFromCenter) * 0.3;
-                        const wordProgress = Math.max(0, Math.min(1, (eased - wordDelay) / (1 - wordDelay)));
-                        
-                        if (wordProgress <= 0) {
-                            span.style.transform = '';
-                            span.style.opacity = '';
-                            span.style.filter = '';
-                            span.style.color = '';
-                            return;
-                        }
-                        
-                        const wp = wordProgress * wordProgress;
-                        
-                        // Parallax spread: words fly outward from center at different speeds
-                        const direction = idx < centerIdx ? -1 : 1;
-                        const spreadX = wp * direction * (20 + distFromCenter * 60);
-                        // 3D: words tilt and recede
-                        const rotateY = wp * direction * (8 + distFromCenter * 15);
-                        const translateZ = wp * (-30 - distFromCenter * 80);
-                        const moveY = wp * (-10 - distFromCenter * 15);
-                        
-                        const opacity = Math.max(0, 1 - wordProgress * 1.3);
-                        const blur = wp * 3;
-                        
-                        span.style.transform = `translate3d(${spreadX}px, ${moveY}px, ${translateZ}px) rotateY(${rotateY}deg)`;
-                        span.style.opacity = opacity;
-                        span.style.filter = `blur(${blur}px)`;
-                        
-                        // Highlighted words pulse in brand color before fading
-                        if (span.dataset.highlight && wordProgress > 0.05 && wordProgress < 0.5) {
-                            const pulse = Math.sin(wordProgress / 0.5 * Math.PI);
-                            const isDark = document.documentElement.classList.contains('dark');
-                            span.style.color = isDark 
-                                ? `rgba(165, 180, 252, ${0.7 + pulse * 0.3})` // indigo-300
-                                : `rgba(79, 70, 229, ${0.7 + pulse * 0.3})`;  // indigo-600
-                        } else {
-                            span.style.color = '';
-                        }
-                    });
-                    
-                    quoteTicking = false;
-                });
-                quoteTicking = true;
-            }
-        }, { passive: true });
-    }
-
-    // --- Media Query Check ---
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-
-    // --- Floating Particles Canvas ---
-    const canvas = document.getElementById('particles-canvas');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        const PARTICLE_COUNT = isMobile ? 15 : 40;
-        const SHOW_CONNECTIONS = !isMobile;
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas, { passive: true });
-
-        function createParticle() {
-            const isDark = document.documentElement.classList.contains('dark');
-            const colors = isDark
-                ? ['rgba(168,85,247,', 'rgba(6,182,212,', 'rgba(99,102,241,']
-                : ['rgba(99,102,241,', 'rgba(168,85,247,', 'rgba(6,182,212,'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            return {
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: Math.random() * 2 + 0.5,
-                speedX: (Math.random() - 0.5) * 0.3,
-                speedY: (Math.random() - 0.5) * 0.3,
-                opacity: Math.random() * 0.5 + 0.1,
-                color: color
-            };
-        }
-
-        for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
-
-        function drawParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.x += p.speedX;
-                p.y += p.speedY;
-                if (p.x < 0) p.x = canvas.width;
-                if (p.x > canvas.width) p.x = 0;
-                if (p.y < 0) p.y = canvas.height;
-                if (p.y > canvas.height) p.y = 0;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = p.color + p.opacity + ')';
-                ctx.fill();
-            });
-
-            // Draw connections between nearby particles (Disabled on mobile for performance)
-            if (SHOW_CONNECTIONS) {
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 150) {
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            const lineOpacity = (1 - dist / 150) * 0.15;
-                            ctx.strokeStyle = particles[i].color + lineOpacity + ')';
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
-                        }
-                    }
-                }
-            }
-            requestAnimationFrame(drawParticles);
-        }
-        drawParticles();
-    }
-
-    // --- Mouse Parallax Effect --- (Disabled on mobile)
-    if (!isMobile) {
-        document.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 2;
-            const y = (e.clientY / window.innerHeight - 0.5) * 2;
-    
-            const layer1 = document.getElementById('parallax-layer-1');
-            const layer2 = document.getElementById('parallax-layer-2');
-            const layer3 = document.getElementById('parallax-layer-3');
-    
-            if (layer1) layer1.style.transform = `translate(${x * -60}px, ${y * -60}px)`; 
-            if (layer2) layer2.style.transform = `translate(${x * -30}px, ${y * -30}px)`; 
-            if (layer3) layer3.style.transform = `translate(${x * -90}px, ${y * -90}px)`; 
-        });
-    }
-
-    // --- Keycap Entrance + Enhanced Floating ---
+    // --- Keycap Floating (Optimized) ---
     const keycaps = document.querySelectorAll('.keycap');
     const keycapsContainer = document.getElementById('keycaps-container');
-    
-    // Check if container is visible (it's hidden on mobile via CSS hidden lg:block)
+    let keycapsRaf = 0;
+
+    let drawParticlesFn: (() => void) | null = null;
+    let animateKeycapsFn: ((now: number) => void) | null = null;
+
+    if (heroBg && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            isHeroVisible = entries[0].isIntersecting;
+            if (isHeroVisible) {
+                if (canvas && !particlesRaf && drawParticlesFn) {
+                    particlesRaf = requestAnimationFrame(drawParticlesFn);
+                }
+                if (keycaps.length > 0 && !keycapsRaf && animateKeycapsFn) {
+                    keycapsRaf = requestAnimationFrame(animateKeycapsFn);
+                }
+            }
+        }, { threshold: 0 });
+        observer.observe(heroBg);
+    }
+
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+            let particles: Array<{
+                x: number;
+                y: number;
+                radius: number;
+                speedX: number;
+                speedY: number;
+                opacity: number;
+                color: string;
+            }> = [];
+            const PARTICLE_COUNT = 20;
+
+            function resizeCanvas() {
+                if (!canvas) return;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas, { passive: true });
+
+            function createParticle() {
+                if (!canvas) return { x: 0, y: 0, radius: 1, speedX: 0, speedY: 0, opacity: 0.5, color: 'rgba(99,102,241,' };
+                const isDark = document.documentElement.classList.contains('dark');
+                const colors = isDark
+                    ? ['rgba(168,85,247,', 'rgba(6,182,212,', 'rgba(99,102,241,']
+                    : ['rgba(99,102,241,', 'rgba(168,85,247,', 'rgba(6,182,212,'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                return {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2 + 0.5,
+                    speedX: (Math.random() - 0.5) * 0.25,
+                    speedY: (Math.random() - 0.5) * 0.25,
+                    opacity: Math.random() * 0.4 + 0.1,
+                    color: color
+                };
+            }
+
+            for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
+
+            drawParticlesFn = function drawParticles() {
+                if (!isHeroVisible || !canvas || !ctx) {
+                    particlesRaf = 0;
+                    return;
+                }
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    p.x += p.speedX;
+                    p.y += p.speedY;
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color + p.opacity + ')';
+                    ctx.fill();
+                }
+                particlesRaf = requestAnimationFrame(drawParticles);
+            };
+
+            particlesRaf = requestAnimationFrame(drawParticlesFn);
+        }
+    }
+
     const containerVisible = keycapsContainer && window.getComputedStyle(keycapsContainer).display !== 'none';
 
     if (keycaps.length > 0 && containerVisible) {
-        // Clean entrance using CSS animations
         keycaps.forEach((kc, idx) => {
-            const delay = kc.style.getPropertyValue('--enter-delay') || `${idx * 0.15 + 0.3}s`;
-            kc.style.animationDelay = delay;
-            
-            // Trigger animation
+            const delay = (kc as HTMLElement).style.getPropertyValue('--enter-delay') || `${idx * 0.15 + 0.3}s`;
+            (kc as HTMLElement).style.animationDelay = delay;
             requestAnimationFrame(() => {
                 kc.classList.add('animate-in');
             });
         });
-        
-        // Enhanced floating with JS (starts after entrance completes)
-        setTimeout(() => {
-            const startTime = performance.now();
-            
-            const keycapData = [];
-            keycaps.forEach(kc => {
-                // Remove animation class before starting JS floating to avoid conflicts
-                kc.style.animation = 'none';
-                kc.style.opacity = '1';
 
-                keycapData.push({
-                    el: kc,
-                    speed: parseFloat(kc.dataset.floatSpeed) || 0.7,
-                    range: parseFloat(kc.dataset.floatRange) || 18,
-                    phaseX: Math.random() * Math.PI * 2,
-                    phaseY: Math.random() * Math.PI * 2,
-                    phaseR: Math.random() * Math.PI * 2,
-                });
+        let startTime = 0;
+        const keycapData: Array<{
+            el: HTMLElement;
+            speed: number;
+            range: number;
+            phaseX: number;
+            phaseY: number;
+            phaseR: number;
+        }> = [];
+
+        keycaps.forEach(kc => {
+            (kc as HTMLElement).style.animation = 'none';
+            (kc as HTMLElement).style.opacity = '1';
+
+            keycapData.push({
+                el: kc as HTMLElement,
+                speed: parseFloat((kc as HTMLElement).dataset.floatSpeed || '0.7') || 0.7,
+                range: parseFloat((kc as HTMLElement).dataset.floatRange || '18') || 18,
+                phaseX: Math.random() * Math.PI * 2,
+                phaseY: Math.random() * Math.PI * 2,
+                phaseR: Math.random() * Math.PI * 2,
             });
-            
-            function animateKeycaps(now) {
-                // Extra safety: stop if container becomes hidden (e.g. resize)
-                if (window.getComputedStyle(keycapsContainer).display === 'none') return;
+        });
 
-                const elapsed = (now - startTime) / 1000;
-                // Ramp up intensity from 0 to 1 over 2 seconds for a seamless transition
-                const ramp = Math.min(1, elapsed / 2.0);
-                
-                keycapData.forEach(data => {
-                    const { el, speed, range, phaseX, phaseY, phaseR } = data;
-                    const t = elapsed * speed;
-                    
-                    // Subtract initial value (Math.sin(phase)) to ensure we start at exactement 0,0
-                    const x = (Math.sin(t * 0.7 + phaseX) - Math.sin(phaseX)) * range * 0.6 
-                            + (Math.sin(t * 1.3 + phaseX * 2) - Math.sin(phaseX * 2)) * range * 0.3;
-                    const y = (Math.sin(t * 0.5 + phaseY) - Math.sin(phaseY)) * range 
-                            + (Math.cos(t * 0.9 + phaseY * 1.5) - Math.cos(phaseY * 1.5)) * range * 0.4;
-                    const rotZ = (Math.sin(t * 0.4 + phaseR) - Math.sin(phaseR)) * 6 
-                               + (Math.cos(t * 0.8 + phaseR * 2) - Math.cos(phaseR * 2)) * 3;
-                    
-                    el.style.transform = `translate3d(${x * ramp}px, ${y * ramp}px, 0) rotate(${rotZ * ramp}deg)`;
-                });
-                
-                requestAnimationFrame(animateKeycaps);
+        animateKeycapsFn = function animateKeycaps(now: number) {
+            if (!isHeroVisible || !keycapsContainer || window.getComputedStyle(keycapsContainer).display === 'none') {
+                keycapsRaf = 0;
+                return;
             }
-            
-            requestAnimationFrame(animateKeycaps);
-        }, 1200); // Shorter wait, start as they finish entering
+            if (!startTime) startTime = now;
+            const elapsed = (now - startTime) / 1000;
+            const ramp = Math.min(1, elapsed / 2.0);
+
+            for (let i = 0; i < keycapData.length; i++) {
+                const { el, speed, range, phaseX, phaseY, phaseR } = keycapData[i];
+                const t = elapsed * speed;
+                const x = (Math.sin(t * 0.7 + phaseX) - Math.sin(phaseX)) * range * 0.6;
+                const y = (Math.sin(t * 0.5 + phaseY) - Math.sin(phaseY)) * range;
+                const rotZ = (Math.sin(t * 0.4 + phaseR) - Math.sin(phaseR)) * 4;
+
+                el.style.transform = `translate3d(${x * ramp}px, ${y * ramp}px, 0) rotate(${rotZ * ramp}deg)`;
+            }
+
+            keycapsRaf = requestAnimationFrame(animateKeycaps);
+        };
+
+        setTimeout(() => {
+            if (animateKeycapsFn) {
+                keycapsRaf = requestAnimationFrame(animateKeycapsFn);
+            }
+        }, 1200);
     }
 </script>
 

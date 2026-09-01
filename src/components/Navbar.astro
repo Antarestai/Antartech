@@ -81,29 +81,43 @@
     document.documentElement.classList.add('dark');
     localStorage.setItem('color-theme', 'dark');
 
-    // --- LÓGICA ANCLAR NAVBAR (se "detiene" al llegar al marquee) ---
+    // --- LÓGICA ANCLAR NAVBAR (optimizado para cero layout thrashing) ---
     const nav = document.getElementById('navbar');
     const marqueeTrigger = document.getElementById('marquee-ticker');
 
     if (nav && marqueeTrigger) {
-        const navHeight = nav.offsetHeight;
+        let stopPoint = 0;
+        let ticking = false;
+
+        function calcStopPoint() {
+            stopPoint = marqueeTrigger.offsetTop - nav.offsetHeight;
+        }
+        calcStopPoint();
+        window.addEventListener('resize', calcStopPoint, { passive: true });
 
         function updateNavPosition() {
-            const marqueeTop = marqueeTrigger.getBoundingClientRect().top + window.scrollY;
-            const stopPoint = marqueeTop - navHeight;
-
-            if (window.scrollY >= stopPoint) {
-                nav.style.position = 'absolute';
-                nav.style.top = stopPoint + 'px';
-            } else {
-                nav.style.position = 'fixed';
-                nav.style.top = '0';
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrollY = window.scrollY;
+                    if (scrollY >= stopPoint) {
+                        if (nav.style.position !== 'absolute') {
+                            nav.style.position = 'absolute';
+                            nav.style.top = stopPoint + 'px';
+                        }
+                    } else {
+                        if (nav.style.position !== 'fixed') {
+                            nav.style.position = 'fixed';
+                            nav.style.top = '0';
+                        }
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
         }
 
         window.addEventListener('scroll', updateNavPosition, { passive: true });
-        window.addEventListener('resize', updateNavPosition, { passive: true });
-        updateNavPosition(); // Estado inicial
+        updateNavPosition();
     }
 
     // --- MOBILE MENU TOGGLE ---

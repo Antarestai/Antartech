@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
-import Cursor from '../components/Cursor.astro';
 import Preloader from '../components/Preloader.astro';
 import CartDrawer from '../components/CartDrawer.astro';
 import Analytics from '@vercel/analytics/astro';
@@ -20,7 +19,7 @@ const ogImageURL = new URL('/logo.png', Astro.site);
 ---
 
 <!doctype html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -96,7 +95,6 @@ const ogImageURL = new URL('/logo.png', Astro.site);
 			Saltar al contenido
 		</a>
         <Preloader />
-        <Cursor />
         
         <Navbar />
         <CartDrawer />

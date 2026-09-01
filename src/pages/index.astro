@@ -113,15 +113,6 @@ const discordLink = "https://discord.gg/antarestai";
     </footer>
 
     <script is:inline>
-        // --- Reveal on scroll (blockquote) ---
-        const revealText = document.getElementById('reveal-text');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 150 && revealText) {
-                revealText.classList.remove('opacity-0', 'translate-y-10');
-                revealText.classList.add('opacity-100', 'translate-y-0');
-            }
-        }, { passive: true });
-
         // --- Scroll Reveal (IntersectionObserver) ---
         const scrollRevealElements = document.querySelectorAll('.scroll-reveal');
         const revealObserver = new IntersectionObserver((entries) => {
@@ -133,17 +124,6 @@ const discordLink = "https://discord.gg/antarestai";
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         scrollRevealElements.forEach(el => revealObserver.observe(el));
-
-        // --- Card Glow (mouse tracking on cards) ---
-        document.querySelectorAll('.card-glow').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--glow-x', x + 'px');
-                card.style.setProperty('--glow-y', y + 'px');
-            });
-        });
     </script>
 </Layout>
 

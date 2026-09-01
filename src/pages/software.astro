@@ -55,7 +55,7 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
             </p>
         </div>
         <div class="scroll-reveal mb-20" style="transition-delay: 100ms">
-            <div class="bg-white/60 dark:bg-white/[0.03] backdrop-blur-2xl p-8 md:p-12 rounded-[2rem] shadow-xl shadow-indigo-500/5 dark:shadow-indigo-950/30 border border-white/60 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] overflow-hidden relative">
+            <div class="bg-white/60 dark:bg-white/[0.03] backdrop-blur-md p-8 md:p-12 rounded-[2rem] shadow-xl shadow-indigo-500/5 dark:shadow-indigo-950/30 border border-white/60 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] overflow-hidden relative">
                 <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-indigo-500/5 dark:bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
                 
                 <h2 class="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tight mb-8 flex items-center gap-3">
@@ -137,7 +137,7 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
             </p>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div class="group relative bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl border border-white/50 dark:border-white/[0.08] rounded-[2rem] p-8 ring-1 ring-white/20 dark:ring-white/[0.05] overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1">
+                <div class="group relative bg-white/60 dark:bg-white/[0.03] backdrop-blur-md border border-white/50 dark:border-white/[0.08] rounded-[2rem] p-8 ring-1 ring-white/20 dark:ring-white/[0.05] overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1">
                     <div class="absolute top-0 right-0 w-[200px] h-[200px] bg-indigo-500/5 dark:bg-indigo-600/10 rounded-full blur-[80px] pointer-events-none"></div>
                     <div class="flex items-start gap-5 mb-6 relative z-10">
                         <div class="w-16 h-16 rounded-2xl overflow-hidden border border-white/50 dark:border-white/10 shadow-md shrink-0">
@@ -153,7 +153,7 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
                         Descargar JSON (VIA)
                     </a>
                 </div>
-                <div class="relative bg-white/40 dark:bg-white/[0.02] backdrop-blur-xl border border-white/30 dark:border-white/[0.05] rounded-[2rem] p-8 ring-1 ring-white/10 dark:ring-white/[0.03] overflow-hidden opacity-70">
+                <div class="relative bg-white/40 dark:bg-white/[0.02] backdrop-blur-md border border-white/30 dark:border-white/[0.05] rounded-[2rem] p-8 ring-1 ring-white/10 dark:ring-white/[0.03] overflow-hidden opacity-70">
                     <div class="flex items-start gap-5 mb-6 relative z-10">
                         <div class="w-16 h-16 rounded-2xl overflow-hidden border border-white/50 dark:border-white/10 shadow-md shrink-0 grayscale">
                             <img src="/images/macropad.jpg" alt="Macropad 12+1" class="w-full h-full object-cover" />
@@ -189,73 +189,73 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
     }, { threshold: 0.1 });
     document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
 
-    // Floating Particles Canvas (same as other pages)
-    const canvas = document.getElementById('particles-canvas');
+    // Floating Particles Canvas (Lightweight, zero O(N^2) loops)
+    const canvas = document.getElementById('particles-canvas') as HTMLCanvasElement | null;
     if (canvas) {
         const ctx = canvas.getContext('2d');
-        let particles = [];
-        const PARTICLE_COUNT = 40;
+        if (ctx) {
+            let particles: Array<{
+                x: number;
+                y: number;
+                radius: number;
+                speedX: number;
+                speedY: number;
+                opacity: number;
+                color: string;
+            }> = [];
+            const PARTICLE_COUNT = 15;
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas, { passive: true });
-
-        function createParticle() {
-            const isDark = document.documentElement.classList.contains('dark');
-            const colors = isDark
-                ? ['rgba(168,85,247,', 'rgba(6,182,212,', 'rgba(99,102,241,']
-                : ['rgba(99,102,241,', 'rgba(168,85,247,', 'rgba(6,182,212,'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            return {
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: Math.random() * 3 + 1,
-                speedX: (Math.random() - 0.5) * 0.4,
-                speedY: (Math.random() - 0.5) * 0.4,
-                opacity: Math.random() * 0.6 + 0.3,
-                color: color
-            };
-        }
-
-        for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
-
-        function drawParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.x += p.speedX;
-                p.y += p.speedY;
-                if (p.x < 0) p.x = canvas.width;
-                if (p.x > canvas.width) p.x = 0;
-                if (p.y < 0) p.y = canvas.height;
-                if (p.y > canvas.height) p.y = 0;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = p.color + p.opacity + ')';
-                ctx.fill();
-            });
-
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 180) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        const lineOpacity = (1 - dist / 180) * 0.4;
-                        ctx.strokeStyle = particles[i].color + lineOpacity + ')';
-                        ctx.lineWidth = 0.8;
-                        ctx.stroke();
-                    }
-                }
+            function resizeCanvas() {
+                if (!canvas) return;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             }
-            requestAnimationFrame(drawParticles);
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas, { passive: true });
+
+            function createParticle() {
+                if (!canvas) return { x: 0, y: 0, radius: 1, speedX: 0, speedY: 0, opacity: 0.5, color: 'rgba(99,102,241,' };
+                const isDark = document.documentElement.classList.contains('dark');
+                const colors = isDark
+                    ? ['rgba(168,85,247,', 'rgba(6,182,212,', 'rgba(99,102,241,']
+                    : ['rgba(99,102,241,', 'rgba(168,85,247,', 'rgba(6,182,212,'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                return {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2 + 0.5,
+                    speedX: (Math.random() - 0.5) * 0.25,
+                    speedY: (Math.random() - 0.5) * 0.25,
+                    opacity: Math.random() * 0.4 + 0.1,
+                    color: color
+                };
+            }
+
+            for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
+
+            function drawParticles() {
+                if (!canvas || !ctx || document.hidden) {
+                    requestAnimationFrame(drawParticles);
+                    return;
+                }
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    p.x += p.speedX;
+                    p.y += p.speedY;
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color + p.opacity + ')';
+                    ctx.fill();
+                }
+                requestAnimationFrame(drawParticles);
+            }
+            drawParticles();
         }
-        drawParticles();
     }
 </script>
 

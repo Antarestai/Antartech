@@ -265,7 +265,7 @@ const productJsonLd = {
                     </div>
                 )}
 
-                <article class="markdown-content bg-white/80 dark:bg-white/[0.03] backdrop-blur-2xl p-8 md:p-12 lg:p-16 rounded-[2rem] shadow-xl shadow-indigo-500/5 dark:shadow-indigo-950/30 border border-white/60 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] w-full overflow-hidden relative">
+                <article class="markdown-content bg-white/80 dark:bg-white/[0.03] backdrop-blur-md p-8 md:p-12 lg:p-16 rounded-[2rem] shadow-xl shadow-indigo-500/5 dark:shadow-indigo-950/30 border border-white/60 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] w-full overflow-hidden relative">
                     <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-indigo-500/5 dark:bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
                     <Content />
                     
@@ -279,7 +279,7 @@ const productJsonLd = {
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                             
                             {device.data.mercadolibreUrl ? (
-                                <a href={device.data.mercadolibreUrl} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl border border-white/50 dark:border-white/[0.08] transform transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl hover:shadow-yellow-500/15 hover:border-yellow-400/40 ring-1 ring-white/20 dark:ring-white/[0.05]">
+                                <a href={device.data.mercadolibreUrl} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.03] backdrop-blur-md border border-white/50 dark:border-white/[0.08] transform transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl hover:shadow-yellow-500/15 hover:border-yellow-400/40 ring-1 ring-white/20 dark:ring-white/[0.05]">
                                     <div class="absolute inset-0 bg-gradient-to-b from-yellow-400/0 to-yellow-400/10 dark:to-yellow-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                     <div class="bg-[#FFE600] p-4 rounded-2xl mb-4 shadow-lg shadow-yellow-500/20 transform group-hover:scale-105 transition-transform duration-700">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2D3277" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
@@ -297,7 +297,7 @@ const productJsonLd = {
                                 </div>
                             )}
                             
-                            <a href={waLinkDynamic} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl border border-white/50 dark:border-white/[0.08] transform transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/15 hover:border-green-400/40 ring-1 ring-white/20 dark:ring-white/[0.05]">
+                            <a href={waLinkDynamic} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.03] backdrop-blur-md border border-white/50 dark:border-white/[0.08] transform transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/15 hover:border-green-400/40 ring-1 ring-white/20 dark:ring-white/[0.05]">
                                 <div class="absolute inset-0 bg-gradient-to-b from-green-500/0 to-green-500/10 dark:to-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                 <div class="bg-[#25D366] p-4 rounded-2xl mb-4 shadow-lg shadow-green-500/20 transform group-hover:scale-105 transition-transform duration-700">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>
@@ -322,14 +322,14 @@ const productJsonLd = {
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10 max-w-4xl mx-auto">
-                                <div class="p-6 rounded-2xl bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl border border-white/50 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] text-center">
+                                <div class="p-6 rounded-2xl bg-white/60 dark:bg-white/[0.03] backdrop-blur-md border border-white/50 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] text-center">
                                     <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-fuchsia-500 to-pink-500 flex items-center justify-center shadow-lg shadow-fuchsia-500/20">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="0.5"/><circle cx="17.5" cy="10.5" r="0.5"/><circle cx="8.5" cy="7.5" r="0.5"/><circle cx="6.5" cy="12.5" r="0.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
                                     </div>
                                     <h4 class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-wider mb-2">Colores & Materiales</h4>
                                     <p class="text-xs text-gray-500 dark:text-gray-400 font-light">Elegí el color de la carcasa, el tipo de material y el acabado.</p>
                                 </div>
-                                <div class="p-6 rounded-2xl bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl border border-white/50 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] text-center">
+                                <div class="p-6 rounded-2xl bg-white/60 dark:bg-white/[0.03] backdrop-blur-md border border-white/50 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] text-center">
                                     <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                                     </div>
@@ -404,74 +404,73 @@ const productJsonLd = {
         });
     }
 
-    // Floating Particles Canvas
-    const canvas = document.getElementById('particles-canvas');
+    // Floating Particles Canvas (Lightweight, zero O(N^2) loops)
+    const canvas = document.getElementById('particles-canvas') as HTMLCanvasElement | null;
     if (canvas) {
         const ctx = canvas.getContext('2d');
-        let particles = [];
-        const PARTICLE_COUNT = 60; // Doblado para mayor densidad
+        if (ctx) {
+            let particles: Array<{
+                x: number;
+                y: number;
+                radius: number;
+                speedX: number;
+                speedY: number;
+                opacity: number;
+                color: string;
+            }> = [];
+            const PARTICLE_COUNT = 15;
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas, { passive: true });
-
-        function createParticle() {
-            const isDark = document.documentElement.classList.contains('dark');
-            const colors = isDark
-                ? ['rgba(168,85,247,', 'rgba(6,182,212,', 'rgba(99,102,241,']
-                : ['rgba(99,102,241,', 'rgba(168,85,247,', 'rgba(6,182,212,'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            return {
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: Math.random() * 3 + 1, // Partículas ligeramente más grandes (1 a 4px)
-                speedX: (Math.random() - 0.5) * 0.4,
-                speedY: (Math.random() - 0.5) * 0.4,
-                opacity: Math.random() * 0.6 + 0.3, // Mucho más opacas de base
-                color: color
-            };
-        }
-
-        for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
-
-        function drawParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.x += p.speedX;
-                p.y += p.speedY;
-                if (p.x < 0) p.x = canvas.width;
-                if (p.x > canvas.width) p.x = 0;
-                if (p.y < 0) p.y = canvas.height;
-                if (p.y > canvas.height) p.y = 0;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = p.color + p.opacity + ')';
-                ctx.fill();
-            });
-
-            // Draw connections between nearby particles (más fuertes)
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 180) { // Mayor distancia de conexión
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        const lineOpacity = (1 - dist / 180) * 0.4; // Líneas mucho más visibles (hasta 40% opacidad)
-                        ctx.strokeStyle = particles[i].color + lineOpacity + ')';
-                        ctx.lineWidth = 0.8;
-                        ctx.stroke();
-                    }
-                }
+            function resizeCanvas() {
+                if (!canvas) return;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             }
-            requestAnimationFrame(drawParticles);
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas, { passive: true });
+
+            function createParticle() {
+                if (!canvas) return { x: 0, y: 0, radius: 1, speedX: 0, speedY: 0, opacity: 0.5, color: 'rgba(99,102,241,' };
+                const isDark = document.documentElement.classList.contains('dark');
+                const colors = isDark
+                    ? ['rgba(168,85,247,', 'rgba(6,182,212,', 'rgba(99,102,241,']
+                    : ['rgba(99,102,241,', 'rgba(168,85,247,', 'rgba(6,182,212,'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                return {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2 + 0.5,
+                    speedX: (Math.random() - 0.5) * 0.25,
+                    speedY: (Math.random() - 0.5) * 0.25,
+                    opacity: Math.random() * 0.4 + 0.1,
+                    color: color
+                };
+            }
+
+            for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
+
+            function drawParticles() {
+                if (!canvas || !ctx || document.hidden) {
+                    requestAnimationFrame(drawParticles);
+                    return;
+                }
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    p.x += p.speedX;
+                    p.y += p.speedY;
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color + p.opacity + ')';
+                    ctx.fill();
+                }
+                requestAnimationFrame(drawParticles);
+            }
+            drawParticles();
         }
-        drawParticles();
     }
 </script>
 
