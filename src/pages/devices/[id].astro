@@ -83,8 +83,7 @@ const productJsonLd = {
                 background-color: var(--pcb-bg);"
         ></div>
         <div class="absolute inset-0 bg-gradient-to-b from-[#d5d0c8]/40 via-[#d5d0c8]/80 to-[#d5d0c8] dark:from-transparent dark:via-[#030014]/80 dark:to-[#030014] transition-colors duration-700"></div>
-        <div class="absolute top-0 right-0 -mr-40 -mt-20 w-[600px] h-[600px] rounded-full bg-indigo-500/15 dark:bg-indigo-600/15 blur-[120px] pointer-events-none animate-float-slow"></div>
-        <div class="absolute bottom-0 left-0 -ml-40 -mb-20 w-[600px] h-[600px] rounded-full bg-cyan-500/15 dark:bg-cyan-600/15 blur-[120px] pointer-events-none animate-float-slow-reverse"></div>
+        <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 85% 15%, rgba(99,102,241,0.12), transparent 50%), radial-gradient(circle at 15% 85%, rgba(6,182,212,0.12), transparent 50%);"></div>
         
 
         <div class="absolute inset-0 z-[1] pointer-events-none overflow-hidden hidden md:block opacity-30 dark:opacity-40">
@@ -241,10 +240,10 @@ const productJsonLd = {
                         {gallery.length > 1 && (
                             <>
 
-                            <button id="gallery-prev" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-md border border-white/50 dark:border-white/10 flex items-center justify-center text-gray-700 dark:text-white hover:bg-white dark:hover:bg-black/70 transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg">
+                            <button id="gallery-prev" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/90 dark:bg-black/70 border border-white/50 dark:border-white/10 flex items-center justify-center text-gray-700 dark:text-white hover:bg-white dark:hover:bg-black/90 transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                             </button>
-                            <button id="gallery-next" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/80 dark:bg-black/50 backdrop-blur-md border border-white/50 dark:border-white/10 flex items-center justify-center text-gray-700 dark:text-white hover:bg-white dark:hover:bg-black/70 transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg">
+                            <button id="gallery-next" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/90 dark:bg-black/70 border border-white/50 dark:border-white/10 flex items-center justify-center text-gray-700 dark:text-white hover:bg-white dark:hover:bg-black/90 transition-all duration-300 opacity-0 group-hover/gallery:opacity-100 hover:scale-110 shadow-lg">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                             </button>
 
@@ -257,7 +256,7 @@ const productJsonLd = {
                                 ))}
                             </div>
 
-                            <div class="absolute top-4 right-4 z-20 bg-black/40 backdrop-blur-md text-white text-[10px] font-bold tracking-wider px-3 py-1.5 rounded-full border border-white/10">
+                            <div class="absolute top-4 right-4 z-20 bg-black/60 text-white text-[10px] font-bold tracking-wider px-3 py-1.5 rounded-full border border-white/10">
                                 <span id="gallery-counter">1</span> / {gallery.length}
                             </div>
                             </>
@@ -265,8 +264,7 @@ const productJsonLd = {
                     </div>
                 )}
 
-                <article class="markdown-content bg-white/80 dark:bg-white/[0.03] backdrop-blur-md p-8 md:p-12 lg:p-16 rounded-[2rem] shadow-xl shadow-indigo-500/5 dark:shadow-indigo-950/30 border border-white/60 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] w-full overflow-hidden relative">
-                    <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-indigo-500/5 dark:bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+                <article class="markdown-content bg-white dark:bg-[#0c0a1a] p-8 md:p-12 lg:p-16 rounded-[2rem] shadow-xl shadow-indigo-500/5 dark:shadow-indigo-950/30 border border-gray-200/80 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] w-full overflow-hidden relative">
                     <Content />
                     
 
@@ -279,7 +277,7 @@ const productJsonLd = {
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                             
                             {device.data.mercadolibreUrl ? (
-                                <a href={device.data.mercadolibreUrl} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.03] backdrop-blur-md border border-white/50 dark:border-white/[0.08] transform transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl hover:shadow-yellow-500/15 hover:border-yellow-400/40 ring-1 ring-white/20 dark:ring-white/[0.05]">
+                                <a href={device.data.mercadolibreUrl} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-white dark:bg-[#120f26] border border-gray-200 dark:border-white/[0.08] transform transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl hover:shadow-yellow-500/15 hover:border-yellow-400/40 ring-1 ring-white/20 dark:ring-white/[0.05]">
                                     <div class="absolute inset-0 bg-gradient-to-b from-yellow-400/0 to-yellow-400/10 dark:to-yellow-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                     <div class="bg-[#FFE600] p-4 rounded-2xl mb-4 shadow-lg shadow-yellow-500/20 transform group-hover:scale-105 transition-transform duration-700">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2D3277" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
@@ -297,7 +295,7 @@ const productJsonLd = {
                                 </div>
                             )}
                             
-                            <a href={waLinkDynamic} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-white/60 dark:bg-white/[0.03] backdrop-blur-md border border-white/50 dark:border-white/[0.08] transform transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/15 hover:border-green-400/40 ring-1 ring-white/20 dark:ring-white/[0.05]">
+                            <a href={waLinkDynamic} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-white dark:bg-[#120f26] border border-gray-200 dark:border-white/[0.08] transform transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/15 hover:border-green-400/40 ring-1 ring-white/20 dark:ring-white/[0.05]">
                                 <div class="absolute inset-0 bg-gradient-to-b from-green-500/0 to-green-500/10 dark:to-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                 <div class="bg-[#25D366] p-4 rounded-2xl mb-4 shadow-lg shadow-green-500/20 transform group-hover:scale-105 transition-transform duration-700">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>
@@ -322,14 +320,14 @@ const productJsonLd = {
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10 max-w-4xl mx-auto">
-                                <div class="p-6 rounded-2xl bg-white/60 dark:bg-white/[0.03] backdrop-blur-md border border-white/50 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] text-center">
+                                <div class="p-6 rounded-2xl bg-white dark:bg-[#120f26] border border-gray-200 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] text-center">
                                     <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-fuchsia-500 to-pink-500 flex items-center justify-center shadow-lg shadow-fuchsia-500/20">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="0.5"/><circle cx="17.5" cy="10.5" r="0.5"/><circle cx="8.5" cy="7.5" r="0.5"/><circle cx="6.5" cy="12.5" r="0.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
                                     </div>
                                     <h4 class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-wider mb-2">Colores & Materiales</h4>
                                     <p class="text-xs text-gray-500 dark:text-gray-400 font-light">Elegí el color de la carcasa, el tipo de material y el acabado.</p>
                                 </div>
-                                <div class="p-6 rounded-2xl bg-white/60 dark:bg-white/[0.03] backdrop-blur-md border border-white/50 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] text-center">
+                                <div class="p-6 rounded-2xl bg-white dark:bg-[#120f26] border border-gray-200 dark:border-white/[0.08] ring-1 ring-white/20 dark:ring-white/[0.05] text-center">
                                     <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                                     </div>

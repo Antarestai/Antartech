@@ -135,20 +135,6 @@ const discordLink = "https://discord.gg/antarestai";
     @keyframes gradient-x { 0%, 100% { background-size: 200% 200%; background-position: left center; } 50% { background-size: 200% 200%; background-position: right center; } }
     .animate-gradient-x { animation: gradient-x 10s ease infinite; }
 
-    /* Floating blobs */
-    @keyframes float-slow { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(30px, -20px) scale(1.05); } 66% { transform: translate(-20px, 15px) scale(0.95); } }
-    @keyframes float-slow-reverse { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(-25px, 15px) scale(0.95); } 66% { transform: translate(20px, -25px) scale(1.05); } }
-    .animate-float-slow { animation: float-slow 20s ease-in-out infinite; }
-    .animate-float-slow-reverse { animation: float-slow-reverse 25s ease-in-out infinite; }
-
-    /* Pulse glow */
-    @keyframes pulse-glow { 0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); } 50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); } }
-    .animate-pulse-glow { animation: pulse-glow 8s ease-in-out infinite; }
-
-    /* Width pulse for accent line */
-    @keyframes width-pulse { 0%, 100% { width: 4rem; } 50% { width: 6rem; } }
-    .animate-width-pulse { animation: width-pulse 3s ease-in-out infinite; }
-
     /* Scroll reveal animations */
     .scroll-reveal {
         opacity: 0;

@@ -2,145 +2,137 @@
 // src/components/Hero.astro
 ---
 
-<div id="hero-bg" class="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-[#d5d0c8] dark:bg-[#030014] transition-colors duration-700">
-    <div id="parallax-layer-1" class="absolute inset-0 w-full h-full">
+<section id="hero-section" class="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#d5d0c8] dark:bg-[#030014] transition-colors duration-700">
+    <!-- Background Layer (Local to Hero section only, 0% background overhead) -->
+    <div id="hero-bg" class="absolute inset-0 pointer-events-none">
         <canvas id="particles-canvas" class="absolute inset-0 w-full h-full"></canvas>
-    </div>
-    
-    <div id="parallax-layer-2"
-        class="absolute inset-0 opacity-[0.3] dark:opacity-[0.8] transition-opacity duration-700" 
-        style="background: 
-            linear-gradient(135deg, var(--pcb-line) 2px, transparent 2px),
-            linear-gradient(225deg, var(--pcb-line) 2px, transparent 2px),
-            radial-gradient(var(--pcb-pad) 4px, transparent 4px);
-            background-size: 60px 60px, 60px 60px, 60px 60px;
-            background-position: 0 0, 30px 0, 30px 30px;
-            background-color: var(--pcb-bg);"
-    ></div>
-    
-    <div class="absolute inset-0 bg-gradient-to-b from-[#d5d0c8]/40 via-[#d5d0c8]/80 to-[#d5d0c8] dark:from-transparent dark:via-[#030014]/60 dark:to-[#030014] transition-colors duration-700"></div>
-    
-    <div id="parallax-layer-3" class="absolute inset-0 w-full h-full">
-        <div class="absolute top-0 right-[-10%] -mt-40 w-[500px] h-[500px] rounded-full bg-fuchsia-500/15 dark:bg-fuchsia-600/15 blur-[120px] pointer-events-none animate-float-slow"></div>
-        <div class="absolute bottom-0 left-[-10%] -mb-40 w-[500px] h-[500px] rounded-full bg-cyan-500/15 dark:bg-cyan-600/15 blur-[120px] pointer-events-none animate-float-slow-reverse"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-indigo-500/5 dark:bg-indigo-600/10 blur-[150px] pointer-events-none animate-pulse-glow"></div>
-    </div>
-</div>
-
-<style>
-    /* Keycap Entrance Animations */
-    @keyframes keycap-enter-left {
-        from { opacity: 0; transform: translateX(-40px) scale(0.8) rotate(-10deg); }
-        to { opacity: 1; transform: translateX(0) scale(1) rotate(0); }
-    }
-    @keyframes keycap-enter-right {
-        from { opacity: 0; transform: translateX(40px) scale(0.8) rotate(10deg); }
-        to { opacity: 1; transform: translateX(0) scale(1) rotate(0); }
-    }
-    @keyframes keycap-enter-top {
-        from { opacity: 0; transform: translateY(-40px) scale(0.8) rotate(-5deg); }
-        to { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
-    }
-    @keyframes keycap-enter-bottom {
-        from { opacity: 0; transform: translateY(40px) scale(0.8) rotate(5deg); }
-        to { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
-    }
-
-    .keycap {
-        opacity: 0;
-        will-change: transform, opacity;
-    }
-
-    .keycap.animate-in[data-enter-from="left"] { animation: keycap-enter-left 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    .keycap.animate-in[data-enter-from="right"] { animation: keycap-enter-right 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    .keycap.animate-in[data-enter-from="top"] { animation: keycap-enter-top 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    .keycap.animate-in[data-enter-from="bottom"] { animation: keycap-enter-bottom 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-
-    /* Performance optimization: hardware acceleration */
-    #hero-bg, #keycaps-container {
-        transform: translateZ(0);
-        backface-visibility: hidden;
-    }
-</style>
-<div id="keycaps-container" class="fixed inset-0 pointer-events-none z-[2] overflow-hidden hidden lg:block">
-    <svg class="keycap absolute left-[4%] top-[12%] w-20 h-20 text-indigo-500/[0.08] dark:text-indigo-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="0.8" data-float-range="18" data-enter-from="left" style="--enter-delay: 0.3s;">
-        <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
-        <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
-        <text x="32" y="38" text-anchor="middle" fill="currentColor" font-size="18" font-weight="bold" font-family="monospace">A</text>
-    </svg>
-    <svg class="keycap absolute right-[8%] top-[18%] w-24 h-24 text-fuchsia-500/[0.08] dark:text-fuchsia-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="0.6" data-float-range="22" data-enter-from="top" style="--enter-delay: 0.5s;">
-        <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
-        <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
-        <text x="32" y="38" text-anchor="middle" fill="currentColor" font-size="18" font-weight="bold" font-family="monospace">N</text>
-    </svg>
-    <svg class="keycap absolute left-[12%] top-[45%] w-16 h-16 text-cyan-500/[0.08] dark:text-cyan-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="1.0" data-float-range="15" data-enter-from="left" style="--enter-delay: 0.7s;">
-        <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
-        <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
-        <text x="32" y="38" text-anchor="middle" fill="currentColor" font-size="18" font-weight="bold" font-family="monospace">T</text>
-    </svg>
-    <svg class="keycap absolute right-[15%] top-[55%] w-20 h-20 text-indigo-500/[0.08] dark:text-indigo-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="0.7" data-float-range="20" data-enter-from="right" style="--enter-delay: 0.9s;">
-        <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
-        <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
-        <text x="32" y="38" text-anchor="middle" fill="currentColor" font-size="18" font-weight="bold" font-family="monospace">A</text>
-    </svg>
-    <svg class="keycap absolute left-[8%] bottom-[15%] w-28 h-28 text-fuchsia-500/[0.08] dark:text-fuchsia-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="0.5" data-float-range="25" data-enter-from="bottom" style="--enter-delay: 1.1s;">
-        <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
-        <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
-        <text x="32" y="38" text-anchor="middle" fill="currentColor" font-size="18" font-weight="bold" font-family="monospace">R</text>
-    </svg>
-    <svg class="keycap absolute right-[25%] bottom-[10%] w-16 h-16 text-cyan-500/[0.08] dark:text-cyan-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="0.9" data-float-range="16" data-enter-from="bottom" style="--enter-delay: 1.3s;">
-        <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
-        <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
-        <text x="32" y="38" text-anchor="middle" fill="currentColor" font-size="18" font-weight="bold" font-family="monospace">E</text>
-    </svg>
-    <svg class="keycap absolute right-[5%] bottom-[25%] w-20 h-20 text-indigo-500/[0.08] dark:text-indigo-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="0.65" data-float-range="19" data-enter-from="right" style="--enter-delay: 1.5s;">
-        <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
-        <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
-        <text x="32" y="42" font-family="monospace" font-size="18" font-weight="bold" text-anchor="middle" fill="currentColor">S</text>
-    </svg>
-</div>
-
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center relative z-10 pt-20">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
-        <div class="lg:col-span-8 scroll-reveal relative z-10 group">
-            <div class="flex items-center gap-4 mb-6">
-                <span class="h-px w-16 bg-gradient-to-r from-fuchsia-600 to-cyan-500 animate-width-pulse"></span>
-                <span class="text-xs font-black uppercase tracking-[0.4em] bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-600 to-cyan-500">Engineering & Design</span>
-            </div>
+        <!-- PCB Line Pattern -->
+        <div class="absolute inset-0 opacity-[0.3] dark:opacity-[0.8] transition-opacity duration-700" 
+            style="background: 
+                linear-gradient(135deg, var(--pcb-line) 2px, transparent 2px),
+                linear-gradient(225deg, var(--pcb-line) 2px, transparent 2px),
+                radial-gradient(var(--pcb-pad) 4px, transparent 4px);
+                background-size: 60px 60px, 60px 60px, 60px 60px;
+                background-position: 0 0, 30px 0, 30px 30px;
+                background-color: var(--pcb-bg);"
+        ></div>
+        
+        <div class="absolute inset-0 bg-gradient-to-b from-[#d5d0c8]/40 via-[#d5d0c8]/80 to-[#d5d0c8] dark:from-transparent dark:via-[#030014]/60 dark:to-[#030014] transition-colors duration-700"></div>
+        
+        <!-- Ambient Glow (Static pure radial gradients — ZERO GPU blur cost) -->
+        <div class="absolute inset-0" style="background: radial-gradient(circle at 85% 15%, rgba(217, 70, 239, 0.12), transparent 45%), radial-gradient(circle at 15% 85%, rgba(6, 182, 212, 0.12), transparent 45%), radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.08), transparent 60%);"></div>
+    </div>
+
+    <style>
+        /* Keycap Entrance Animations */
+        @keyframes keycap-enter-left {
+            from { opacity: 0; transform: translateX(-40px) scale(0.8) rotate(-10deg); }
+            to { opacity: 1; transform: translateX(0) scale(1) rotate(0); }
+        }
+        @keyframes keycap-enter-right {
+            from { opacity: 0; transform: translateX(40px) scale(0.8) rotate(10deg); }
+            to { opacity: 1; transform: translateX(0) scale(1) rotate(0); }
+        }
+        @keyframes keycap-enter-top {
+            from { opacity: 0; transform: translateY(-40px) scale(0.8) rotate(-5deg); }
+            to { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+        }
+        @keyframes keycap-enter-bottom {
+            from { opacity: 0; transform: translateY(40px) scale(0.8) rotate(5deg); }
+            to { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+        }
+
+        .keycap {
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        .keycap.animate-in[data-enter-from="left"] { animation: keycap-enter-left 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .keycap.animate-in[data-enter-from="right"] { animation: keycap-enter-right 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .keycap.animate-in[data-enter-from="top"] { animation: keycap-enter-top 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .keycap.animate-in[data-enter-from="bottom"] { animation: keycap-enter-bottom 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    </style>
+
+    <!-- Floating Keycaps (Contained within Hero only) -->
+    <div id="keycaps-container" class="absolute inset-0 pointer-events-none z-[2] overflow-hidden hidden lg:block">
+        <svg class="keycap absolute left-[4%] top-[12%] w-20 h-20 text-indigo-500/[0.08] dark:text-indigo-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="0.8" data-float-range="18" data-enter-from="left" style="--enter-delay: 0.3s;">
+            <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
+            <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
+            <text x="32" y="38" text-anchor="middle" fill="currentColor" font-size="18" font-weight="bold" font-family="monospace">A</text>
+        </svg>
+        <svg class="keycap absolute right-[8%] top-[18%] w-24 h-24 text-fuchsia-500/[0.08] dark:text-fuchsia-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="0.6" data-float-range="22" data-enter-from="top" style="--enter-delay: 0.5s;">
+            <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
+            <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
+            <text x="32" y="38" text-anchor="middle" fill="currentColor" font-size="18" font-weight="bold" font-family="monospace">N</text>
+        </svg>
+        <svg class="keycap absolute left-[12%] top-[45%] w-16 h-16 text-cyan-500/[0.08] dark:text-cyan-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="1.0" data-float-range="15" data-enter-from="left" style="--enter-delay: 0.7s;">
+            <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
+            <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
+            <text x="32" y="38" text-anchor="middle" fill="currentColor" font-size="18" font-weight="bold" font-family="monospace">T</text>
+        </svg>
+        <svg class="keycap absolute right-[15%] top-[55%] w-20 h-20 text-indigo-500/[0.08] dark:text-indigo-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="0.7" data-float-range="20" data-enter-from="right" style="--enter-delay: 0.9s;">
+            <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
+            <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
+            <text x="32" y="38" text-anchor="middle" fill="currentColor" font-size="18" font-weight="bold" font-family="monospace">A</text>
+        </svg>
+        <svg class="keycap absolute left-[8%] bottom-[15%] w-28 h-28 text-fuchsia-500/[0.08] dark:text-fuchsia-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="0.5" data-float-range="25" data-enter-from="bottom" style="--enter-delay: 1.1s;">
+            <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
+            <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
+            <text x="32" y="38" text-anchor="middle" fill="currentColor" font-size="18" font-weight="bold" font-family="monospace">R</text>
+        </svg>
+        <svg class="keycap absolute right-[25%] bottom-[10%] w-16 h-16 text-cyan-500/[0.08] dark:text-cyan-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="0.9" data-float-range="16" data-enter-from="bottom" style="--enter-delay: 1.3s;">
+            <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
+            <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
+            <text x="32" y="38" text-anchor="middle" fill="currentColor" font-size="18" font-weight="bold" font-family="monospace">E</text>
+        </svg>
+        <svg class="keycap absolute right-[5%] bottom-[25%] w-20 h-20 text-indigo-500/[0.08] dark:text-indigo-400/[0.12] opacity-0" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" data-float-speed="0.65" data-float-range="19" data-enter-from="right" style="--enter-delay: 1.5s;">
+            <rect x="6" y="6" width="52" height="52" rx="10" ry="10"/>
+            <rect x="12" y="10" width="40" height="40" rx="6" ry="6"/>
+            <text x="32" y="42" font-family="monospace" font-size="18" font-weight="bold" text-anchor="middle" fill="currentColor">S</text>
+        </svg>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 pt-28 pb-20">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            <h1 id="interactive-title" class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter text-gray-900 dark:text-white leading-[0.9] uppercase break-keep relative">
-                <span class="absolute -inset-8 bg-gradient-to-r from-fuchsia-500/20 via-indigo-500/10 to-cyan-500/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 -z-10 pointer-events-none"></span>
-                Periféricos <br/> 
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-500 dark:from-fuchsia-400 dark:via-indigo-400 dark:to-cyan-400 animate-gradient-x italic filter drop-shadow-[0_0_25px_rgba(168,85,247,0.4)]">Custom.</span>
-            </h1>
-        </div>
-
-        <div class="lg:col-span-4 border-l-2 border-indigo-600/30 pl-8 py-4 scroll-reveal delay-200">
-            <div class="flex items-center gap-2 mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-indigo-500 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                <p class="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-500 dark:text-cyan-400">Maker & Developer</p>
+            <div class="lg:col-span-8 scroll-reveal relative z-10 group">
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="h-px w-16 bg-gradient-to-r from-fuchsia-600 to-cyan-500 opacity-80"></span>
+                    <span class="text-xs font-black uppercase tracking-[0.4em] bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-600 to-cyan-500">Engineering & Design</span>
+                </div>
+                
+                <h1 id="interactive-title" class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter text-gray-900 dark:text-white leading-[0.9] uppercase break-keep relative">
+                    Periféricos <br/> 
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-500 dark:from-fuchsia-400 dark:via-indigo-400 dark:to-cyan-400 italic">Custom.</span>
+                </h1>
             </div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-1 flex items-center gap-3">Antares Cabrera. <span class="inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-widest text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10 px-2.5 py-1 rounded-full border border-green-200/50 dark:border-green-500/20"><span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>Activo</span></h2>
-            <p class="text-gray-600 dark:text-gray-300 font-light leading-relaxed mb-6">
-                Estudiante de Ingeniería en Informática, apasionado por el hardware y el código. <br/>
-                Cada pieza es <span class="italic font-medium text-gray-900 dark:text-white relative"><span class="relative z-10">desarrollada y ensamblada a mano</span><span class="absolute bottom-0 left-0 w-full h-2 bg-fuchsia-500/30 -z-10 rounded-sm"></span></span> por mí para garantizar la máxima calidad.
-            </p>
+
+            <div class="lg:col-span-4 border-l-2 border-indigo-600/30 pl-8 py-4 scroll-reveal delay-200">
+                <div class="flex items-center gap-2 mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-indigo-500 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-500 dark:text-cyan-400">Maker & Developer</p>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-1 flex items-center gap-3">Antares Cabrera. <span class="inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-widest text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-500/10 px-2.5 py-1 rounded-full border border-green-200/50 dark:border-green-500/20"><span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>Activo</span></h2>
+                <p class="text-gray-600 dark:text-gray-300 font-light leading-relaxed mb-6">
+                    Estudiante de Ingeniería en Informática, apasionado por el hardware y el código. <br/>
+                    Cada pieza es <span class="italic font-medium text-gray-900 dark:text-white relative"><span class="relative z-10">desarrollada y ensamblada a mano</span><span class="absolute bottom-0 left-0 w-full h-2 bg-fuchsia-500/30 -z-10 rounded-sm"></span></span> por mí para garantizar la máxima calidad.
+                </p>
+            </div>
+        </div>
+
+        <div id="reveal-text" class="mt-28 max-w-4xl scroll-reveal border-y border-gray-200 dark:border-gray-800 py-12">
+            <blockquote id="quote-dissolve" class="text-xl md:text-3xl font-light text-gray-500 dark:text-gray-400 leading-relaxed">
+                "Todo lo que ves acá nace de la curiosidad y necesidad. No solo diseño estos periféricos, sino que <span class="text-gray-900 dark:text-white font-medium italic">son los mismos que uso en mi día a día</span> para trabajar, estudiar y jugar."
+            </blockquote>
         </div>
     </div>
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-30 animate-pulse">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-400 dark:text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-    </div>
-
-    <div id="reveal-text" class="mt-32 max-w-4xl scroll-reveal border-y border-gray-200 dark:border-gray-800 py-12">
-        <blockquote id="quote-dissolve" class="text-xl md:text-3xl font-light text-gray-500 dark:text-gray-400 leading-relaxed">
-            "Todo lo que ves acá nace de la curiosidad y necesidad. No solo diseño estos periféricos, sino que <span class="text-gray-900 dark:text-white font-medium italic">son los mismos que uso en mi día a día</span> para trabajar, estudiar y jugar."
-        </blockquote>
-    </div>
+</section>
 
 <script>
     // --- Intersection Observer to pause animations when Hero is off-screen ---
-    const heroBg = document.getElementById('hero-bg');
+    const heroSection = document.getElementById('hero-section');
     let isHeroVisible = true;
 
     // --- Lightweight Floating Particles Canvas ---
@@ -155,7 +147,7 @@
     let drawParticlesFn: (() => void) | null = null;
     let animateKeycapsFn: ((now: number) => void) | null = null;
 
-    if (heroBg && 'IntersectionObserver' in window) {
+    if (heroSection && 'IntersectionObserver' in window) {
         const observer = new IntersectionObserver((entries) => {
             isHeroVisible = entries[0].isIntersecting;
             if (isHeroVisible) {
@@ -165,9 +157,19 @@
                 if (keycaps.length > 0 && !keycapsRaf && animateKeycapsFn) {
                     keycapsRaf = requestAnimationFrame(animateKeycapsFn);
                 }
+            } else {
+                // Cancel running frames when out of view
+                if (particlesRaf) {
+                    cancelAnimationFrame(particlesRaf);
+                    particlesRaf = 0;
+                }
+                if (keycapsRaf) {
+                    cancelAnimationFrame(keycapsRaf);
+                    keycapsRaf = 0;
+                }
             }
-        }, { threshold: 0 });
-        observer.observe(heroBg);
+        }, { threshold: 0.05 });
+        observer.observe(heroSection);
     }
 
     if (canvas) {
@@ -182,12 +184,12 @@
                 opacity: number;
                 color: string;
             }> = [];
-            const PARTICLE_COUNT = 20;
+            const PARTICLE_COUNT = 18;
 
             function resizeCanvas() {
                 if (!canvas) return;
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+                canvas.width = canvas.parentElement ? canvas.parentElement.offsetWidth : window.innerWidth;
+                canvas.height = canvas.parentElement ? canvas.parentElement.offsetHeight : window.innerHeight;
             }
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas, { passive: true });
@@ -302,4 +304,3 @@
         }, 1200);
     }
 </script>
-
