@@ -6,6 +6,7 @@ gallery: ["/images/macropad.jpg", "/images/macropad-color1.jpg", "/images/macrop
 featured: true
 customizable: true
 tags: ["QMK/VIA", "Mechanical", "Personalizable","Wired"]
+category: "Productividad"
 firmwareUrl: "/files/macropad-12-1.json"
 mercadolibreUrl: ""
 price: 50000

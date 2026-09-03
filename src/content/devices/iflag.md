@@ -6,6 +6,7 @@ gallery: ["/images/iflag.jpg", "/images/iflag-2.jpg", "/images/iflag-3.jpg", "/i
 featured: true
 customizable: true
 tags: ["SimRacing", "SimHub", "Indicador LED", "Multi-Módulo", "USB-C"]
+category: "SimRacing"
 mercadolibreUrl: "https://www.mercadolibre.com.ar/iflag-simracing-simulador-simhub-indicador-bandera-y-marchas/up/MLAU5009520538?pdp_filters=item_id:MLA3881349330"
 firmwareUrl: ""
 price: 60000

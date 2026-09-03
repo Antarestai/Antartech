@@ -9,6 +9,7 @@ const devicesCollection = defineCollection({
     image: z.string().optional(),
     gallery: z.array(z.string()).optional(),
     tags: z.array(z.string()),
+    category: z.string().optional(),
     price: z.number().optional(),
     firmwareUrl: z.string().optional(),
     mercadolibreUrl: z.string().optional(),

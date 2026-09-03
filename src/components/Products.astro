@@ -15,14 +15,59 @@ const formatter = new Intl.NumberFormat('es-AR', {
     <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center mb-16 px-4 scroll-reveal">
-            <h2 class="text-3xl font-black text-gray-900 dark:text-white mr-8 uppercase tracking-tighter">Productos / Proyectos</h2>
-            <div class="h-px bg-gradient-to-r from-indigo-500/50 to-transparent flex-grow"></div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12 px-4 scroll-reveal">
+            <div class="flex items-center">
+                <h2 class="text-3xl font-black text-gray-900 dark:text-white mr-6 uppercase tracking-tighter">Productos / Proyectos</h2>
+                <div class="h-px bg-gradient-to-r from-indigo-500/50 to-transparent w-24 hidden lg:block"></div>
+            </div>
+
+            <!-- Filtros de Categoría -->
+            <div class="flex flex-wrap items-center gap-2" id="category-filters">
+                <button 
+                    type="button" 
+                    data-filter="all" 
+                    class="category-filter-btn px-5 py-2.5 rounded-2xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-gray-900 text-white dark:bg-white dark:text-gray-900 shadow-md shadow-indigo-500/10 cursor-pointer"
+                >
+                    Todos
+                </button>
+                <button 
+                    type="button" 
+                    data-filter="simracing" 
+                    class="category-filter-btn px-5 py-2.5 rounded-2xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-gray-100 dark:bg-white/[0.04] text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border border-gray-200/80 dark:border-white/[0.08] cursor-pointer"
+                >
+                    🏎️ SimRacing
+                </button>
+                <button 
+                    type="button" 
+                    data-filter="logitech" 
+                    class="category-filter-btn px-5 py-2.5 rounded-2xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-gray-100 dark:bg-white/[0.04] text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border border-gray-200/80 dark:border-white/[0.08] cursor-pointer"
+                >
+                    🎮 Accesorios Logitech
+                </button>
+                <button 
+                    type="button" 
+                    data-filter="productividad" 
+                    class="category-filter-btn px-5 py-2.5 rounded-2xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-gray-100 dark:bg-white/[0.04] text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border border-gray-200/80 dark:border-white/[0.08] cursor-pointer"
+                >
+                    ⌨️ Productividad & Control
+                </button>
+            </div>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-4">
-            {featuredDevices.map((device: any, index: number) => (
-                <div class={`product-card group relative bg-white dark:bg-[#0e0c1e] border border-gray-200/80 dark:border-white/[0.08] rounded-[2.5rem] overflow-hidden shadow-lg dark:shadow-indigo-950/50 md:shadow-xl md:shadow-indigo-500/5 md:dark:shadow-2xl transition-colors duration-300 md:transition-all md:duration-700 md:hover:-translate-y-4 md:hover:shadow-2xl md:hover:shadow-indigo-500/25 md:hover:border-indigo-400/60 md:dark:hover:border-indigo-400/30 flex flex-col scroll-reveal`} style={`transition-delay: ${index * 75}ms`}>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-4" id="products-grid">
+            {featuredDevices.map((device: any, index: number) => {
+                const deviceCats = [
+                    device.data.category?.toLowerCase() || '',
+                    ...(device.data.tags || []).map((t: string) => t.toLowerCase()),
+                    device.id.toLowerCase()
+                ].join(' ');
+
+                return (
+                <div 
+                    class={`product-card group relative bg-white dark:bg-[#0e0c1e] border border-gray-200/80 dark:border-white/[0.08] rounded-[2.5rem] overflow-hidden shadow-lg dark:shadow-indigo-950/50 md:shadow-xl md:shadow-indigo-500/5 md:dark:shadow-2xl transition-colors duration-300 md:transition-all md:duration-700 md:hover:-translate-y-4 md:hover:shadow-2xl md:hover:shadow-indigo-500/25 md:hover:border-indigo-400/60 md:dark:hover:border-indigo-400/30 flex flex-col scroll-reveal`} 
+                    style={`transition-delay: ${index * 75}ms`}
+                    data-category={deviceCats}
+                >
                     <div class="hidden md:block absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/10 to-transparent transition-transform duration-[1.5s] ease-in-out pointer-events-none z-20"></div>
 
                     <div class="h-80 overflow-hidden relative z-10 bg-gray-100 dark:bg-gray-900/50">
@@ -57,6 +102,12 @@ const formatter = new Intl.NumberFormat('es-AR', {
 
                     <div class="p-10 flex flex-col flex-grow relative z-10">
                         <div class="flex flex-wrap gap-2 mb-4">
+                            {device.data.category && (
+                                <span class="text-[9px] font-black uppercase tracking-widest text-cyan-700 dark:text-cyan-300 bg-cyan-100/90 dark:bg-cyan-950/80 px-3 py-1.5 rounded-md border border-cyan-300 dark:border-cyan-700/60 shadow-sm flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
+                                    {device.data.category}
+                                </span>
+                            )}
                             {device.data.tags && device.data.tags.map((tag: string) => (
                                 <span class="text-[9px] font-black uppercase tracking-widest text-indigo-600 dark:text-cyan-400 bg-indigo-100/80 dark:bg-cyan-950/60 px-3 py-1.5 rounded-md border border-indigo-200 dark:border-cyan-800/50 shadow-sm">{tag}</span>
                             ))}
@@ -92,10 +143,15 @@ const formatter = new Intl.NumberFormat('es-AR', {
                         </div>
                     </div>
                 </div>
-            ))}
+                );
+            })}
 
             {/* Tarjeta de Próximamente / General Teaser */}
-            <div class={`product-card group relative bg-indigo-50/50 dark:bg-[#0e0c1e] md:bg-gradient-to-br md:from-indigo-500/5 md:to-fuchsia-500/5 md:dark:from-indigo-500/10 md:dark:to-fuchsia-500/10 border-2 border-dashed border-indigo-200 dark:border-white/10 rounded-[2.5rem] overflow-hidden transition-colors duration-300 md:transition-all md:duration-700 md:hover:-translate-y-4 md:hover:border-indigo-400/50 flex flex-col scroll-reveal`} style={`transition-delay: ${featuredDevices.length * 75}ms`}>
+            <div 
+                class={`product-card group relative bg-indigo-50/50 dark:bg-[#0e0c1e] md:bg-gradient-to-br md:from-indigo-500/5 md:to-fuchsia-500/5 md:dark:from-indigo-500/10 md:dark:to-fuchsia-500/10 border-2 border-dashed border-indigo-200 dark:border-white/10 rounded-[2.5rem] overflow-hidden transition-colors duration-300 md:transition-all md:duration-700 md:hover:-translate-y-4 md:hover:border-indigo-400/50 flex flex-col scroll-reveal`} 
+                style={`transition-delay: ${featuredDevices.length * 75}ms`}
+                data-category="all productividad setup"
+            >
                 <div class="h-80 flex items-center justify-center bg-gray-50/50 dark:bg-white/[0.02] relative overflow-hidden group">
                     <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-fuchsia-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
                     <div class="relative z-10 text-center space-y-4">
@@ -126,6 +182,33 @@ const formatter = new Intl.NumberFormat('es-AR', {
     import { cartStore } from '../scripts/cartStore.js';
 
     document.addEventListener('DOMContentLoaded', () => {
+        // Lógica de Filtrado por Categoría
+        const filterButtons = document.querySelectorAll('.category-filter-btn');
+        const productCards = document.querySelectorAll('.product-card');
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.getAttribute('data-filter') || 'all';
+
+                filterButtons.forEach(b => {
+                    b.classList.remove('active', 'bg-gray-900', 'text-white', 'dark:bg-white', 'dark:text-gray-900', 'shadow-md');
+                    b.classList.add('bg-gray-100', 'dark:bg-white/[0.04]', 'text-gray-600', 'dark:text-gray-400', 'border', 'border-gray-200/80', 'dark:border-white/[0.08]');
+                });
+
+                btn.classList.add('active', 'bg-gray-900', 'text-white', 'dark:bg-white', 'dark:text-gray-900', 'shadow-md');
+                btn.classList.remove('bg-gray-100', 'dark:bg-white/[0.04]', 'text-gray-600', 'dark:text-gray-400', 'border', 'border-gray-200/80', 'dark:border-white/[0.08]');
+
+                productCards.forEach((card: any) => {
+                    const cats = (card.dataset.category || '').toLowerCase();
+                    if (filter === 'all' || cats.includes(filter)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
         // Lógica para Añadir al Carrito
         const addButtons = document.querySelectorAll('.add-to-cart-btn');
         

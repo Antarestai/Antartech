@@ -21,6 +21,10 @@
       "answer": "🏁 **iFlag LED Simracing** — Indicador LED de banderas y marchas compatible con SimHub. Permite conectar uno o más módulos simultáneos con configuraciones independientes (ej: uno para banderas y otro para marchas). Incluye soporte articulado y cable USB-C.\n\n→ Más info: /devices/iflag"
     },
     {
+      "keywords": ["adaptador", "pedalera", "pedales", "logitech", "g29", "g920", "g923", "g27", "g25", "12bit", "12 bits", "rp2040"],
+      "answer": "🏎️ **Adaptador USB 12-Bit para Pedalera Logitech** — Interfaz USB autónoma con microcontrolador RP2040 (1000 Hz, 4096 pasos). Permite conectar pedaleras Logitech G25, G27, G29, G920 y G923 directo a la PC por USB sin necesidad del volante. Auto-calibración en EEPROM y cable USB-C incluido.\n\n→ Más info: /devices/logitech-pedal-adapter"
+    },
+    {
       "keywords": ["switch", "power", "boton", "botón", "encendido", "pc"],
       "answer": "⚡ **Switch PC** — Botón de encendido externo para PC. Plug & Play, sin configuración.\n\n→ Más info: /devices/pc-power-button"
     },
@@ -54,7 +58,7 @@
     },
     {
       "keywords": ["producto", "productos", "catalogo", "catálogo", "tienda", "store", "comprar"],
-      "answer": "🛒 Nuestros productos actuales:\n\n• **AntaKnob** — Controlador multimedia\n• **iFlag LED** — Indicador de banderas y marchas SimRacing\n• **Handbrake** — Freno de mano USB\n• **Switch PC** — Botón de encendido\n• **Macropad 12+1** — Próximamente\n\n→ Mirá todo en: /#store"
+      "answer": "🛒 Nuestros productos actuales:\n\n• **AntaKnob** — Controlador multimedia\n• **iFlag LED** — Indicador de banderas y marchas SimRacing\n• **Adaptador Pedalera Logitech** — Interfaz USB 12-Bit (4096 pasos)\n• **Handbrake** — Freno de mano USB\n• **Switch PC** — Botón de encendido\n• **Macropad 12+1** — Próximamente\n\n→ Mirá todo en: /#store"
     },
     {
       "keywords": ["qmk", "firmware", "flash", "flashear"],
