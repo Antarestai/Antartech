@@ -4,12 +4,13 @@ description: "Interfaz USB de 12 bits (4096 pasos) y 1000 Hz para conectar y usa
 image: "/images/logitech-pedal-adapter.jpg"
 gallery: ["/images/logitech-pedal-adapter.jpg"]
 featured: true
+isAccessory: true
 customizable: true
 category: "Accesorios Logitech"
 tags: ["Logitech", "SimRacing", "12-Bit (4096 Pasos)", "RP2040", "USB-C"]
-mercadolibreUrl: ""
+mercadolibreUrl: "https://www.mercadolibre.com.ar/interfaz-adaptador-usb-pedalera-12bit-logitech-g29-g920-g923/up/MLAU5074340123?pdp_filters=item_id:MLA2061052485"
 firmwareUrl: ""
-price: 45000
+price: 50000
 stock: "En Stock"
 instructionSteps:
   - text: "Conectá la ficha DB9 original de tu pedalera Logitech (G25, G27, G29, G920 o G923) al puerto hembra del adaptador Antartech."

@@ -64,9 +64,10 @@ const formatter = new Intl.NumberFormat('es-AR', {
 
                 return (
                 <div 
-                    class={`product-card group relative bg-white dark:bg-[#0e0c1e] border border-gray-200/80 dark:border-white/[0.08] rounded-[2.5rem] overflow-hidden shadow-lg dark:shadow-indigo-950/50 md:shadow-xl md:shadow-indigo-500/5 md:dark:shadow-2xl transition-colors duration-300 md:transition-all md:duration-700 md:hover:-translate-y-4 md:hover:shadow-2xl md:hover:shadow-indigo-500/25 md:hover:border-indigo-400/60 md:dark:hover:border-indigo-400/30 flex flex-col scroll-reveal`} 
+                    class={`product-card group relative bg-white dark:bg-[#0e0c1e] border border-gray-200/80 dark:border-white/[0.08] rounded-[2.5rem] overflow-hidden shadow-lg dark:shadow-indigo-950/50 md:shadow-xl md:shadow-indigo-500/5 md:dark:shadow-2xl transition-colors duration-300 md:transition-all md:duration-700 md:hover:-translate-y-4 md:hover:shadow-2xl md:hover:shadow-indigo-500/25 md:hover:border-indigo-400/60 md:dark:hover:border-indigo-400/30 flex flex-col scroll-reveal ${device.data.isAccessory ? 'is-accessory hidden' : ''}`} 
                     style={`transition-delay: ${index * 75}ms`}
                     data-category={deviceCats}
+                    data-is-accessory={device.data.isAccessory ? "true" : "false"}
                 >
                     <div class="hidden md:block absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/40 dark:via-white/10 to-transparent transition-transform duration-[1.5s] ease-in-out pointer-events-none z-20"></div>
 
@@ -146,6 +147,61 @@ const formatter = new Intl.NumberFormat('es-AR', {
                 );
             })}
 
+            <!-- Tarjeta Ecosistema / Accesorios Logitech G -->
+            <div 
+                id="logitech-hub-card"
+                class="product-card group relative bg-white dark:bg-[#0e0c1e] border-2 border-cyan-500/40 hover:border-cyan-400 dark:border-cyan-500/30 dark:hover:border-cyan-400 rounded-[2.5rem] overflow-hidden shadow-lg shadow-cyan-500/10 dark:shadow-cyan-950/40 transition-all duration-700 hover:-translate-y-4 hover:shadow-2xl hover:shadow-cyan-500/20 flex flex-col scroll-reveal cursor-pointer"
+                data-category="all simracing"
+            >
+                <div class="h-80 relative overflow-hidden bg-gradient-to-b from-cyan-950/30 via-slate-900 to-slate-950 flex items-center justify-center p-8">
+                    <div class="absolute inset-0 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:16px_16px] opacity-25"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-white dark:from-[#0e0c1e] via-transparent to-transparent"></div>
+
+                    <!-- Hub Emblem -->
+                    <div class="relative z-10 flex flex-col items-center text-center space-y-3">
+                        <div class="w-24 h-24 rounded-3xl bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center shadow-xl shadow-cyan-500/20 group-hover:scale-110 group-hover:border-cyan-300 transition-transform duration-500">
+                            <span class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-cyan-300 via-blue-400 to-indigo-400 font-mono tracking-tighter">G</span>
+                        </div>
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-400/30 text-[10px] font-black uppercase tracking-widest text-cyan-300">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                            Ecosistema Logitech G
+                        </div>
+                    </div>
+
+                    <!-- Badge compatible models -->
+                    <div class="absolute top-4 right-4 z-20">
+                        <span class="px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-cyan-500/10 text-cyan-300 border border-cyan-400/30">
+                            G29 · G920 · G923
+                        </span>
+                    </div>
+                </div>
+
+                <div class="p-10 flex flex-col flex-grow relative z-10">
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-[9px] font-black uppercase tracking-widest text-cyan-700 dark:text-cyan-300 bg-cyan-100/90 dark:bg-cyan-950/80 px-3 py-1.5 rounded-md border border-cyan-300 dark:border-cyan-700/60 shadow-sm">
+                            Accesorios & Mods
+                        </span>
+                        <span class="text-[9px] font-black uppercase tracking-widest text-indigo-600 dark:text-cyan-400 bg-indigo-100/80 dark:bg-cyan-950/60 px-3 py-1.5 rounded-md border border-indigo-200 dark:border-cyan-800/50 shadow-sm">
+                            SimRacing
+                        </span>
+                    </div>
+
+                    <h3 class="text-3xl font-black text-gray-900 dark:text-white mb-3 uppercase tracking-tighter leading-tight font-sans group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors duration-500">
+                        Accesorios para Logitech
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-base mb-8 leading-relaxed font-light">
+                        Interfaces independientes de 12 bits, adaptadores USB y mods de alto rendimiento diseñados específicamente para volantes y pedaleras Logitech.
+                    </p>
+
+                    <div class="mt-auto pt-5 border-t border-gray-100 dark:border-white/5 flex items-center justify-between">
+                        <span class="text-xs font-black uppercase tracking-wider text-cyan-600 dark:text-cyan-400">Ver accesorios compatibles</span>
+                        <div class="w-11 h-11 rounded-2xl bg-cyan-500/10 group-hover:bg-cyan-500 text-cyan-600 dark:text-cyan-400 group-hover:text-white dark:group-hover:text-gray-900 flex items-center justify-center transition-all duration-300 transform group-hover:translate-x-1 shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {/* Tarjeta de Próximamente / General Teaser */}
             <div 
                 class={`product-card group relative bg-indigo-50/50 dark:bg-[#0e0c1e] md:bg-gradient-to-br md:from-indigo-500/5 md:to-fuchsia-500/5 md:dark:from-indigo-500/10 md:dark:to-fuchsia-500/10 border-2 border-dashed border-indigo-200 dark:border-white/10 rounded-[2.5rem] overflow-hidden transition-colors duration-300 md:transition-all md:duration-700 md:hover:-translate-y-4 md:hover:border-indigo-400/50 flex flex-col scroll-reveal`} 
@@ -185,29 +241,76 @@ const formatter = new Intl.NumberFormat('es-AR', {
         // Lógica de Filtrado por Categoría
         const filterButtons = document.querySelectorAll('.category-filter-btn');
         const productCards = document.querySelectorAll('.product-card');
+        const logitechHubCard = document.getElementById('logitech-hub-card');
 
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const filter = btn.getAttribute('data-filter') || 'all';
-
-                filterButtons.forEach(b => {
+        function setCategoryFilter(filter: string) {
+            filterButtons.forEach(b => {
+                const btnFilter = b.getAttribute('data-filter');
+                if (btnFilter === filter) {
+                    b.classList.add('active', 'bg-gray-900', 'text-white', 'dark:bg-white', 'dark:text-gray-900', 'shadow-md');
+                    b.classList.remove('bg-gray-100', 'dark:bg-white/[0.04]', 'text-gray-600', 'dark:text-gray-400', 'border', 'border-gray-200/80', 'dark:border-white/[0.08]');
+                } else {
                     b.classList.remove('active', 'bg-gray-900', 'text-white', 'dark:bg-white', 'dark:text-gray-900', 'shadow-md');
                     b.classList.add('bg-gray-100', 'dark:bg-white/[0.04]', 'text-gray-600', 'dark:text-gray-400', 'border', 'border-gray-200/80', 'dark:border-white/[0.08]');
-                });
+                }
+            });
 
-                btn.classList.add('active', 'bg-gray-900', 'text-white', 'dark:bg-white', 'dark:text-gray-900', 'shadow-md');
-                btn.classList.remove('bg-gray-100', 'dark:bg-white/[0.04]', 'text-gray-600', 'dark:text-gray-400', 'border', 'border-gray-200/80', 'dark:border-white/[0.08]');
-
-                productCards.forEach((card: any) => {
-                    const cats = (card.dataset.category || '').toLowerCase();
-                    if (filter === 'all' || cats.includes(filter)) {
+            productCards.forEach((card: any) => {
+                if (card.id === 'logitech-hub-card') {
+                    // La tarjeta de colección Logitech se muestra en "Todos" o "SimRacing", y se oculta cuando se entra a "Accesorios Logitech" o "Productividad"
+                    if (filter === 'all' || filter === 'simracing') {
                         card.style.display = 'flex';
                     } else {
                         card.style.display = 'none';
                     }
-                });
+                    return;
+                }
+
+                const isAccessory = card.dataset.isAccessory === 'true';
+                const cats = (card.dataset.category || '').toLowerCase();
+
+                if (filter === 'all') {
+                    // En "Todos", los accesorios individuales están agrupados bajo la tarjeta Hub
+                    if (isAccessory) {
+                        card.style.display = 'none';
+                    } else {
+                        card.style.display = 'flex';
+                    }
+                } else if (filter === 'logitech') {
+                    // Al seleccionar Logitech, se revelan los accesorios para Logitech
+                    if (cats.includes('logitech')) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                } else {
+                    // Filtro por otra categoría (simracing, productividad)
+                    if (cats.includes(filter)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.getAttribute('data-filter') || 'all';
+                setCategoryFilter(filter);
             });
         });
+
+        // Click en la tarjeta Hub activa el filtro de accesorios Logitech
+        if (logitechHubCard) {
+            logitechHubCard.addEventListener('click', () => {
+                setCategoryFilter('logitech');
+                const storeEl = document.getElementById('store');
+                if (storeEl) {
+                    storeEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
 
         // Lógica para Añadir al Carrito
         const addButtons = document.querySelectorAll('.add-to-cart-btn');
