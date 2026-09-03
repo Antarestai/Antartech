@@ -17,6 +17,10 @@
       "answer": "🏎️ **Handbrake** — Freno de mano USB analógico para simracing. Plug & Play, sin configuración necesaria.\n\n→ Más info: /devices/handbrake"
     },
     {
+      "keywords": ["iflag", "flag", "bandera", "banderas", "marcha", "marchas", "simhub", "led"],
+      "answer": "🏁 **iFlag LED Simracing** — Indicador LED de banderas y marchas para simuladores, compatible con SimHub. Ángulo ajustable y soporte incluido.\n\n→ Más info: /devices/iflag"
+    },
+    {
       "keywords": ["switch", "power", "boton", "botón", "encendido", "pc"],
       "answer": "⚡ **Switch PC** — Botón de encendido externo para PC. Plug & Play, sin configuración.\n\n→ Más info: /devices/pc-power-button"
     },
@@ -50,7 +54,7 @@
     },
     {
       "keywords": ["producto", "productos", "catalogo", "catálogo", "tienda", "store", "comprar"],
-      "answer": "🛒 Nuestros productos actuales:\n\n• **AntaKnob** — Controlador multimedia\n• **Handbrake** — Freno de mano USB\n• **Switch PC** — Botón de encendido\n• **Macropad 12+1** — Próximamente\n\n→ Mirá todo en: /#store"
+      "answer": "🛒 Nuestros productos actuales:\n\n• **AntaKnob** — Controlador multimedia\n• **iFlag LED** — Indicador de banderas y marchas SimRacing\n• **Handbrake** — Freno de mano USB\n• **Switch PC** — Botón de encendido\n• **Macropad 12+1** — Próximamente\n\n→ Mirá todo en: /#store"
     },
     {
       "keywords": ["qmk", "firmware", "flash", "flashear"],
