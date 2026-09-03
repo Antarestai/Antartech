@@ -1,32 +1,35 @@
 ---
 title: "iFlag LED Simracing"
-description: "Indicador LED de banderas y marchas para simulador de carreras (SimRacing), 100% compatible con SimHub. Ángulo y posición ajustables con soporte incluido."
+description: "Indicador LED de banderas, marchas y telemetría para simuladores de conducción. Compatible con SimHub, soporte multi-módulo y ángulo ajustable."
 image: "/images/iflag.jpg"
 gallery: ["/images/iflag.jpg", "/images/iflag-2.jpg", "/images/iflag-3.jpg", "/images/iflag-4.jpg", "/images/iflag-5.jpg"]
 featured: true
 customizable: true
-tags: ["SimRacing", "SimHub", "Indicador LED", "USB-C", "Plug & Play"]
+tags: ["SimRacing", "SimHub", "Indicador LED", "Multi-Módulo", "USB-C"]
 mercadolibreUrl: "https://www.mercadolibre.com.ar/iflag-simracing-simulador-simhub-indicador-bandera-y-marchas/up/MLAU5009520538?pdp_filters=item_id:MLA3881349330"
 firmwareUrl: ""
 price: 60000
 stock: "En Stock"
 instructionSteps:
-  - text: "Conectá el iFlag a un puerto USB de tu PC mediante el cable USB Tipo C de 2 metros incluido."
-  - text: "Descargá e iniciá SimHub (simhubdash.com) si todavía no lo tenés instalado en tu computadora."
-  - text: "En SimHub, ingresá al apartado 'Arduino' / 'RGB Matrix' y vinculá el dispositivo para habilitar la telemetría en tiempo real."
-  - text: "Personalizá las señales que querés visualizar: banderas de pista (amarilla, verde, azul, roja), marcha engranada, limitador de boxes (pit limiter) y advertencias de spotter."
-  - text: "Instalá el soporte articulado en tu volante o cockpit, ajustá el ángulo e inclinación a tu altura de visión ¡y salí a pista!"
+  - text: "Conectá el iFlag a un puerto USB de tu PC utilizando el cable USB Tipo C de 2 metros incluido."
+  - text: "Iniciá SimHub (simhubdash.com) en tu computadora."
+  - text: "En SimHub, ingresá a la sección 'Arduino' / 'RGB Matrix' y vinculá el dispositivo para habilitar la telemetría en tiempo real."
+  - text: "Configurá las señales deseadas: banderas de pista (amarilla, azul, verde, roja, cuadros), marcha actual, limitador de boxes (pit limiter) y alertas de spotter."
+  - text: "Instalá el soporte articulado en tu volante o cockpit y ajustá el ángulo e inclinación según tu posición de manejo."
+  - text: "Configuración Multi-Módulo: Si utilizás dos o más unidades, conectalas a puertos USB independientes y asigná funciones específicas a cada pantalla desde SimHub."
 ---
 
-### Telemetría y Banderas en Tiempo Real para tu Simulador
+### Telemetría y Banderas en Tiempo Real para Simulación de Competición
 
-El **IFLAG LED de Antartech** está pensado para quienes buscan una lectura rápida y precisa en simulación de manejo. Su indicador de banderas y marchas ayuda a mantener la máxima concentración en pista, con una matriz de lectura clara y un diseño negro sobrio que aporta realismo y orden visual a cualquier cockpit.
+El **iFlag LED** de Antartech está diseñado para pilotos virtuales que requieren información visual inmediata y precisa en pista sin desviar la vista del trazado. Ofrece una lectura de alto contraste para banderas, marchas y alertas críticas del vehículo en un chasis compacto y sobrio.
 
-Compatible con los principales simuladores del mercado: **iRacing, Assetto Corsa, Assetto Corsa Competizione, Automobilista 2, rFactor 2, F1 23/24, Le Mans Ultimate y más**, a través del potente software **SimHub**.
+Totalmente compatible con los principales simuladores a través de **SimHub**: **iRacing, Assetto Corsa, Assetto Corsa Competizione, Automobilista 2, rFactor 2, EA Sports WRC, F1 23/24, Le Mans Ultimate y Project CARS**.
 
-#### Características Principales
-- **Matriz LED de Alto Brillo**: Indicación instantánea de banderas en pista (amarilla por incidente, azul por sobrepaso, bandera a cuadros, bandera verde), marcha actual (1 a 8, N y R) y alertas de seguridad.
-- **Ángulo y Posición Ajustables**: Diseñado con soporte articulado para orientar e inclinar el dispositivo a la altura ideal de visión según tu tipo de base o aro de volante.
-- **Dimensiones Compactas**: Medidas de 11 cm de alto, 8 cm de ancho y 2 cm de profundidad para ubicarse fácilmente sin obstruir la pantalla principal.
-- **Conexión USB Tipo C**: Incluye cable mallado Tipo C de 2 metros para un alcance cómodo hasta tu PC.
-- **Soporte y Calidad Artesanal**: Fabricado e inspeccionado por Antares Cabrera con materiales de alta resistencia y terminación premium.
+#### Especificaciones y Características Técnicas
+
+- **Compatibilidad Multi-Módulo**: Permite conectar una o múltiples unidades en simultáneo en la misma PC. A través de SimHub es posible asignar funciones independientes a cada módulo (por ejemplo: una unidad exclusiva para visualización de banderas y advertencias de spotter, y una segunda unidad dedicada a marcha engranada, RPM o limitador de velocidad en pitlane).
+- **Matriz LED de Alto Brillo**: Señalización instantánea de banderas de carrera (amarilla por incidente, azul de cesión de paso, verde, blanca, negra y cuadros), indicador numérico de marcha (R, N, 1 a 8) y avisos de seguridad.
+- **Soporte Articulado Regulable**: Permite ajuste de posición, inclinación y ángulo visual para adaptarse tanto a bases Direct Drive, escritorios o estructuras de perfilería de aluminio.
+- **Dimensiones Compactas**: Medidas de 11 cm de alto, 8 cm de ancho y 2 cm de profundidad. Optimizado para integrarse limpiamente en el puesto de conducción sin interferir con la pantalla ni periféricos adyacentes.
+- **Conectividad USB Tipo C**: Incluye cable desmontable Tipo C de 2 metros para una conexión directa, estable y de fácil ruteo en el cockpit.
+- **Construcción Robusta**: Fabricado en polímeros de alta resistencia mecánica en acabado negro mate, apto para soportar las vibraciones continuas generadas por sistemas de force feedback potentes.

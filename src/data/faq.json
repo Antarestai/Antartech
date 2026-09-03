@@ -17,8 +17,8 @@
       "answer": "🏎️ **Handbrake** — Freno de mano USB analógico para simracing. Plug & Play, sin configuración necesaria.\n\n→ Más info: /devices/handbrake"
     },
     {
-      "keywords": ["iflag", "flag", "bandera", "banderas", "marcha", "marchas", "simhub", "led"],
-      "answer": "🏁 **iFlag LED Simracing** — Indicador LED de banderas y marchas para simuladores, compatible con SimHub. Ángulo ajustable y soporte incluido.\n\n→ Más info: /devices/iflag"
+      "keywords": ["iflag", "flag", "bandera", "banderas", "marcha", "marchas", "simhub", "led", "modulos", "módulos"],
+      "answer": "🏁 **iFlag LED Simracing** — Indicador LED de banderas y marchas compatible con SimHub. Permite conectar uno o más módulos simultáneos con configuraciones independientes (ej: uno para banderas y otro para marchas). Incluye soporte articulado y cable USB-C.\n\n→ Más info: /devices/iflag"
     },
     {
       "keywords": ["switch", "power", "boton", "botón", "encendido", "pc"],
