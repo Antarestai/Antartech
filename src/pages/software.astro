@@ -6,7 +6,7 @@ const devices = await getCollection('devices');
 const viaDevices = devices.filter(d => d.data.firmwareUrl);
 ---
 
-<Layout title="Software - VIA Configurator" description="Configurá tus periféricos Antares Tech con VIA, el software open-source que funciona desde el navegador. Sin instalaciones, sin drivers.">
+<Layout title="Software y Utilidades - Antares Tech" description="Configurá tus periféricos Antares Tech con VIA (AntaKnob, Macropad), SimHub (iFlag LED) y utilidades de calibración DXTweak2 (Pedalera Logitech).">
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-[#d5d0c8] dark:bg-[#030014] transition-colors duration-700">
         <canvas id="particles-canvas" class="absolute inset-0 w-full h-full"></canvas>
         <div 
@@ -168,8 +168,86 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
                 </div>
 
             </div>
+        </div>
+
+        <div class="scroll-reveal mt-20" style="transition-delay: 250ms">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polygon points="10 8 16 12 10 16 10 8"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-600 dark:text-cyan-400">SimRacing & Telemetría</span>
+                    <h2 class="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tight">Software y Utilidades para Simuladores</h2>
+                </div>
+            </div>
+            <p class="text-gray-500 dark:text-gray-400 font-light mb-10 max-w-2xl">
+                Descargá el software oficial y las herramientas recomendadas para telemetría, banderas y calibración de periféricos de simracing.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- SimHub Card -->
+                <div class="group relative bg-white dark:bg-[#0e0c1e] border border-gray-200/80 dark:border-white/[0.08] rounded-[2rem] p-8 ring-1 ring-white/20 dark:ring-white/[0.05] overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-cyan-500/10 hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start gap-5 mb-6 relative z-10">
+                            <div class="w-16 h-16 rounded-2xl overflow-hidden border border-white/50 dark:border-white/10 shadow-md shrink-0 bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                                    <line x1="4" y1="22" x2="4" y2="15"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-lg font-black text-gray-900 dark:text-white">SimHub</h3>
+                                    <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">iFlag LED</span>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 font-light mt-1">Plataforma de telemetría, dashboards y control de matrices LED para simuladores en PC.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://www.simhubdash.com/download-2/" target="_blank" rel="noopener noreferrer" class="relative z-10 flex items-center justify-center gap-3 w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white px-6 py-4 rounded-2xl font-black uppercase text-xs tracking-[0.1em] transition-all duration-500 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        Descargar SimHub Oficial
+                    </a>
+                </div>
+
+                <!-- DXTweak2 Card -->
+                <div class="group relative bg-white dark:bg-[#0e0c1e] border border-gray-200/80 dark:border-white/[0.08] rounded-[2rem] p-8 ring-1 ring-white/20 dark:ring-white/[0.05] overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start gap-5 mb-6 relative z-10">
+                            <div class="w-16 h-16 rounded-2xl overflow-hidden border border-white/50 dark:border-white/10 shadow-md shrink-0 bg-gradient-to-br from-indigo-600 to-fuchsia-600 flex items-center justify-center text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="4" y1="21" x2="4" y2="14"/>
+                                    <line x1="4" y1="10" x2="4" y2="3"/>
+                                    <line x1="12" y1="21" x2="12" y2="12"/>
+                                    <line x1="12" y1="8" x2="12" y2="3"/>
+                                    <line x1="20" y1="21" x2="20" y2="16"/>
+                                    <line x1="20" y1="12" x2="20" y2="3"/>
+                                    <line x1="1" y1="14" x2="7" y2="14"/>
+                                    <line x1="9" y1="8" x2="15" y2="8"/>
+                                    <line x1="17" y1="16" x2="23" y2="16"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-lg font-black text-gray-900 dark:text-white">DXTweak2</h3>
+                                    <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">Pedalera Logitech</span>
+                                </div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 font-light mt-1">Herramienta portable para ajuste fino de zonas muertas (deadzones) y curvas de acelerador, freno y embrague.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/downloads/DXTweak2.zip" download class="relative z-10 flex items-center justify-center gap-3 w-full bg-gradient-to-r from-indigo-600 to-fuchsia-600 hover:from-indigo-500 hover:to-fuchsia-500 text-white px-6 py-4 rounded-2xl font-black uppercase text-xs tracking-[0.1em] transition-all duration-500 shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:-translate-y-0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                        Descargar DXTweak2 (.zip)
+                    </a>
+                </div>
+            </div>
+
             <p class="text-xs text-gray-400 dark:text-gray-500 mt-8 text-center font-light">
-                ¿No ves tu producto? Los dispositivos Plug & Play como el <strong>Switch PC</strong>, el <strong>Handbrake</strong> y el <strong>Adaptador de Pedalera Logitech</strong> cuentan con auto-calibración y no necesitan software adicional. Si tenés el <strong>iFlag LED</strong>, se vincula directamente con <strong>SimHub</strong>.
+                ¿No ves tu producto? Los dispositivos como el <strong>Switch PC</strong> y el <strong>Handbrake</strong> cuentan con calibración directa por hardware y funcionan automáticamente sin necesidad de instalar software adicional.
             </p>
         </div>
 

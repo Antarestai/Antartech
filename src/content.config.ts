@@ -17,6 +17,14 @@ const devicesCollection = defineCollection({
     isAccessory: z.boolean().default(false),
     stock: z.enum(["En Stock", "A Pedido", "Sold Out", "Próximamente"]).default("En Stock"),
     customizable: z.boolean().optional(),
+    videoGuideUrl: z.string().optional(),
+    softwareUrl: z.string().optional(),
+    softwareName: z.string().optional(),
+    profiles: z.array(z.object({
+      name: z.string(),
+      url: z.string().optional(),
+      description: z.string().optional(),
+    })).optional(),
     instructionSteps: z.array(z.object({
       text: z.string(),
       image: z.string().optional(),

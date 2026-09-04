@@ -9,7 +9,8 @@ customizable: true
 category: "Accesorios Logitech"
 tags: ["Logitech", "SimRacing", "12-Bit (4096 Pasos)", "RP2040", "USB-C"]
 mercadolibreUrl: "https://www.mercadolibre.com.ar/interfaz-adaptador-usb-pedalera-12bit-logitech-g29-g920-g923/up/MLAU5074340123?pdp_filters=item_id:MLA2061052485"
-firmwareUrl: ""
+firmwareUrl: "/downloads/DXTweak2.zip"
+videoGuideUrl: "https://www.youtube.com/watch?v=qVXqMrxvKwE&t=186s"
 price: 50000
 stock: "En Stock"
 instructionSteps:
@@ -17,7 +18,7 @@ instructionSteps:
   - text: "Conectá el cable USB Tipo C a tu PC con los pedales en reposo (sin pisarlos durante la conexión)."
   - text: "Pisá a fondo cada pedal (acelerador, freno y embrague) una sola vez para que el microcontrolador RP2040 memorice el recorrido máximo y mínimo en su memoria EEPROM interna."
   - text: "Windows y tus simuladores lo detectarán de inmediato como 'Antartech Adapter 12-Bit' con 4096 niveles de resolución reales y 1000 Hz de sondeo."
-  - text: "(Opcional) Si deseás configurar curvas no lineales de frenado, zonas muertas o perfiles específicos, podés utilizar utilidades estándar como DIView o DXTweak."
+  - text: "(Opcional) Para ajustar zonas muertas (deadzones) iniciales/finales o curvas de respuesta, descargá DXTweak2 con el botón de la página y seguí el video tutorial incluido abajo."
 ---
 
 ### Interfaz USB Independiente de Alto Rendimiento para Pedales Logitech
@@ -47,3 +48,13 @@ Multiplica por 16 la resolución original de los pedales y ofrece una respuesta 
 #### Compatibilidad de Simuladores en PC
 
 iRacing, Assetto Corsa, Assetto Corsa Competizione, Automobilista 2, rFactor 2, EA Sports WRC, Dirt Rally 2.0, F1 23/24, BeamNG.drive, Forza Horizon / Motorsport, Live for Speed, Richard Burns Rally, entre otros.
+
+#### Calibración y Ajuste Fino con DXTweak2
+
+Aunque el adaptador cuenta con auto-calibración por hardware (memoriza los topes al pisar los pedales a fondo), podés utilizar la herramienta portable gratuita **DXTweak2** para realizar ajustes avanzados directamente en Windows a nivel DirectInput:
+
+- **Zonas Muertas (Deadzone) Inicial y Final**: Configurá una zona muerta al inicio para poder apoyar el pie en el freno o acelerador sin que se active accidentalmente, y una zona muerta al final para asegurar el 100% de recorrido sin tener que presionar con fuerza excesiva.
+- **Curvas de Sensibilidad y Progresividad**: Ajustá la linealidad de la respuesta para lograr una frenada más modulable y evitar bloqueos en curvas difíciles.
+- **Portátil y Ligero**: No requiere instalación en el sistema ni controladores residentes en memoria. Solo descargás el archivo comprimido `.zip`, ejecutás la utilidad y guardás la calibración.
+- **Tutorial en Video**: Más abajo encontrás la guía en video paso a paso donde se explica cómo utilizar DXTweak2 para dejar tus pedales Logitech calibrados a la perfección para simracing.
+
