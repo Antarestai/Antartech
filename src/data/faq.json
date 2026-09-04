@@ -21,8 +21,8 @@
       "answer": "🏁 **iFlag LED Simracing** — Indicador LED de banderas y marchas compatible con SimHub. Permite conectar uno o más módulos simultáneos con configuraciones independientes (ej: uno para banderas y otro para marchas). Incluye soporte articulado y cable USB-C.\n\n→ Más info: /devices/iflag"
     },
     {
-      "keywords": ["adaptador", "pedalera", "pedales", "logitech", "g29", "g920", "g923", "g27", "g25", "12bit", "12 bits", "rp2040"],
-      "answer": "🏎️ **Adaptador USB 12-Bit para Pedalera Logitech** — Interfaz USB autónoma con microcontrolador RP2040 (1000 Hz, 4096 pasos). Permite conectar pedaleras Logitech G25, G27, G29, G920 y G923 directo a la PC por USB sin necesidad del volante. Auto-calibración en EEPROM y cable USB-C incluido.\n\n→ Más info: /devices/logitech-pedal-adapter"
+      "keywords": ["adaptador", "pedalera", "pedales", "logitech", "g29", "g920", "g923", "g27", "g25", "12bit", "12 bits", "rp2040", "calibrar", "joy.cpl"],
+      "answer": "🏎️ **Adaptador USB 12-Bit para Pedalera Logitech** — Interfaz USB autónoma con microcontrolador RP2040 (1000 Hz, 4096 pasos). Conectá primero la pedalera al adaptador y luego el cable USB a la PC. Auto-calibración en memoria interna, verificable con joy.cpl o calibrable en detalle con DXTweak2.\n\n→ Más info: /devices/logitech-pedal-adapter"
     },
     {
       "keywords": ["switch", "power", "boton", "botón", "encendido", "pc"],
