@@ -231,22 +231,21 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
                             <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-400">12-Bit · 4096 Pasos</span>
                         </div>
                         <ul class="text-xs text-gray-600 dark:text-gray-400 space-y-2 font-light">
-                            <li>• <strong class="text-amber-600 dark:text-amber-400 font-bold">⚠️ Conexión Obligatoria</strong>: Conectá primero la ficha de la pedalera al adaptador y luego el cable USB a la PC. ¡No al revés para que no tome lecturas erróneas!</li>
-                            <li>• <strong class="text-gray-800 dark:text-gray-200">Calibración de Acelerador, Freno y Embrague</strong>: Ajustá cada pedal de forma individual aprovechando los 4096 niveles reales del microcontrolador RP2040.</li>
-                            <li>• <strong class="text-gray-800 dark:text-gray-200">Curvas de Frenada Progresiva</strong>: Configurá la curva no lineal para modular el freno al límite del bloqueo sin necesidad de Logitech G-HUB.</li>
-                            <li>• <strong class="text-gray-800 dark:text-gray-200">Zona Muerta Final</strong>: Alcanzá el 100% de potencia de frenado sin tener que pararte sobre el pedal.</li>
+                            <li>• <strong class="text-amber-600 dark:text-amber-400 font-bold">⚠️ Conexión</strong>: Primero conectar la pedalera al adaptador y después el cable tipo C a la PC (no al revés, porque sino tomará cualquier valor).</li>
+                            <li>• <strong class="text-gray-800 dark:text-gray-200">Calibración</strong>: Pisá los pedales a fondo una vez y luego revisá la calibración en joy.cpl o en DXTweak2.</li>
+                            <li>• <strong class="text-gray-800 dark:text-gray-200">Zonas Muertas y Curvas</strong>: Ajustá el recorrido y la dureza del freno a tu gusto sin programas pesados.</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Pasos de uso DXTweak2 y joy.cpl -->
+                <!-- Pasos de conexión y calibración -->
                 <div class="p-5 rounded-2xl bg-indigo-50/50 dark:bg-white/[0.02] border border-indigo-200/50 dark:border-white/[0.06]">
                     <h4 class="text-xs font-black text-gray-900 dark:text-white uppercase tracking-wider mb-2">Instrucciones de conexión y calibración:</h4>
                     <ol class="text-xs text-gray-600 dark:text-gray-400 space-y-1.5 list-decimal list-inside font-light">
-                        <li><strong>Orden de conexión (Pedalera)</strong>: Conectá <em>primero</em> la pedalera Logitech al adaptador Antartech y <em>después</em> el cable USB Tipo C a la PC (pedales en reposo). Si se conecta al revés, tomará lecturas flotantes erróneas.</li>
-                        <li><strong>Auto-memorización</strong>: Pisá una sola vez a fondo cada pedal para que el adaptador guarde los topes máximos y mínimos.</li>
-                        <li><strong>Verificación rápida nativa (joy.cpl)</strong>: Presioná <code>Win + R</code>, ejecutá <code class="text-indigo-600 dark:text-cyan-400 font-mono">joy.cpl</code> y abrí Propiedades de <em>"Antartech Adapter 12-Bit"</em> para verificar el movimiento de los ejes en vivo.</li>
-                        <li><strong>Ajuste fino con DXTweak2</strong>: Descomprimí <code class="text-indigo-600 dark:text-cyan-400 font-mono">DXTweak2.zip</code> y ejecutá <code class="text-indigo-600 dark:text-cyan-400 font-mono">DXTweak2.exe</code>. Seleccioná tu dispositivo, ajustá <strong>Min</strong>, <strong>Max</strong> y <strong>Deadzone</strong> a tu gusto, y guardá con <strong>Apply / Save</strong>.</li>
+                        <li><strong>Conectá primero la pedalera al adaptador</strong> y después el cable tipo C a la PC (no al revés, porque sino tomará cualquier valor).</li>
+                        <li><strong>Pisá a fondo cada pedal una sola vez</strong> para que tome el recorrido.</li>
+                        <li><strong>Revisá desde joy.cpl</strong>: Presioná <code>Win + R</code>, escribí <code class="text-indigo-600 dark:text-cyan-400 font-mono">joy.cpl</code> y dale Enter para ver el movimiento en Windows.</li>
+                        <li><strong>O mejorá la calibración con DXTweak2</strong>: Abrí el programa descargable para ajustar zonas muertas y curvas de frenado (mirá el video tutorial en el minuto 3:27).</li>
                     </ol>
                 </div>
             </div>
