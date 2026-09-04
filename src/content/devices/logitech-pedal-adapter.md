@@ -10,7 +10,7 @@ category: "Accesorios Logitech"
 tags: ["Logitech", "SimRacing", "12-Bit (4096 Pasos)", "RP2040", "USB-C"]
 mercadolibreUrl: "https://www.mercadolibre.com.ar/interfaz-adaptador-usb-pedalera-12bit-logitech-g29-g920-g923/up/MLAU5074340123?pdp_filters=item_id:MLA2061052485"
 firmwareUrl: "/downloads/DXTweak2.zip"
-videoGuideUrl: "https://www.youtube.com/watch?v=qVXqMrxvKwE&t=186s"
+videoGuideUrl: "https://www.youtube.com/watch?v=qVXqMrxvKwE&t=207s"
 price: 50000
 stock: "En Stock"
 instructionSteps:

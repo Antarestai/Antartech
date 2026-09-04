@@ -1,6 +1,8 @@
 ---
+const pathname = Astro.url.pathname;
+const isSoftware = pathname === '/software' || pathname.startsWith('/software/');
 ---
-<nav id="navbar" class="fixed top-0 w-full z-50 bg-[#ccc7bf]/70 dark:bg-gray-950/60 backdrop-blur-md border-b border-gray-400/30 dark:border-gray-800/50 transition-all duration-500 ease-in-out">
+<nav id="navbar" class="fixed top-0 left-0 right-0 w-full z-50 bg-[#ccc7bf]/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-400/30 dark:border-gray-800/50 transition-colors duration-300">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             
@@ -18,9 +20,9 @@
                     Productos
                     <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-to-r from-indigo-500 to-cyan-400 transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="/software" class="relative text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 transition-colors duration-300 group">
+                <a href="/software" class={`relative text-xs font-bold uppercase tracking-widest transition-colors duration-300 group ${isSoftware ? 'text-indigo-600 dark:text-cyan-400' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400'}`}>
                     Software
-                    <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-to-r from-indigo-500 to-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                    <span class={`absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-indigo-500 to-cyan-400 transition-all duration-300 ${isSoftware ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
                 </a>
                 <a href="/#contact" class="relative text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 transition-colors duration-300 group">
                     Contacto
@@ -30,7 +32,7 @@
 
             <!-- Desktop: only cart button -->
             <div class="hidden md:flex items-center gap-2">
-                <button id="nav-cart-btn" class="relative text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 focus:outline-none rounded-lg p-2 transition-colors">
+                <button id="nav-cart-btn" class="relative text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 focus:outline-none rounded-lg p-2 transition-colors" aria-label="Ver carrito">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                     <span id="nav-cart-badge" class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white shadow-lg shadow-red-500/50 scale-0 transition-transform duration-300">
                         0
@@ -40,7 +42,7 @@
 
             <!-- Mobile: hamburger menu button -->
             <div class="flex md:hidden items-center">
-                <button id="mobile-menu-btn" class="relative text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 focus:outline-none rounded-lg p-2 transition-colors">
+                <button id="mobile-menu-btn" class="relative text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 focus:outline-none rounded-lg p-2 transition-colors" aria-label="Abrir menú">
                     <svg id="mobile-menu-icon-open" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
                     <svg id="mobile-menu-icon-close" class="hidden" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                     <!-- Mobile cart badge on hamburger -->
@@ -52,15 +54,15 @@
     </div>
 
     <!-- Mobile dropdown menu -->
-    <div id="mobile-menu" class="md:hidden hidden border-t border-gray-400/30 dark:border-gray-800/50 bg-[#ccc7bf]/90 dark:bg-gray-950/90 backdrop-blur-xl">
+    <div id="mobile-menu" class="md:hidden hidden border-t border-gray-400/30 dark:border-gray-800/50 bg-[#ccc7bf]/95 dark:bg-gray-950/95 backdrop-blur-xl">
         <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-1">
             <a href="/#store" id="mobile-link-store" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 Productos
             </a>
-            <a href="/software" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 transition-colors">
+            <a href="/software" id="mobile-link-software" class={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-widest transition-colors ${isSoftware ? 'text-indigo-600 dark:text-cyan-400 bg-indigo-50 dark:bg-cyan-500/10' : 'text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50'}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                Software
+                Software & Firmware
             </a>
             <a href="/#contact" id="mobile-link-contact" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-gray-200/50 dark:hover:bg-gray-800/50 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -77,48 +79,9 @@
 </nav>
 
 <script is:inline>
-    // --- FORCE DARK MODE (theme toggle removed) ---
+    // --- FORCE DARK MODE ---
     document.documentElement.classList.add('dark');
     localStorage.setItem('color-theme', 'dark');
-
-    // --- LÓGICA ANCLAR NAVBAR (optimizado para cero layout thrashing) ---
-    const nav = document.getElementById('navbar');
-    const marqueeTrigger = document.getElementById('marquee-ticker');
-
-    if (nav && marqueeTrigger) {
-        let stopPoint = 0;
-        let ticking = false;
-
-        function calcStopPoint() {
-            stopPoint = marqueeTrigger.offsetTop - nav.offsetHeight;
-        }
-        calcStopPoint();
-        window.addEventListener('resize', calcStopPoint, { passive: true });
-
-        function updateNavPosition() {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    const scrollY = window.scrollY;
-                    if (scrollY >= stopPoint) {
-                        if (nav.style.position !== 'absolute') {
-                            nav.style.position = 'absolute';
-                            nav.style.top = stopPoint + 'px';
-                        }
-                    } else {
-                        if (nav.style.position !== 'fixed') {
-                            nav.style.position = 'fixed';
-                            nav.style.top = '0';
-                        }
-                    }
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }
-
-        window.addEventListener('scroll', updateNavPosition, { passive: true });
-        updateNavPosition();
-    }
 
     // --- MOBILE MENU TOGGLE ---
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -140,7 +103,7 @@
     });
 
     // Close menu when clicking nav links
-    ['mobile-link-store', 'mobile-link-contact'].forEach(id => {
+    ['mobile-link-store', 'mobile-link-software', 'mobile-link-contact'].forEach(id => {
         document.getElementById(id)?.addEventListener('click', () => {
             mobileMenu.classList.add('hidden');
             iconOpen.classList.remove('hidden');

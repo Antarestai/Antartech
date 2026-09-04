@@ -10,7 +10,7 @@ category: "SimRacing"
 mercadolibreUrl: "https://www.mercadolibre.com.ar/iflag-simracing-simulador-simhub-indicador-bandera-y-marchas/up/MLAU5009520538?pdp_filters=item_id:MLA3881349330"
 softwareUrl: "https://www.simhubdash.com/download-2/"
 softwareName: "SimHub"
-videoGuideUrl: "https://www.youtube.com/watch?v=UXE5aNdot-4&t=675s"
+videoGuideUrl: "https://www.youtube.com/watch?v=UXE5aNdot-4"
 profiles:
   - name: "Perfil Banderas y Marchas Competitivo"
     description: "Animaciones de banderas (amarilla, verde, azul, safety car), marchas de alto contraste y limitador de boxes listo para importar en SimHub."

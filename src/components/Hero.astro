@@ -5,8 +5,6 @@
 <section id="hero-section" class="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#d5d0c8] dark:bg-[#030014] transition-colors duration-700">
     <!-- Background Layer (Local to Hero section only, 0% background overhead) -->
     <div id="hero-bg" class="absolute inset-0 pointer-events-none">
-        <canvas id="particles-canvas" class="absolute inset-0 w-full h-full"></canvas>
-        
         <!-- PCB Line Pattern -->
         <div class="absolute inset-0 opacity-[0.3] dark:opacity-[0.8] transition-opacity duration-700" 
             style="background: 
@@ -25,33 +23,22 @@
     </div>
 
     <style>
-        /* Keycap Entrance Animations */
-        @keyframes keycap-enter-left {
-            from { opacity: 0; transform: translateX(-40px) scale(0.8) rotate(-10deg); }
-            to { opacity: 1; transform: translateX(0) scale(1) rotate(0); }
+        @keyframes keycap-float-slow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1.5deg); }
         }
-        @keyframes keycap-enter-right {
-            from { opacity: 0; transform: translateX(40px) scale(0.8) rotate(10deg); }
-            to { opacity: 1; transform: translateX(0) scale(1) rotate(0); }
+        @keyframes keycap-float-reverse {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(8px) rotate(-1.5deg); }
         }
-        @keyframes keycap-enter-top {
-            from { opacity: 0; transform: translateY(-40px) scale(0.8) rotate(-5deg); }
-            to { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
-        }
-        @keyframes keycap-enter-bottom {
-            from { opacity: 0; transform: translateY(40px) scale(0.8) rotate(5deg); }
-            to { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
-        }
-
         .keycap {
-            opacity: 0;
-            will-change: transform, opacity;
+            opacity: 1;
+            will-change: transform;
+            animation: keycap-float-slow 8s ease-in-out infinite;
         }
-
-        .keycap.animate-in[data-enter-from="left"] { animation: keycap-enter-left 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .keycap.animate-in[data-enter-from="right"] { animation: keycap-enter-right 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .keycap.animate-in[data-enter-from="top"] { animation: keycap-enter-top 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .keycap.animate-in[data-enter-from="bottom"] { animation: keycap-enter-bottom 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .keycap:nth-child(even) {
+            animation: keycap-float-reverse 9s ease-in-out infinite;
+        }
     </style>
 
     <!-- Floating Keycaps (Contained within Hero only) -->
@@ -130,177 +117,4 @@
     </div>
 </section>
 
-<script>
-    // --- Intersection Observer to pause animations when Hero is off-screen ---
-    const heroSection = document.getElementById('hero-section');
-    let isHeroVisible = true;
 
-    // --- Lightweight Floating Particles Canvas ---
-    const canvas = document.getElementById('particles-canvas') as HTMLCanvasElement | null;
-    let particlesRaf = 0;
-
-    // --- Keycap Floating (Optimized) ---
-    const keycaps = document.querySelectorAll('.keycap');
-    const keycapsContainer = document.getElementById('keycaps-container');
-    let keycapsRaf = 0;
-
-    let drawParticlesFn: (() => void) | null = null;
-    let animateKeycapsFn: ((now: number) => void) | null = null;
-
-    if (heroSection && 'IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-            isHeroVisible = entries[0].isIntersecting;
-            if (isHeroVisible) {
-                if (canvas && !particlesRaf && drawParticlesFn) {
-                    particlesRaf = requestAnimationFrame(drawParticlesFn);
-                }
-                if (keycaps.length > 0 && !keycapsRaf && animateKeycapsFn) {
-                    keycapsRaf = requestAnimationFrame(animateKeycapsFn);
-                }
-            } else {
-                // Cancel running frames when out of view
-                if (particlesRaf) {
-                    cancelAnimationFrame(particlesRaf);
-                    particlesRaf = 0;
-                }
-                if (keycapsRaf) {
-                    cancelAnimationFrame(keycapsRaf);
-                    keycapsRaf = 0;
-                }
-            }
-        }, { threshold: 0.05 });
-        observer.observe(heroSection);
-    }
-
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-            let particles: Array<{
-                x: number;
-                y: number;
-                radius: number;
-                speedX: number;
-                speedY: number;
-                opacity: number;
-                color: string;
-            }> = [];
-            const PARTICLE_COUNT = 18;
-
-            function resizeCanvas() {
-                if (!canvas) return;
-                canvas.width = canvas.parentElement ? canvas.parentElement.offsetWidth : window.innerWidth;
-                canvas.height = canvas.parentElement ? canvas.parentElement.offsetHeight : window.innerHeight;
-            }
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas, { passive: true });
-
-            function createParticle() {
-                if (!canvas) return { x: 0, y: 0, radius: 1, speedX: 0, speedY: 0, opacity: 0.5, color: 'rgba(99,102,241,' };
-                const isDark = document.documentElement.classList.contains('dark');
-                const colors = isDark
-                    ? ['rgba(168,85,247,', 'rgba(6,182,212,', 'rgba(99,102,241,']
-                    : ['rgba(99,102,241,', 'rgba(168,85,247,', 'rgba(6,182,212,'];
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                return {
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 2 + 0.5,
-                    speedX: (Math.random() - 0.5) * 0.25,
-                    speedY: (Math.random() - 0.5) * 0.25,
-                    opacity: Math.random() * 0.4 + 0.1,
-                    color: color
-                };
-            }
-
-            for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(createParticle());
-
-            drawParticlesFn = function drawParticles() {
-                if (!isHeroVisible || !canvas || !ctx) {
-                    particlesRaf = 0;
-                    return;
-                }
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let i = 0; i < particles.length; i++) {
-                    const p = particles[i];
-                    p.x += p.speedX;
-                    p.y += p.speedY;
-                    if (p.x < 0) p.x = canvas.width;
-                    if (p.x > canvas.width) p.x = 0;
-                    if (p.y < 0) p.y = canvas.height;
-                    if (p.y > canvas.height) p.y = 0;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = p.color + p.opacity + ')';
-                    ctx.fill();
-                }
-                particlesRaf = requestAnimationFrame(drawParticles);
-            };
-
-            particlesRaf = requestAnimationFrame(drawParticlesFn);
-        }
-    }
-
-    const containerVisible = keycapsContainer && window.getComputedStyle(keycapsContainer).display !== 'none';
-
-    if (keycaps.length > 0 && containerVisible) {
-        keycaps.forEach((kc, idx) => {
-            const delay = (kc as HTMLElement).style.getPropertyValue('--enter-delay') || `${idx * 0.15 + 0.3}s`;
-            (kc as HTMLElement).style.animationDelay = delay;
-            requestAnimationFrame(() => {
-                kc.classList.add('animate-in');
-            });
-        });
-
-        let startTime = 0;
-        const keycapData: Array<{
-            el: HTMLElement;
-            speed: number;
-            range: number;
-            phaseX: number;
-            phaseY: number;
-            phaseR: number;
-        }> = [];
-
-        keycaps.forEach(kc => {
-            (kc as HTMLElement).style.animation = 'none';
-            (kc as HTMLElement).style.opacity = '1';
-
-            keycapData.push({
-                el: kc as HTMLElement,
-                speed: parseFloat((kc as HTMLElement).dataset.floatSpeed || '0.7') || 0.7,
-                range: parseFloat((kc as HTMLElement).dataset.floatRange || '18') || 18,
-                phaseX: Math.random() * Math.PI * 2,
-                phaseY: Math.random() * Math.PI * 2,
-                phaseR: Math.random() * Math.PI * 2,
-            });
-        });
-
-        animateKeycapsFn = function animateKeycaps(now: number) {
-            if (!isHeroVisible || !keycapsContainer || window.getComputedStyle(keycapsContainer).display === 'none') {
-                keycapsRaf = 0;
-                return;
-            }
-            if (!startTime) startTime = now;
-            const elapsed = (now - startTime) / 1000;
-            const ramp = Math.min(1, elapsed / 2.0);
-
-            for (let i = 0; i < keycapData.length; i++) {
-                const { el, speed, range, phaseX, phaseY, phaseR } = keycapData[i];
-                const t = elapsed * speed;
-                const x = (Math.sin(t * 0.7 + phaseX) - Math.sin(phaseX)) * range * 0.6;
-                const y = (Math.sin(t * 0.5 + phaseY) - Math.sin(phaseY)) * range;
-                const rotZ = (Math.sin(t * 0.4 + phaseR) - Math.sin(phaseR)) * 4;
-
-                el.style.transform = `translate3d(${x * ramp}px, ${y * ramp}px, 0) rotate(${rotZ * ramp}deg)`;
-            }
-
-            keycapsRaf = requestAnimationFrame(animateKeycaps);
-        };
-
-        setTimeout(() => {
-            if (animateKeycapsFn) {
-                keycapsRaf = requestAnimationFrame(animateKeycapsFn);
-            }
-        }, 1200);
-    }
-</script>
