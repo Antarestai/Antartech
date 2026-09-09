@@ -13,97 +13,51 @@ softwareName: "SimHub"
 firmwareUrl: "/downloads/Perfil_iFlag_ATSR_Doble.zip"
 videoGuideUrl: "https://www.youtube.com/watch?v=UXE5aNdot-4"
 profiles:
-  - name: "Plugin ATSR Hub EVO para SimHub (GitHub)"
-    description: "Plugin oficial necesario para gestionar banderas y perfiles en SimHub. Descargá la última versión."
+  - name: "Pack Perfil Doble iFlag (.zip)"
+    description: "Incluye los archivos listos para importar (.atsreffects y .ledsprofile) y la guía oficial en PDF."
+    tag: "Perfiles Listos"
+    url: "/downloads/Perfil_iFlag_ATSR_Doble.zip"
+  - name: "Plugin ATSR Hub EVO para SimHub"
+    description: "Descarga oficial de la última versión del plugin ATSR en GitHub Releases."
     tag: "Plugin Oficial"
     url: "https://github.com/ATSR-Alex/ATSR-Hub-EVO/releases/"
-  - name: "ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile"
-    description: "📌 Se importa en SimHub en la parte de: Arduino -> RGB Matrix -> Profile manager."
-    tag: "Arduino RGB Matrix"
-    url: "/downloads/ATSR_DOBLE%20IFLAG_RGBMatrix_Arduino.ledsprofile"
-  - name: "configuracion efecos 2 iFlag - ATSR.atsreffects"
-    description: "📌 Se importa en el plugin ATSR Hub EVO, dentro del dispositivo DOBLE IFLAG -> apartado Import."
-    tag: "ATSR Hub EVO"
-    url: "/downloads/configuracion%20efecos%202%20iFlag%20-%20ATSR.atsreffects"
-  - name: "Pack Completo Doble iFlag (.zip)"
-    description: "Descarga un solo archivo comprimido con ambos perfiles listos más el manual en PDF."
-    tag: "Pack Completo .zip"
-    url: "/downloads/Perfil_iFlag_ATSR_Doble.zip"
-  - name: "Guía Oficial en PDF (Paso a Paso)"
-    description: "Manual con capturas de pantalla que muestra exactamente dónde importar cada archivo."
-    tag: "Manual PDF"
-    url: "/downloads/INSTRUCCIONES_iflag.pdf"
 price: 60000
 stock: "En Stock"
 instructionSteps:
-  - text: "1. Instalar SimHub desde simhubdash.com."
-  - text: "2. Instalar el plugin ATSR Hub EVO para SimHub desde github.com/ATSR-Alex/ATSR-Hub-EVO/releases."
-  - text: "3. En SimHub, abrir la pestaña de ATSR, ir a 'Device-Hub', hacer clic en añadir nuevo dispositivo y elegir 'Flag Box Profile'."
-  - text: "4. Indicar la cantidad de iFlag que tengas (ej: 2) y guardarlo con el nombre exacto 'DOBLE IFLAG' para que tome la configuración."
-  - text: "5. En el plugin ATSR Hub EVO, entrar a 'DOBLE IFLAG' y desde el apartado 'Import' cargar el archivo: 'configuracion efecos 2 iFlag - ATSR.atsreffects'."
-  - text: "6. En SimHub, ir al apartado 'Arduino', pestaña 'RGB Matrix' y hacer clic en 'Profile manager'."
-  - text: "7. Hacer clic en 'Import profile' y seleccionar el archivo: 'ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile'."
-  - text: "8. En caso de tener más de un iFlag: en SimHub tocá en 'Hardware settings (Rotation ...)' y en 'RGB Matrix content' asigná a cada pantalla su número (1, 2, etc.) y la rotación en 'Portrait'."
-  - text: "💬 Si necesitás ayuda para configurarlo, podés contactarme directamente por Discord en discord.gg/32RFVHPGYU."
+  - text: "1. Conectá el iFlag por USB a tu PC e instalá SimHub (simhubdash.com)."
+  - text: "2. Podés configurarlo libremente desde SimHub (sección Arduino -> RGB Matrix), o usar plugins como ATSR Hub EVO."
+  - text: "3. Para usar nuestro perfil: dentro de ATSR importá el archivo .atsreffects, y en SimHub (Arduino -> RGB Matrix) importá el archivo .ledsprofile."
+  - text: "4. Si tenés más de un iFlag: en SimHub tocá en 'Hardware settings', asigná a cada pantalla su número en 'RGB Matrix content' (1 y 2) y rotación en 'Portrait'."
+  - text: "5. ¿Dudas con la configuración? Podés contactarme directamente por Discord en discord.gg/32RFVHPGYU y te ayudo."
 ---
 
-### Telemetría y Banderas en Tiempo Real para Simulación de Competición
+### Indicador LED de Banderas, Marchas y Telemetría
 
-El **iFlag LED** de Antartech está diseñado para pilotos virtuales que requieren información visual inmediata y precisa en pista sin desviar la vista del trazado. Ofrece una lectura de alto contraste para banderas, marchas y alertas críticas del vehículo en un chasis compacto y sobrio.
+El **iFlag LED** de Antartech te muestra información visual en tiempo real sin desviar la vista de la pista: banderas de carrera (amarilla, verde, azul, roja, safety car), marcha actual, luces de cambio (shift lights) y alertas de spotter.
 
-Totalmente compatible con los principales simuladores a través de **SimHub**: **iRacing, Assetto Corsa, Assetto Corsa Competizione, Automobilista 2, rFactor 2, EA Sports WRC, F1 23/24, Le Mans Ultimate y Project CARS**.
+#### ¿Para qué sirve y cómo se configura?
 
-#### 📥 Dónde Importar Cada Archivo de Configuración
+- **Configuración Libre en SimHub**: Podés crear tus propios efectos, matrices y alertas desde la sección *Arduino ➡️ RGB Matrix* de SimHub con total libertad.
+- **Uso con Plugins y Perfiles**: También podés usar plugins de la comunidad como **[ATSR Hub EVO (descargar de GitHub)](https://github.com/ATSR-Alex/ATSR-Hub-EVO/releases/)** e importar perfiles listos como se muestra en el video tutorial de abajo.
+- **Soporte Multi-Módulo**: Podés conectar 1, 2 o más iFlags en la misma PC (por ejemplo: uno para banderas y otro para marchas). Con la opción *Hardware settings* en SimHub asignás qué muestra cada pantalla.
 
-En la sección de descargas contás con los dos archivos necesarios para que funcione el iFlag:
+#### Compatibilidad
 
-1. **`ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile`** ➡️ *(Arduino RGB Matrix)*  
-   Se debe importar en **SimHub** en la parte de: **Arduino** -> pestaña **RGB Matrix** -> **Profile manager** -> botón **Import profile**.
+- **Simuladores en PC**: iRacing, Assetto Corsa, ACC, Automobilista 2, rFactor 2, EA Sports WRC, F1 23/24, Le Mans Ultimate, BeamNG.drive y todos los juegos compatibles con SimHub.
+- **Hardware**: Matriz LED de alto brillo, conexión USB Tipo C (cable mallado de 2 metros incluido) y soporte articulado regulable en ángulo y altura.
 
-2. **`configuracion efecos 2 iFlag - ATSR.atsreffects`** ➡️ *(ATSR Hub EVO)*  
-   Se debe importar en el plugin **ATSR Hub EVO**, dentro del dispositivo creado **DOBLE IFLAG** -> apartado **Import**.
-
-#### 🏁 Cómo Instalar y Configurar Paso a Paso
-
-1. **Instalá SimHub**: Descargalo gratis desde [simhubdash.com](https://www.simhubdash.com/).
-2. **Instalá el Plugin ATSR**: Descargá [ATSR Hub EVO para SimHub](https://github.com/ATSR-Alex/ATSR-Hub-EVO/releases/).
-3. **Crear Dispositivo**: En SimHub, abrí la pestaña de ATSR, andá a **Device-Hub**, tocá en añadir nuevo dispositivo y elegí **Flag Box Profile**.
-4. **Guardar Nombre**: Establecé la cantidad de iFlag que tengas (ej: 2) y guardalo con el nombre exacto: **DOBLE IFLAG** *(necesario para que funcione la configuración)*.
-5. **Importar en ATSR Hub EVO**: Dentro de ATSR en **DOBLE IFLAG**, andá al apartado **Import** y cargá el archivo `configuracion efecos 2 iFlag - ATSR.atsreffects`.
-6. **Importar en Arduino RGB Matrix**: En SimHub, andá a la pestaña **Arduino** -> **RGB Matrix** -> **Profile manager** -> tocá en **Import profile** y seleccioná el archivo `ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile`.
-
-¡Listo! Ya estará el iFlag funcionando con la configuración completa.
-
-#### ⚙️ Configuración para 2 o más iFlags (Hardware Settings & Rotation)
-
-Si tenés más de un iFlag conectado a la PC:
-
-1. En SimHub, andá a la sección **Arduino** ➡️ pestaña **RGB Matrix**.
-2. Hacé clic en el botón **`Hardware settings (Rotation ...)`**.
-3. En la ventana **Arduino RGB Matrix settings**, verás cada uno de tus módulos (*SimHub iFlag Pico*).
-4. Con **`RGB Matrix content`**, asigná cuál querés que sea cada pantalla:
-   - Primer iFlag ➡️ **`RGB Matrix content: 1`**
-   - Segundo iFlag ➡️ **`RGB Matrix content: 2`**
-5. En **`RGB Matrix rotation`**, asegurate de seleccionar **Portrait** en ambos.
-6. Hacé clic en **Apply** y luego en **Ok**.
-
-![Configuración de rotación y asignación de contenido de múltiples iFlags](/images/iflag-hardware-settings.png)
-
-#### 💬 ¿Necesitás ayuda para configurarlo?
-
-Si tenés alguna duda o necesitás una mano para configurar los perfiles o tu simulador, contactame por **[Discord (discord.gg/32RFVHPGYU)](https://discord.gg/32RFVHPGYU)** y te ayudo a dejarlo funcionando.
-
-> 📥 **Descargas directas:**  
-> • [Descargar Plugin ATSR Hub EVO (GitHub Releases)](https://github.com/ATSR-Alex/ATSR-Hub-EVO/releases/)  
-> • [Descargar Pack Completo de Perfiles y Guía PDF](/downloads/Perfil_iFlag_ATSR_Doble.zip)  
-> • [Ver o Descargar Manual en PDF con capturas](/downloads/INSTRUCCIONES_iflag.pdf)  
-> • Mirá el video tutorial completo [acá en YouTube](https://youtu.be/UXE5aNdot-4).
-
-#### Especificaciones y Características Técnicas
-
-- **Compatibilidad Multi-Módulo**: Permite conectar una o múltiples unidades en simultáneo en la misma PC. A través de SimHub es posible asignar funciones independientes a cada módulo (por ejemplo: una unidad exclusiva para visualización de banderas y advertencias de spotter, y una segunda unidad dedicada a marcha engranada, RPM o limitador de velocidad en pitlane).
-- **Matriz LED de Alto Brillo**: Señalización instantánea de banderas de carrera (amarilla por incidente, azul de cesión de paso, verde, blanca, negra y cuadros), indicador numérico de marcha (R, N, 1 a 8) y avisos de seguridad.
-- **Soporte Articulado Regulable**: Permite ajuste de posición, inclinación y ángulo visual para adaptarse tanto a bases Direct Drive, escritorios o estructuras de perfilería de aluminio.
-- **Dimensiones Compactas**: Medidas de 11 cm de alto, 8 cm de ancho y 2 cm de profundidad. Optimizado para integrarse limpiamente en el puesto de conducción sin interferir con la pantalla ni periféricos adyacentes.
-- **Conectividad USB Tipo C**: Incluye cable desmontable Tipo C de 2 metros para una conexión directa, estable y de fácil ruteo en el cockpit.
-- **Construcción Robusta**: Fabricado en polímeros de alta resistencia mecánica en acabado negro mate, apto para soportar las vibraciones continuas generadas por sistemas de force feedback potentes.
+<div class="my-8 p-6 rounded-2xl bg-gradient-to-r from-indigo-500/10 via-cyan-500/10 to-transparent border border-cyan-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div>
+        <h4 class="text-base font-black text-gray-900 dark:text-white uppercase tracking-tight">Guía de Configuración Rápida</h4>
+        <p class="text-xs text-gray-500 dark:text-gray-400 font-light mt-1">Hacé clic para ver las instrucciones breves o consultá por Discord si necesitás ayuda.</p>
+    </div>
+    <div class="flex items-center gap-3 w-full sm:w-auto">
+        <button type="button" class="open-instructions-btn inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white px-6 py-3.5 rounded-xl font-bold uppercase text-xs tracking-wider transition-all shadow-md shadow-indigo-500/20 w-full sm:w-auto cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Instrucciones
+        </button>
+        <a href="https://discord.gg/32RFVHPGYU" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-1.5 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 dark:text-cyan-400 border border-indigo-500/30 px-4 py-3.5 rounded-xl font-bold uppercase text-xs tracking-wider transition-colors w-full sm:w-auto">
+            Discord
+        </a>
+    </div>
+</div>
