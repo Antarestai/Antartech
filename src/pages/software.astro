@@ -308,6 +308,28 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
                     </div>
                 </div>
 
+                <!-- Resumen de archivos descargables y destino -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+                    <div class="p-4 rounded-xl bg-cyan-500/5 dark:bg-white/[0.02] border border-cyan-500/30">
+                        <div class="flex flex-wrap items-center justify-between gap-1 mb-1.5">
+                            <span class="text-xs font-bold text-gray-900 dark:text-white font-mono break-all">ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile</span>
+                            <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">Arduino RGB Matrix</span>
+                        </div>
+                        <p class="text-xs text-gray-600 dark:text-gray-400 font-light">
+                            👉 <strong>Dónde se importa:</strong> En <strong>SimHub</strong>, sección <strong>Arduino</strong> ➡️ pestaña <strong>RGB Matrix</strong> ➡️ <strong>Profile manager</strong> ➡️ <strong>Import profile</strong>.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-indigo-500/5 dark:bg-white/[0.02] border border-indigo-500/30">
+                        <div class="flex flex-wrap items-center justify-between gap-1 mb-1.5">
+                            <span class="text-xs font-bold text-gray-900 dark:text-white font-mono break-all">configuracion efecos 2 iFlag - ATSR.atsreffects</span>
+                            <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">ATSR Hub EVO</span>
+                        </div>
+                        <p class="text-xs text-gray-600 dark:text-gray-400 font-light">
+                            👉 <strong>Dónde se importa:</strong> En el plugin <strong>ATSR Hub EVO</strong> ➡️ seleccionando el dispositivo <strong>DOBLE IFLAG</strong> ➡️ pestaña <strong>Import</strong>.
+                        </p>
+                    </div>
+                </div>
+
                 <!-- Pasos de configuración SimHub y ATSR -->
                 <div class="p-6 rounded-2xl bg-cyan-50/50 dark:bg-white/[0.02] border border-cyan-200/50 dark:border-white/[0.06]">
                     <h4 class="text-xs font-black text-gray-900 dark:text-white uppercase tracking-wider mb-3 flex items-center gap-2">

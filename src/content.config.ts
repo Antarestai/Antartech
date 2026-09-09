@@ -24,6 +24,7 @@ const devicesCollection = defineCollection({
       name: z.string(),
       url: z.string().optional(),
       description: z.string().optional(),
+      tag: z.string().optional(),
     })).optional(),
     instructionSteps: z.array(z.object({
       text: z.string(),

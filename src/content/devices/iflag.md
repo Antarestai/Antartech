@@ -13,17 +13,21 @@ softwareName: "SimHub"
 firmwareUrl: "/downloads/Perfil_iFlag_ATSR_Doble.zip"
 videoGuideUrl: "https://www.youtube.com/watch?v=UXE5aNdot-4"
 profiles:
-  - name: "Pack Completo Perfil Doble iFlag (.zip)"
-    description: "Incluye los efectos de animación ATSR, el perfil de matriz LED para SimHub y la guía oficial ilustrada en PDF."
-    url: "/downloads/Perfil_iFlag_ATSR_Doble.zip"
-  - name: "Efectos 2 iFlag (Plugin ATSR)"
-    description: "Archivo .atsreffects para importar en el apartado Import del plugin ATSR Hub EVO."
-    url: "/downloads/configuracion%20efecos%202%20iFlag%20-%20ATSR.atsreffects"
-  - name: "Perfil Matriz LED (SimHub Arduino)"
-    description: "Archivo .ledsprofile para importar en SimHub -> Arduino -> RGB Matrix -> Profile manager."
+  - name: "ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile"
+    description: "📌 Se importa en SimHub en la parte de: Arduino -> RGB Matrix -> Profile manager."
+    tag: "Arduino RGB Matrix"
     url: "/downloads/ATSR_DOBLE%20IFLAG_RGBMatrix_Arduino.ledsprofile"
+  - name: "configuracion efecos 2 iFlag - ATSR.atsreffects"
+    description: "📌 Se importa en el plugin ATSR Hub EVO, dentro del dispositivo DOBLE IFLAG -> apartado Import."
+    tag: "ATSR Hub EVO"
+    url: "/downloads/configuracion%20efecos%202%20iFlag%20-%20ATSR.atsreffects"
+  - name: "Pack Completo Doble iFlag (.zip)"
+    description: "Descarga un solo archivo comprimido con ambos perfiles listos más el manual en PDF."
+    tag: "Pack Completo .zip"
+    url: "/downloads/Perfil_iFlag_ATSR_Doble.zip"
   - name: "Guía Oficial en PDF (Paso a Paso)"
-    description: "Manual oficial ilustrado con capturas de pantalla para configurar SimHub y ATSR Hub EVO paso a paso."
+    description: "Manual con capturas de pantalla que muestra exactamente dónde importar cada archivo."
+    tag: "Manual PDF"
     url: "/downloads/INSTRUCCIONES_iflag.pdf"
 price: 60000
 stock: "En Stock"
@@ -32,8 +36,8 @@ instructionSteps:
   - text: "2. Instalar el plugin ATSR Hub EVO para SimHub (desde github.com/ATSR-Alex/ATSR-Hub-EVO/releases)."
   - text: "3. En SimHub, abrir la pestaña de ATSR, ir a 'Device-Hub', hacer clic en añadir nuevo dispositivo y elegir 'Flag Box Profile'."
   - text: "4. Indicar la cantidad de iFlag que tengas (ej: 2) y guardarlo con el nombre exacto 'DOBLE IFLAG' para que tome la configuración."
-  - text: "5. En ATSR Hub EVO, entrar a 'DOBLE IFLAG' y desde el apartado 'Import' cargar el archivo: 'configuracion efecos 2 iFlag - ATSR.atsreffects' (incluido en la descarga)."
-  - text: "6. Ir a la pestaña 'Arduino' de SimHub, luego a 'RGB Matrix' y hacer clic en 'Profile manager'."
+  - text: "5. En el plugin ATSR Hub EVO, entrar a 'DOBLE IFLAG' y desde el apartado 'Import' cargar el archivo: 'configuracion efecos 2 iFlag - ATSR.atsreffects'."
+  - text: "6. En SimHub, ir al apartado 'Arduino', pestaña 'RGB Matrix' y hacer clic en 'Profile manager'."
   - text: "7. Hacer clic en 'Import profile' y seleccionar el archivo: 'ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile'. ¡Listo!"
 ---
 
@@ -43,17 +47,24 @@ El **iFlag LED** de Antartech está diseñado para pilotos virtuales que requier
 
 Totalmente compatible con los principales simuladores a través de **SimHub**: **iRacing, Assetto Corsa, Assetto Corsa Competizione, Automobilista 2, rFactor 2, EA Sports WRC, F1 23/24, Le Mans Ultimate y Project CARS**.
 
-#### 🏁 Cómo Instalar y Cargar el Perfil (Paso a Paso)
+#### 📥 Dónde Importar Cada Archivo de Configuración
 
-Seguí estas instrucciones para dejar funcionando tu iFlag con la configuración de banderas y efectos:
+En la sección de descargas contás con los dos archivos necesarios para que funcione el iFlag:
+
+1. **`ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile`** ➡️ *(Arduino RGB Matrix)*  
+   Se debe importar en **SimHub** en la parte de: **Arduino** -> pestaña **RGB Matrix** -> **Profile manager** -> botón **Import profile**.
+
+2. **`configuracion efecos 2 iFlag - ATSR.atsreffects`** ➡️ *(ATSR Hub EVO)*  
+   Se debe importar en el plugin **ATSR Hub EVO**, dentro del dispositivo creado **DOBLE IFLAG** -> apartado **Import**.
+
+#### 🏁 Cómo Instalar y Configurar Paso a Paso
 
 1. **Instalá SimHub**: Descargalo gratis desde [simhubdash.com](https://www.simhubdash.com/).
 2. **Instalá el Plugin ATSR**: Descargá [ATSR Hub EVO para SimHub](https://github.com/ATSR-Alex/ATSR-Hub-EVO/releases/).
 3. **Crear Dispositivo**: En SimHub, abrí la pestaña de ATSR, andá a **Device-Hub**, tocá en añadir nuevo dispositivo y elegí **Flag Box Profile**.
 4. **Guardar Nombre**: Establecé la cantidad de iFlag que tengas (ej: 2) y guardalo con el nombre exacto: **DOBLE IFLAG** *(necesario para que funcione la configuración)*.
-5. **Cargar Efectos**: Dentro de ATSR en **DOBLE IFLAG**, andá al apartado **Import** y seleccioná el archivo `configuracion efecos 2 iFlag - ATSR.atsreffects` (incluido en el pack de descarga).
-6. **Cargar Matriz LED**: En SimHub, andá a la pestaña **Arduino** -> **RGB Matrix** -> **Profile manager**.
-7. **Importar Perfil**: Tocá en **Import profile** y seleccioná el archivo `ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile`.
+5. **Importar en ATSR Hub EVO**: Dentro de ATSR en **DOBLE IFLAG**, andá al apartado **Import** y cargá el archivo `configuracion efecos 2 iFlag - ATSR.atsreffects`.
+6. **Importar en Arduino RGB Matrix**: En SimHub, andá a la pestaña **Arduino** -> **RGB Matrix** -> **Profile manager** -> tocá en **Import profile** y seleccioná el archivo `ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile`.
 
 ¡Listo! Ya estará el iFlag funcionando con la configuración completa.
 
