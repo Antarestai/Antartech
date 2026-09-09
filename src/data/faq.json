@@ -17,8 +17,8 @@
       "answer": "🏎️ **Handbrake** — Freno de mano USB analógico para simracing. Plug & Play, sin configuración necesaria.\n\n→ Más info: /devices/handbrake"
     },
     {
-      "keywords": ["iflag", "flag", "bandera", "banderas", "marcha", "marchas", "simhub", "led", "modulos", "módulos"],
-      "answer": "🏁 **iFlag LED Simracing** — Indicador LED de banderas y marchas compatible con SimHub. Permite conectar uno o más módulos simultáneos con configuraciones independientes (ej: uno para banderas y otro para marchas). Incluye soporte articulado y cable USB-C.\n\n→ Más info: /devices/iflag"
+      "keywords": ["iflag", "flag", "bandera", "banderas", "marcha", "marchas", "simhub", "led", "modulos", "módulos", "atsr", "perfil", "perfiles"],
+      "answer": "🏁 **iFlag LED Simracing** — Indicador LED de banderas y marchas compatible con SimHub y el plugin ATSR Hub EVO. En la web tenés para descargar gratis el pack de perfiles (.zip) y la guía oficial en PDF paso a paso.\n\n→ Más info y descargas: /devices/iflag"
     },
     {
       "keywords": ["adaptador", "pedalera", "pedales", "logitech", "g29", "g920", "g923", "g27", "g25", "12bit", "12 bits", "rp2040", "calibrar", "joy.cpl"],

@@ -1,0 +1,76 @@
+{
+  "deviceName": "Flag Profile_Effect",
+  "presetName": "Default",
+  "version": "2.2.2.0",
+  "deviceSettings": {
+    "PresetSettings": {
+      "SelectedGame": 0,
+      "IsAbsoluteDefault": true,
+      "IsDefaultForGame": false,
+      "SelectedCars": []
+    },
+    "ColorSettings": {
+      "Color_Spotter": "#FFFF0000",
+      "Color_ABS": "#FFFF00FF",
+      "Color_TC": "#FF0000FF",
+      "Color_Redline": "#FFFF0000",
+      "Color_LowFuel": "#FFFF0000",
+      "Color_Thumb": "#FFFFFF00",
+      "Color_Incident": "#FFFF0000",
+      "GlobalTC": true,
+      "GlobalABS": true,
+      "GlobalSpotter": true,
+      "GlobalRedlineFlash": true,
+      "GlobalFlag": true,
+      "GlobalLowFuel": true
+    },
+    "GeneralSettings": {
+      "Background": true,
+      "BackgroundIdle": true,
+      "IdleLights": true,
+      "ShutdownAnimation": true,
+      "StartupAnimation": true,
+      "NightMode": true,
+      "PitLimiter": true,
+      "ThumbEncoderAnimations": true,
+      "AmbientNightModeOverride": true,
+      "EncoderMode": 1,
+      "EncoderValueStart": 0
+    },
+    "LeftSettings": {
+      "MainFunction": "G-Meter",
+      "ShowRPM": false,
+      "StartupSequence": false,
+      "PitLimiterAnimation": true,
+      "ABSAlert": true,
+      "TCAlert": true,
+      "SpotterLeft": true,
+      "SpotterRight": false,
+      "IndicatorLeft": false,
+      "IndicatorRight": false,
+      "FlagWarnings": true,
+      "RedlineFlash": false,
+      "SlowdownAlert": false,
+      "IncidentWarning": false,
+      "LiftAndCoast": false
+    },
+    "RightSettings": {
+      "MainFunction": "Gear Indicator",
+      "ShowRPM": false,
+      "StartupSequence": false,
+      "PitLimiterAnimation": true,
+      "ABSAlert": true,
+      "TCAlert": true,
+      "SpotterLeft": false,
+      "SpotterRight": true,
+      "IndicatorLeft": false,
+      "IndicatorRight": false,
+      "FlagWarnings": true,
+      "RedlineFlash": false,
+      "SlowdownAlert": false,
+      "IncidentWarning": false,
+      "LiftAndCoast": false
+    },
+    "AuxiliarySettings": null
+  }
+}

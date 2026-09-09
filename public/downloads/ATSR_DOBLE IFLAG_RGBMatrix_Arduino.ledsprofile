@@ -1,0 +1,189 @@
+{
+  "EmbeddedJavascript": null,
+  "GlobalBrightness": 100.0,
+  "LedContainers": [
+    {
+      "BrightnessFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "return $prop(\"ATSRHubMain.NM_Brightness\");",
+        "PreExpression": null
+      },
+      "StartPositionXEx": 1,
+      "StartPositionYEx": 1,
+      "LedContainers": [
+        {
+          "ContentFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return new Array($prop(\"ATSRHubMain.Device_DOBLE IFLAG_Matrix1_Background\"));",
+            "PreExpression": null
+          },
+          "Rows": 8,
+          "Columns": 8,
+          "StartPositionMatrix": 1,
+          "StartPositionX": 1,
+          "StartPositionY": 1,
+          "ContainerId": "ad9103e6-5383-4afd-967f-ca625d61a5bb",
+          "ContainerType": "ScriptedContentContainer",
+          "Description": "Background Layer",
+          "IsEnabled": true,
+          "DeviceKind": 1
+        },
+        {
+          "ContentFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return new Array($prop(\"ATSRHubMain.Device_DOBLE IFLAG_Matrix1_Layer1\"));",
+            "PreExpression": null
+          },
+          "Rows": 8,
+          "Columns": 8,
+          "StartPositionMatrix": 1,
+          "StartPositionX": 1,
+          "StartPositionY": 1,
+          "ContainerId": "036da9b9-7fdb-44ce-84e5-79fd3a154769",
+          "ContainerType": "ScriptedContentContainer",
+          "Description": "Layer 1",
+          "IsEnabled": true,
+          "DeviceKind": 1
+        },
+        {
+          "ContentFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return new Array($prop(\"ATSRHubMain.Device_DOBLE IFLAG_Matrix1_Layer2\"));",
+            "PreExpression": null
+          },
+          "Rows": 8,
+          "Columns": 8,
+          "StartPositionMatrix": 1,
+          "StartPositionX": 1,
+          "StartPositionY": 1,
+          "ContainerId": "e762a416-67f9-4890-b200-6c99203b82d5",
+          "ContainerType": "ScriptedContentContainer",
+          "Description": "Layer 2",
+          "IsEnabled": true,
+          "DeviceKind": 1
+        },
+        {
+          "ContentFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return new Array($prop(\"ATSRHubMain.Device_DOBLE IFLAG_Matrix1_Layer3\"));",
+            "PreExpression": null
+          },
+          "Rows": 8,
+          "Columns": 8,
+          "StartPositionMatrix": 1,
+          "StartPositionX": 1,
+          "StartPositionY": 1,
+          "ContainerId": "54cdf18b-e9a2-47a0-8483-b4302b264990",
+          "ContainerType": "ScriptedContentContainer",
+          "Description": "Layer 3",
+          "IsEnabled": true,
+          "DeviceKind": 1
+        }
+      ],
+      "StartPositionMatrix": 1,
+      "ContainerId": "54cdf18b-e9a2-47a0-8483-b4302b264990",
+      "ContainerType": "BrightnessFormulaGroupContainer",
+      "Description": "ATSR : DOBLE IFLAG : Profile – Matrix 1",
+      "IsEnabled": true,
+      "DeviceKind": 1
+    },
+    {
+      "BrightnessFormula": {
+        "JSExt": 0,
+        "Interpreter": 1,
+        "Expression": "return $prop(\"ATSRHubMain.NM_Brightness\");",
+        "PreExpression": null
+      },
+      "StartPositionXEx": 1,
+      "StartPositionYEx": 1,
+      "LedContainers": [
+        {
+          "ContentFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return new Array($prop(\"ATSRHubMain.Device_DOBLE IFLAG_Matrix2_Background\"));",
+            "PreExpression": null
+          },
+          "Rows": 8,
+          "Columns": 8,
+          "StartPositionMatrix": 1,
+          "StartPositionX": 1,
+          "StartPositionY": 1,
+          "ContainerId": "ad9103e6-5383-4afd-967f-ca625d61a5bb",
+          "ContainerType": "ScriptedContentContainer",
+          "Description": "Background Layer",
+          "IsEnabled": true,
+          "DeviceKind": 1
+        },
+        {
+          "ContentFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return new Array($prop(\"ATSRHubMain.Device_DOBLE IFLAG_Matrix2_Layer1\"));",
+            "PreExpression": null
+          },
+          "Rows": 8,
+          "Columns": 8,
+          "StartPositionMatrix": 1,
+          "StartPositionX": 1,
+          "StartPositionY": 1,
+          "ContainerId": "036da9b9-7fdb-44ce-84e5-79fd3a154769",
+          "ContainerType": "ScriptedContentContainer",
+          "Description": "Layer 1",
+          "IsEnabled": true,
+          "DeviceKind": 1
+        },
+        {
+          "ContentFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return new Array($prop(\"ATSRHubMain.Device_DOBLE IFLAG_Matrix2_Layer2\"));",
+            "PreExpression": null
+          },
+          "Rows": 8,
+          "Columns": 8,
+          "StartPositionMatrix": 1,
+          "StartPositionX": 1,
+          "StartPositionY": 1,
+          "ContainerId": "e762a416-67f9-4890-b200-6c99203b82d5",
+          "ContainerType": "ScriptedContentContainer",
+          "Description": "Layer 2",
+          "IsEnabled": true,
+          "DeviceKind": 1
+        },
+        {
+          "ContentFormula": {
+            "JSExt": 0,
+            "Interpreter": 1,
+            "Expression": "return new Array($prop(\"ATSRHubMain.Device_DOBLE IFLAG_Matrix2_Layer3\"));",
+            "PreExpression": null
+          },
+          "Rows": 8,
+          "Columns": 8,
+          "StartPositionMatrix": 1,
+          "StartPositionX": 1,
+          "StartPositionY": 1,
+          "ContainerId": "54cdf18b-e9a2-47a0-8483-b4302b264990",
+          "ContainerType": "ScriptedContentContainer",
+          "Description": "Layer 3",
+          "IsEnabled": true,
+          "DeviceKind": 1
+        }
+      ],
+      "StartPositionMatrix": 2,
+      "ContainerId": "54cdf18b-e9a2-47a0-8483-b4302b264990",
+      "ContainerType": "BrightnessFormulaGroupContainer",
+      "Description": "ATSR : DOBLE IFLAG : Profile – Matrix 2",
+      "IsEnabled": true,
+      "DeviceKind": 1
+    }
+  ],
+  "Name": "ATSR : DOBLE IFLAG : Profile",
+  "GameCode": null,
+  "CarChoice": null
+}
