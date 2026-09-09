@@ -13,6 +13,10 @@ softwareName: "SimHub"
 firmwareUrl: "/downloads/Perfil_iFlag_ATSR_Doble.zip"
 videoGuideUrl: "https://www.youtube.com/watch?v=UXE5aNdot-4"
 profiles:
+  - name: "Plugin ATSR Hub EVO para SimHub (GitHub)"
+    description: "Plugin oficial necesario para gestionar banderas y perfiles en SimHub. Descargá la última versión."
+    tag: "Plugin Oficial"
+    url: "https://github.com/ATSR-Alex/ATSR-Hub-EVO/releases/"
   - name: "ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile"
     description: "📌 Se importa en SimHub en la parte de: Arduino -> RGB Matrix -> Profile manager."
     tag: "Arduino RGB Matrix"
@@ -33,12 +37,14 @@ price: 60000
 stock: "En Stock"
 instructionSteps:
   - text: "1. Instalar SimHub desde simhubdash.com."
-  - text: "2. Instalar el plugin ATSR Hub EVO para SimHub (desde github.com/ATSR-Alex/ATSR-Hub-EVO/releases)."
+  - text: "2. Instalar el plugin ATSR Hub EVO para SimHub desde github.com/ATSR-Alex/ATSR-Hub-EVO/releases."
   - text: "3. En SimHub, abrir la pestaña de ATSR, ir a 'Device-Hub', hacer clic en añadir nuevo dispositivo y elegir 'Flag Box Profile'."
   - text: "4. Indicar la cantidad de iFlag que tengas (ej: 2) y guardarlo con el nombre exacto 'DOBLE IFLAG' para que tome la configuración."
   - text: "5. En el plugin ATSR Hub EVO, entrar a 'DOBLE IFLAG' y desde el apartado 'Import' cargar el archivo: 'configuracion efecos 2 iFlag - ATSR.atsreffects'."
   - text: "6. En SimHub, ir al apartado 'Arduino', pestaña 'RGB Matrix' y hacer clic en 'Profile manager'."
-  - text: "7. Hacer clic en 'Import profile' y seleccionar el archivo: 'ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile'. ¡Listo!"
+  - text: "7. Hacer clic en 'Import profile' y seleccionar el archivo: 'ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile'."
+  - text: "8. En caso de tener más de un iFlag: en SimHub tocá en 'Hardware settings (Rotation ...)' y en 'RGB Matrix content' asigná a cada pantalla su número (1, 2, etc.) y la rotación en 'Portrait'."
+  - text: "💬 Si necesitás ayuda para configurarlo, podés contactarme directamente por Discord en discord.gg/32RFVHPGYU."
 ---
 
 ### Telemetría y Banderas en Tiempo Real para Simulación de Competición
@@ -68,7 +74,27 @@ En la sección de descargas contás con los dos archivos necesarios para que fun
 
 ¡Listo! Ya estará el iFlag funcionando con la configuración completa.
 
+#### ⚙️ Configuración para 2 o más iFlags (Hardware Settings & Rotation)
+
+Si tenés más de un iFlag conectado a la PC:
+
+1. En SimHub, andá a la sección **Arduino** ➡️ pestaña **RGB Matrix**.
+2. Hacé clic en el botón **`Hardware settings (Rotation ...)`**.
+3. En la ventana **Arduino RGB Matrix settings**, verás cada uno de tus módulos (*SimHub iFlag Pico*).
+4. Con **`RGB Matrix content`**, asigná cuál querés que sea cada pantalla:
+   - Primer iFlag ➡️ **`RGB Matrix content: 1`**
+   - Segundo iFlag ➡️ **`RGB Matrix content: 2`**
+5. En **`RGB Matrix rotation`**, asegurate de seleccionar **Portrait** en ambos.
+6. Hacé clic en **Apply** y luego en **Ok**.
+
+![Configuración de rotación y asignación de contenido de múltiples iFlags](/images/iflag-hardware-settings.png)
+
+#### 💬 ¿Necesitás ayuda para configurarlo?
+
+Si tenés alguna duda o necesitás una mano para configurar los perfiles o tu simulador, contactame por **[Discord (discord.gg/32RFVHPGYU)](https://discord.gg/32RFVHPGYU)** y te ayudo a dejarlo funcionando.
+
 > 📥 **Descargas directas:**  
+> • [Descargar Plugin ATSR Hub EVO (GitHub Releases)](https://github.com/ATSR-Alex/ATSR-Hub-EVO/releases/)  
 > • [Descargar Pack Completo de Perfiles y Guía PDF](/downloads/Perfil_iFlag_ATSR_Doble.zip)  
 > • [Ver o Descargar Manual en PDF con capturas](/downloads/INSTRUCCIONES_iflag.pdf)  
 > • Mirá el video tutorial completo [acá en YouTube](https://youtu.be/UXE5aNdot-4).

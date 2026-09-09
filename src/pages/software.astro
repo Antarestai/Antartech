@@ -276,6 +276,10 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                             Guía en PDF
                         </a>
+                        <a href="https://github.com/ATSR-Alex/ATSR-Hub-EVO/releases/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 dark:text-cyan-400 border border-indigo-500/30 px-4 py-3 rounded-xl font-bold uppercase text-xs tracking-wider transition-colors">
+                            Plugin ATSR (GitHub)
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        </a>
                         <a href="https://www.simhubdash.com/download-2/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 px-4 py-3 rounded-xl font-bold uppercase text-xs tracking-wider transition-colors">
                             SimHub Oficial
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -343,7 +347,16 @@ const viaDevices = devices.filter(d => d.data.firmwareUrl);
                         <li>Entrá a <strong>DOBLE IFLAG</strong>, andá a <strong>Import</strong> y cargá el archivo <code class="text-cyan-600 dark:text-cyan-400 font-mono">configuracion efecos 2 iFlag - ATSR.atsreffects</code> (incluido en el .zip).</li>
                         <li>En SimHub, andá a la sección <strong>Arduino</strong> -> pestaña <strong>RGB Matrix</strong> -> <strong>Profile manager</strong>.</li>
                         <li>Tocá en <strong>Import profile</strong> y seleccioná el archivo <code class="text-cyan-600 dark:text-cyan-400 font-mono">ATSR_DOBLE IFLAG_RGBMatrix_Arduino.ledsprofile</code>. ¡Listo para usar!</li>
+                        <li><strong>Si tenés más de un iFlag:</strong> En SimHub andá a <em>Arduino</em> ➡️ <em>RGB Matrix</em> ➡️ hacé clic en <strong>Hardware settings (Rotation ...)</strong>. En la ventana emergente, asigná a cada iFlag su número en <strong>RGB Matrix content</strong> (1 para el primero, 2 para el segundo) y colocá <strong>RGB Matrix rotation</strong> en <em>Portrait</em>.</li>
                     </ol>
+
+                    <div class="mt-4 pt-3 border-t border-cyan-200/50 dark:border-white/10 flex items-center justify-between flex-wrap gap-2 text-xs">
+                        <span class="text-gray-600 dark:text-gray-400 font-light">¿Necesitás ayuda con la configuración?</span>
+                        <a href="https://discord.gg/32RFVHPGYU" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 font-bold text-indigo-600 dark:text-cyan-400 hover:underline">
+                            Escribime por Discord (discord.gg/32RFVHPGYU)
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>

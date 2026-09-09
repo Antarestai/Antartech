@@ -314,9 +314,15 @@ const productJsonLd = {
                                             <p class="text-xs text-gray-500 dark:text-gray-400 font-light leading-relaxed mb-6">{prof.description}</p>
                                         </div>
                                         {prof.url ? (
-                                            <a href={prof.url} download class="inline-flex items-center justify-center gap-2 w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white py-3 rounded-xl font-bold uppercase text-xs tracking-wider transition-all duration-300 shadow-md shadow-cyan-500/20">
+                                            <a 
+                                                href={prof.url} 
+                                                download={prof.url.startsWith('/') ? true : undefined}
+                                                target={prof.url.startsWith('http') ? '_blank' : undefined}
+                                                rel={prof.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                                class="inline-flex items-center justify-center gap-2 w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white py-3 rounded-xl font-bold uppercase text-xs tracking-wider transition-all duration-300 shadow-md shadow-cyan-500/20"
+                                            >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                                                Descargar Perfil
+                                                {prof.url.includes('github') ? 'Descargar Plugin (GitHub)' : 'Descargar Archivo'}
                                             </a>
                                         ) : (
                                             <div class="flex items-center justify-center gap-2 py-3 rounded-xl bg-gray-200/50 dark:bg-white/[0.04] text-gray-500 dark:text-gray-400 text-xs font-semibold border border-gray-300/40 dark:border-white/5">
