@@ -591,7 +591,7 @@ export default function CheckoutFlow() {
             <div className="flex gap-2">
               <input
                 type="text"
-                placeholder="Código (ej: ANTATEST)"
+                placeholder="Ingresá tu código"
                 value={couponInput}
                 onChange={(e) => {
                   setCouponInput(e.target.value.toUpperCase());
