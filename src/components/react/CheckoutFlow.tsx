@@ -664,9 +664,9 @@ export default function CheckoutFlow() {
       {
         id: 'mercadopago',
         label: 'MercadoPago',
-        icon: '📱',
-        badge: 'Link directo',
-        badgeColor: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20',
+        icon: 'mercadopago',
+        badge: 'Automático',
+        badgeColor: 'bg-[#009EE3]/15 text-[#009EE3] border-[#009EE3]/30 font-bold',
       },
       {
         id: 'efectivo',
@@ -696,7 +696,16 @@ export default function CheckoutFlow() {
                       : 'hover:bg-gray-50/80 dark:hover:bg-white/[0.02]'
                 }`}
               >
-                <span className="text-2xl shrink-0">{m.icon}</span>
+                {m.id === 'mercadopago' ? (
+                  <div className="w-8 h-8 rounded-xl bg-[#009EE3] flex items-center justify-center shrink-0 shadow-sm shadow-[#009EE3]/30">
+                    <svg className="w-5 h-5 text-white fill-current" viewBox="0 0 24 24">
+                      <path d="M19.5 8.5c-.4-.5-1-.8-1.7-.8-.6 0-1.2.3-1.6.7l-1.8 1.8-2.8-2.8c-.4-.4-1-.6-1.6-.6s-1.2.2-1.6.6l-5.3 5.3c-.4.4-.7 1-.7 1.6 0 .6.3 1.2.7 1.6.4.4 1 .7 1.6.7.6 0 1.2-.3 1.6-.7l3.7-3.7 1.8 1.8c.4.4 1 .7 1.6.7.6 0 1.2-.3 1.6-.7l4.7-4.7c.4-.4.4-1.1 0-1.6z"/>
+                      <path d="M14.5 16.2l1.8-1.8c.4-.4 1-.6 1.6-.6.6 0 1.2.2 1.6.6l1.4 1.4c.4.4.7 1 .7 1.6 0 .6-.3 1.2-.7 1.6-.4.4-1 .7-1.6.7s-1.2-.3-1.6-.7l-3.2-3.2c-.4-.4-.4-1.1 0-1.6z"/>
+                    </svg>
+                  </div>
+                ) : (
+                  <span className="text-2xl shrink-0">{m.icon}</span>
+                )}
                 <div className="flex-grow min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <p className={`font-bold text-sm ${active ? 'text-indigo-900 dark:text-cyan-300' : 'text-gray-900 dark:text-white'}`}>
@@ -801,13 +810,46 @@ export default function CheckoutFlow() {
 
                 {active && m.id === 'mercadopago' && (
                   <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden border-t border-gray-200/60 dark:border-white/[0.06]">
-                    <div className="p-4 bg-blue-50/60 dark:bg-blue-500/5 space-y-2">
-                      <p className="text-xs text-blue-900 dark:text-blue-200 font-bold leading-relaxed">
-                        {CHECKOUT_CONFIG.paymentInstructions.mercadopago}
+                    <div className="p-4 bg-blue-50/60 dark:bg-blue-500/10 space-y-3">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-6 h-6 rounded-lg bg-[#009EE3] flex items-center justify-center text-white shrink-0 shadow-sm">
+                          <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                            <path d="M19.5 8.5c-.4-.5-1-.8-1.7-.8-.6 0-1.2.3-1.6.7l-1.8 1.8-2.8-2.8c-.4-.4-1-.6-1.6-.6s-1.2.2-1.6.6l-5.3 5.3c-.4.4-.7 1-.7 1.6 0 .6.3 1.2.7 1.6.4.4 1 .7 1.6.7.6 0 1.2-.3 1.6-.7l3.7-3.7 1.8 1.8c.4.4 1 .7 1.6.7.6 0 1.2-.3 1.6-.7l4.7-4.7c.4-.4.4-1.1 0-1.6z"/>
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="text-xs text-blue-900 dark:text-blue-200 font-bold uppercase tracking-wider">
+                            Cobro 100% Automático e Instantáneo
+                          </p>
+                          <p className="text-[11px] text-gray-500 dark:text-gray-400">
+                            Plataforma oficial y protegida por Mercado Pago
+                          </p>
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-gray-700 dark:text-gray-200 font-medium leading-relaxed">
+                        Al confirmar el pedido, <strong>se generará tu link de pago oficial de Mercado Pago automáticamente</strong> para abonar de forma inmediata.
                       </p>
-                      <p className="text-xs text-gray-600 dark:text-gray-300 font-medium">
-                        Abonás con dinero en cuenta de MercadoPago, tarjetas de crédito, débito o cuotas tras confirmar.
-                      </p>
+
+                      <div className="p-3 bg-white dark:bg-[#0e0c1e] rounded-xl border border-blue-200/60 dark:border-blue-500/20 text-xs text-gray-700 dark:text-gray-300 space-y-2 shadow-sm">
+                        <span className="font-bold text-gray-900 dark:text-white block">
+                          💳 Medios de pago aceptados en el momento:
+                        </span>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-[11px] text-gray-600 dark:text-gray-300">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[#009EE3] font-bold">✓</span> Dinero en cuenta MP
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[#009EE3] font-bold">✓</span> Tarjetas de Débito
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[#009EE3] font-bold">✓</span> Tarjetas de Crédito / Cuotas
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[#009EE3] font-bold">✓</span> Rapipago / Pago Fácil
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </motion.div>
                 )}

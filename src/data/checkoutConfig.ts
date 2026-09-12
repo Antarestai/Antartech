@@ -29,7 +29,7 @@ export const CHECKOUT_CONFIG = {
     transferencia:
       'Realizá la transferencia al CBU/Alias de abajo. Una vez hecha, te contactamos por WhatsApp para confirmar y coordinar la entrega.',
     mercadopago:
-      'Una vez confirmado tu pedido, te enviaremos el link de pago de MercadoPago por WhatsApp para que puedas abonar de forma rápida y segura.',
+      'Pago 100% automático e instantáneo. Al confirmar tu pedido, se generará tu link oficial de Mercado Pago para abonar al instante con dinero en cuenta, tarjetas de crédito, débito o cuotas.',
     efectivo:
       'Abonás en efectivo al momento de retirar. Podés retirar personalmente por Bauness 481 (Ciudad Evita) o a coordinar un punto de encuentro por WhatsApp.',
   },
