@@ -1,4 +1,4 @@
-﻿// src/data/reviews.ts
+// src/data/reviews.ts
 
 export interface Review {
   id: string;
@@ -11,6 +11,11 @@ export interface Review {
   image?: string;
   verified: boolean;
   platform: 'mercadolibre';
+  versionBadge?: string;
+  developerNote?: {
+    title: string;
+    text: string;
+  };
 }
 
 export const REVIEWS: Review[] = [
@@ -37,6 +42,33 @@ export const REVIEWS: Review[] = [
     image: '/images/reviews/handbrake-review-2.jpg',
     verified: true,
     platform: 'mercadolibre',
+  },
+  {
+    id: 'hb-3',
+    deviceId: 'handbrake',
+    productName: 'Freno de Mano Pro Hall USB Simracing',
+    author: 'Comprador verificado',
+    date: 'Hace 1 mes',
+    rating: 4,
+    comment: 'Muy bueno.',
+    verified: true,
+    platform: 'mercadolibre',
+  },
+  {
+    id: 'hb-4',
+    deviceId: 'handbrake',
+    productName: 'Freno de Mano Pro Hall USB Simracing',
+    author: 'Comprador verificado',
+    date: 'Hace 4 meses',
+    rating: 1,
+    comment: 'Está impresa en 3d, la calidad de impresión es muy baja, no estan reforzados los soportes, cruje en el uso como si fuera de papel.',
+    verified: true,
+    platform: 'mercadolibre',
+    versionBadge: 'Feedback inicial · Versión V1',
+    developerNote: {
+      title: 'Respuesta de AntarTech · Evolución del Producto a Versión V2',
+      text: 'Esta opinión corresponde a la primera versión de prueba de hace 4 meses y sirvió directamente como base de mejora. El usuario no lo tenía instalado en un cockpit ni perfilería rígida, sino en un agarre provisorio a mesa. A partir de este feedback se rediseñó la pieza entera: chasis con paredes reforzadas al triple de espesor, mayor densidad de relleno, encastres optimizados y anclaje mecánico blindado. La versión actual no es para nada la misma, no cruje y soporta uso competitivo intensivo.',
+    },
   },
   {
     id: 'ak-1',
