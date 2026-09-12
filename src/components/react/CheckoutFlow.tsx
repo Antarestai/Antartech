@@ -984,6 +984,139 @@ export default function CheckoutFlow() {
     );
   };
 
+  // ═══════════════════════ MERCADO PAGO RETURN STATUS ═══════════════════════
+
+  const renderReturnStatus = () => {
+    if (returnStatus === 'approved') {
+      return (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
+          className="max-w-md mx-auto py-8 text-center"
+        >
+          <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500/10 border-2 border-emerald-500/30 flex items-center justify-center mb-6">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-500/20 mb-3">
+            <img src="/images/mercadopago.png" alt="Mercado Pago" className="w-4 h-4 object-contain" />
+            <span className="text-[11px] font-bold text-blue-600 dark:text-blue-300">Mercado Pago</span>
+          </div>
+          <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tight mb-2">
+            ¡Pago Aprobado!
+          </h2>
+          <p className="text-sm text-gray-700 dark:text-gray-300 font-medium max-w-sm mx-auto leading-relaxed mb-8">
+            Tu pago fue procesado con éxito por Mercado Pago. Ya estamos registrando tu pedido y te contactaremos a la brevedad por WhatsApp para coordinar la entrega.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <a
+              href="/"
+              className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold uppercase text-xs tracking-widest transition-all shadow-lg shadow-indigo-500/25 cursor-pointer"
+            >
+              Volver a la Tienda
+            </a>
+            <a
+              href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola AntarTech! Realicé el pago por Mercado Pago en la web y quería coordinar el pedido.')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE55] text-white font-bold text-xs uppercase tracking-wider transition-all"
+            >
+              Escribir por WhatsApp
+            </a>
+          </div>
+        </motion.div>
+      );
+    }
+
+    if (returnStatus === 'rejected') {
+      return (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
+          className="max-w-md mx-auto py-8 text-center"
+        >
+          <div className="w-20 h-20 mx-auto rounded-full bg-red-500/10 border-2 border-red-500/30 flex items-center justify-center mb-6">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-red-500">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-500/20 mb-3">
+            <img src="/images/mercadopago.png" alt="Mercado Pago" className="w-4 h-4 object-contain" />
+            <span className="text-[11px] font-bold text-blue-600 dark:text-blue-300">Mercado Pago</span>
+          </div>
+          <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tight mb-2">
+            El Pago no pudo completarse
+          </h2>
+          <p className="text-sm text-gray-700 dark:text-gray-300 font-medium max-w-sm mx-auto leading-relaxed mb-6">
+            Mercado Pago no pudo procesar tu medio de pago o fue rechazado por la entidad emisora.
+          </p>
+          <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-900 dark:text-amber-200 font-medium mb-6 text-left leading-relaxed">
+            💡 <strong>Tip:</strong> Podés reintentar con otra tarjeta o elegir <strong>Transferencia Bancaria con un 5% de descuento</strong> directo.
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              type="button"
+              onClick={() => {
+                setReturnStatus(null);
+                setStep(2);
+              }}
+              className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold uppercase text-xs tracking-widest transition-all cursor-pointer"
+            >
+              Reintentar en el Checkout
+            </button>
+            <a
+              href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola AntarTech, tuve un inconveniente al intentar pagar por Mercado Pago y quería coordinar el pago.')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-gray-300 dark:border-white/15 hover:bg-gray-100 dark:hover:bg-white/5 text-gray-700 dark:text-gray-300 font-bold text-xs uppercase tracking-wider transition-colors"
+            >
+              Ayuda por WhatsApp
+            </a>
+          </div>
+        </motion.div>
+      );
+    }
+
+    if (returnStatus === 'pending') {
+      return (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
+          className="max-w-md mx-auto py-8 text-center"
+        >
+          <div className="w-20 h-20 mx-auto rounded-full bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-center mb-6">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-amber-500">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-500/20 mb-3">
+            <img src="/images/mercadopago.png" alt="Mercado Pago" className="w-4 h-4 object-contain" />
+            <span className="text-[11px] font-bold text-blue-600 dark:text-blue-300">Mercado Pago</span>
+          </div>
+          <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tight mb-2">
+            Pago en Proceso
+          </h2>
+          <p className="text-sm text-gray-700 dark:text-gray-300 font-medium max-w-sm mx-auto leading-relaxed mb-6">
+            Tu pago está pendiente de acreditación en Mercado Pago (común en pagos en efectivo o validaciones de seguridad). Te contactaremos en cuanto se acredite.
+          </p>
+          <a
+            href="/"
+            className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold uppercase text-xs tracking-widest transition-all cursor-pointer"
+          >
+            Volver a la Tienda
+          </a>
+        </motion.div>
+      );
+    }
+    return null;
+  };
+
   // ═══════════════════════ SUCCESS ═══════════════════════
 
   const renderSuccess = () => (
@@ -1106,6 +1239,7 @@ export default function CheckoutFlow() {
 
   // — Selector de paso —
   const renderStep = () => {
+    if (returnStatus) return renderReturnStatus();
     if (submitted) return renderSuccess();
     switch (step) {
       case 0: return renderOrderSummary();
@@ -1121,7 +1255,7 @@ export default function CheckoutFlow() {
   return (
     <div className="max-w-xl mx-auto px-4">
       {/* Header */}
-      {!submitted && (
+      {!submitted && !returnStatus && (
         <>
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-xl font-black uppercase tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
@@ -1163,7 +1297,7 @@ export default function CheckoutFlow() {
       <div ref={contentRef} className="min-h-[320px]">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
-            key={submitted ? 'success' : step}
+            key={returnStatus ? `return-${returnStatus}` : submitted ? 'success' : step}
             custom={direction}
             variants={stepVariants}
             initial="enter"
@@ -1177,7 +1311,7 @@ export default function CheckoutFlow() {
       </div>
 
       {/* Navigation Buttons */}
-      {!submitted && (
+      {!submitted && !returnStatus && (
         <div className="flex items-center gap-3 mt-8 pt-6 border-t border-gray-200/70 dark:border-white/10">
           <button
             type="button"
