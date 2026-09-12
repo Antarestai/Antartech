@@ -93,6 +93,7 @@ export default function CheckoutFlow() {
     paymentMethod: '',
   });
   const [mpPaymentUrl, setMpPaymentUrl] = useState<string | null>(null);
+  const [returnStatus, setReturnStatus] = useState<string | null>(null);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -100,6 +101,22 @@ export default function CheckoutFlow() {
   const [submitError, setSubmitError] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  // — Verificar si viene redirigido de vuelta desde Mercado Pago —
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const mpStatus = params.get('mp_status') || params.get('collection_status') || params.get('status');
+      if (mpStatus === 'success' || mpStatus === 'approved') {
+        setReturnStatus('approved');
+        cartStore.clearCart();
+      } else if (mpStatus === 'failure' || mpStatus === 'rejected') {
+        setReturnStatus('rejected');
+      } else if (mpStatus === 'pending' || mpStatus === 'in_process') {
+        setReturnStatus('pending');
+      }
+    }
+  }, []);
 
   // — Cargar carrito al montar —
   useEffect(() => {
@@ -326,6 +343,69 @@ export default function CheckoutFlow() {
     );
     return `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
   };
+
+  // ═══════════════════════ ESTADO DE RETORNO MERCADO PAGO ═══════════════════════
+
+  if (returnStatus) {
+    return (
+      <div className="max-w-md mx-auto py-12 px-4 text-center">
+        {returnStatus === 'approved' && (
+          <div className="space-y-4">
+            <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500/10 border-2 border-emerald-500/30 flex items-center justify-center text-emerald-500 mb-6">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tight">¡Pago Aprobado en Mercado Pago!</h2>
+            <p className="text-sm text-gray-700 dark:text-gray-300 font-medium max-w-sm mx-auto leading-relaxed">
+              Tu pago fue acreditado correctamente. Ya tenemos tu orden registrada y nos pondremos en contacto por WhatsApp a la brevedad para coordinar la entrega.
+            </p>
+            <div className="pt-6">
+              <a href="/" className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 text-white font-bold uppercase text-xs tracking-widest transition-all shadow-lg shadow-indigo-500/25">
+                Volver a la Tienda
+              </a>
+            </div>
+          </div>
+        )}
+        {returnStatus === 'rejected' && (
+          <div className="space-y-4">
+            <div className="w-20 h-20 mx-auto rounded-full bg-red-500/10 border-2 border-red-500/30 flex items-center justify-center text-red-500 mb-6">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </div>
+            <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tight">El pago no pudo completarse</h2>
+            <p className="text-sm text-gray-700 dark:text-gray-300 font-medium max-w-sm mx-auto leading-relaxed">
+              El pago fue cancelado o rechazado en Mercado Pago. Podés intentar nuevamente o abonar por transferencia con 5% de descuento.
+            </p>
+            <div className="pt-6">
+              <a href="/checkout" className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 text-white font-bold uppercase text-xs tracking-widest transition-all shadow-lg shadow-indigo-500/25">
+                Reintentar Pedido
+              </a>
+            </div>
+          </div>
+        )}
+        {returnStatus === 'pending' && (
+          <div className="space-y-4">
+            <div className="w-20 h-20 mx-auto rounded-full bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-center text-amber-500 mb-6">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tight">Pago Pendiente en Mercado Pago</h2>
+            <p className="text-sm text-gray-700 dark:text-gray-300 font-medium max-w-sm mx-auto leading-relaxed">
+              Tu pago se encuentra pendiente de acreditación (por ejemplo, si elegiste abonar en efectivo en Pago Fácil o Rapipago). Apenas se confirme en Mercado Pago te contactaremos por WhatsApp.
+            </p>
+            <div className="pt-6">
+              <a href="/" className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 text-white font-bold uppercase text-xs tracking-widest transition-all shadow-lg shadow-indigo-500/25">
+                Volver a la Tienda
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   // ═══════════════════════ EMPTY / LOADING STATES ═══════════════════════
 
