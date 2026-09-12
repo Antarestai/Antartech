@@ -379,16 +379,16 @@ const productJsonLd = {
                             {device.data.mercadolibreUrl ? (
                                 <a href={device.data.mercadolibreUrl} target="_blank" class="group relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-white dark:bg-[#120f26] border border-gray-200 dark:border-white/[0.08] transform transition-all duration-700 hover:-translate-y-2 hover:shadow-2xl hover:shadow-yellow-500/15 hover:border-yellow-400/40 ring-1 ring-white/20 dark:ring-white/[0.05]">
                                     <div class="absolute inset-0 bg-gradient-to-b from-yellow-400/0 to-yellow-400/10 dark:to-yellow-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                                    <div class="bg-[#FFE600] p-4 rounded-2xl mb-4 shadow-lg shadow-yellow-500/20 transform group-hover:scale-105 transition-transform duration-700">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2D3277" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                    <div class="bg-[#FFE600] p-3 rounded-2xl mb-4 shadow-lg shadow-yellow-500/20 transform group-hover:scale-105 transition-transform duration-700 flex items-center justify-center w-16 h-16">
+                                        <img src="/images/mercadolibre.png" alt="Mercado Libre" class="w-10 h-10 object-contain" />
                                     </div>
                                     <span class="text-gray-900 dark:text-white font-black uppercase tracking-[0.15em] text-sm relative z-10 mb-1">Mercado Libre</span>
                                     <span class="text-gray-500 dark:text-gray-400 text-xs font-medium relative z-10">Compras en nuestra publicación oficial</span>
                                 </a>
                             ) : (
                                 <div class="relative overflow-hidden flex flex-col items-center justify-center p-8 rounded-[2rem] bg-gray-100/50 dark:bg-white/[0.01] border border-gray-200/50 dark:border-white/5 opacity-50 cursor-not-allowed">
-                                    <div class="bg-gray-300 dark:bg-gray-800 p-4 rounded-2xl mb-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-gray-500 dark:text-gray-400" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                    <div class="bg-gray-200 dark:bg-gray-800 p-3 rounded-2xl mb-4 flex items-center justify-center w-16 h-16 grayscale opacity-60">
+                                        <img src="/images/mercadolibre.png" alt="Mercado Libre" class="w-10 h-10 object-contain" />
                                     </div>
                                     <span class="text-gray-500 dark:text-gray-400 font-black uppercase tracking-[0.15em] text-sm relative z-10 mb-1">Mercado Libre</span>
                                     <span class="text-gray-400 dark:text-gray-500 text-xs font-medium relative z-10">No disponible actualmente</span>

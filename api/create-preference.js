@@ -24,7 +24,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Método no permitido' });
   }
 
-  const token = process.env.MERCADOPAGO_ACCESS_TOKEN;
+  const rawToken = process.env.MERCADOPAGO_ACCESS_TOKEN || '';
+  const token = rawToken.trim().replace(/^["']|["']$/g, '');
 
   if (!token) {
     return res.status(500).json({
@@ -45,7 +46,7 @@ export default async function handler(req, res) {
       id: String(item.id || 'prod'),
       title: String(item.title || 'Producto AntarTech'),
       quantity: Number(item.quantity || 1),
-      unit_price: Number(item.price || 0),
+      unit_price: Number(item.price || item.unit_price || 0),
       currency_id: 'ARS',
       picture_url: item.image && item.image.startsWith('http')
         ? item.image
@@ -58,9 +59,7 @@ export default async function handler(req, res) {
       items: mpItems,
       payer: {
         name: payer?.name || 'Cliente AntarTech',
-        phone: {
-          number: payer?.whatsapp ? String(payer.whatsapp) : '',
-        },
+        ...(payer?.whatsapp ? { phone: { number: String(payer.whatsapp).replace(/\D/g, '') } } : {}),
       },
       back_urls: {
         success: 'https://antartech.com.ar/checkout?mp_status=success',
@@ -88,6 +87,11 @@ export default async function handler(req, res) {
       return res.status(mpResponse.status).json({
         error: mpData.message || 'Error al comunicarse con Mercado Pago.',
         details: mpData,
+        debug: {
+          tokenLength: token.length,
+          tokenPrefix: token.substring(0, 15),
+          tokenSuffix: token.substring(token.length - 4),
+        },
         fallback: true,
       });
     }

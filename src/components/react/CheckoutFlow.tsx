@@ -290,6 +290,7 @@ export default function CheckoutFlow() {
       }
 
       // Si eligió Mercado Pago, intentar generar el link de Checkout Pro en Vercel
+      let generatedMpUrl: string | null = null;
       if (formData.paymentMethod === 'mercadopago') {
         try {
           const mpRes = await fetch('/api/create-preference', {
@@ -306,8 +307,11 @@ export default function CheckoutFlow() {
           if (mpRes.ok) {
             const mpData = await mpRes.json();
             if (mpData?.init_point) {
+              generatedMpUrl = mpData.init_point;
               setMpPaymentUrl(mpData.init_point);
             }
+          } else {
+            console.error('Mercado Pago preference failed:', mpRes.status);
           }
         } catch (mpErr) {
           console.warn('Fallback a WhatsApp para Mercado Pago:', mpErr);
@@ -316,6 +320,11 @@ export default function CheckoutFlow() {
 
       setSubmitted(true);
       cartStore.clearCart();
+
+      // Si se generó el portal de Mercado Pago, redirigir automáticamente
+      if (generatedMpUrl) {
+        window.location.href = generatedMpUrl;
+      }
     } catch (err) {
       console.error('Submit error:', err);
       setSubmitError(true);
@@ -697,11 +706,8 @@ export default function CheckoutFlow() {
                 }`}
               >
                 {m.id === 'mercadopago' ? (
-                  <div className="w-8 h-8 rounded-xl bg-[#009EE3] flex items-center justify-center shrink-0 shadow-sm shadow-[#009EE3]/30">
-                    <svg className="w-5 h-5 text-white fill-current" viewBox="0 0 24 24">
-                      <path d="M19.5 8.5c-.4-.5-1-.8-1.7-.8-.6 0-1.2.3-1.6.7l-1.8 1.8-2.8-2.8c-.4-.4-1-.6-1.6-.6s-1.2.2-1.6.6l-5.3 5.3c-.4.4-.7 1-.7 1.6 0 .6.3 1.2.7 1.6.4.4 1 .7 1.6.7.6 0 1.2-.3 1.6-.7l3.7-3.7 1.8 1.8c.4.4 1 .7 1.6.7.6 0 1.2-.3 1.6-.7l4.7-4.7c.4-.4.4-1.1 0-1.6z"/>
-                      <path d="M14.5 16.2l1.8-1.8c.4-.4 1-.6 1.6-.6.6 0 1.2.2 1.6.6l1.4 1.4c.4.4.7 1 .7 1.6 0 .6-.3 1.2-.7 1.6-.4.4-1 .7-1.6.7s-1.2-.3-1.6-.7l-3.2-3.2c-.4-.4-.4-1.1 0-1.6z"/>
-                    </svg>
+                  <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-sm border border-gray-200/80 p-1">
+                    <img src="/images/mercadopago.png" alt="Mercado Pago" className="w-full h-full object-contain" />
                   </div>
                 ) : (
                   <span className="text-2xl shrink-0">{m.icon}</span>
@@ -812,10 +818,8 @@ export default function CheckoutFlow() {
                   <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden border-t border-gray-200/60 dark:border-white/[0.06]">
                     <div className="p-4 bg-blue-50/60 dark:bg-blue-500/10 space-y-3">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-6 h-6 rounded-lg bg-[#009EE3] flex items-center justify-center text-white shrink-0 shadow-sm">
-                          <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                            <path d="M19.5 8.5c-.4-.5-1-.8-1.7-.8-.6 0-1.2.3-1.6.7l-1.8 1.8-2.8-2.8c-.4-.4-1-.6-1.6-.6s-1.2.2-1.6.6l-5.3 5.3c-.4.4-.7 1-.7 1.6 0 .6.3 1.2.7 1.6.4.4 1 .7 1.6.7.6 0 1.2-.3 1.6-.7l3.7-3.7 1.8 1.8c.4.4 1 .7 1.6.7.6 0 1.2-.3 1.6-.7l4.7-4.7c.4-.4.4-1.1 0-1.6z"/>
-                          </svg>
+                        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center shrink-0 shadow-sm border border-gray-200/80 p-1">
+                          <img src="/images/mercadopago.png" alt="Mercado Pago" className="w-full h-full object-contain" />
                         </div>
                         <div>
                           <p className="text-xs text-blue-900 dark:text-blue-200 font-bold uppercase tracking-wider">
@@ -1035,32 +1039,59 @@ export default function CheckoutFlow() {
         </div>
       )}
 
-      {/* Si eligió MercadoPago */}
+      {/* Si eligió MercadoPago y se generó el portal */}
       {formData.paymentMethod === 'mercadopago' && mpPaymentUrl && (
         <div className="p-5 rounded-2xl bg-blue-50/80 dark:bg-blue-500/10 border border-blue-500/30 text-left space-y-3.5 mb-8 shadow-sm">
-          <div>
-            <h4 className="text-xs font-black uppercase tracking-wider text-blue-900 dark:text-blue-300 flex items-center gap-1.5">
-              <span>💳</span> Pago Seguro con Mercado Pago
-            </h4>
-            <p className="text-xs text-gray-700 dark:text-gray-300 font-medium mt-1 leading-relaxed">
-              Tu orden fue registrada y tu link de pago por <strong>{order!.formattedTotal}</strong> está listo. Hacé clic para abonar con tarjeta, débito o dinero en cuenta:
-            </p>
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-sm border border-blue-200 p-1">
+              <img src="/images/mercadopago.png" alt="Mercado Pago" className="w-full h-full object-contain" />
+            </div>
+            <div>
+              <h4 className="text-xs font-black uppercase tracking-wider text-blue-900 dark:text-blue-300">
+                Redirigiendo a Mercado Pago...
+              </h4>
+              <p className="text-xs text-gray-700 dark:text-gray-300 font-medium mt-0.5">
+                Tu orden fue confirmada. Hacé clic abajo si no abre automáticamente:
+              </p>
+            </div>
           </div>
           <a
             href={mpPaymentUrl}
-            target="_blank"
-            rel="noopener noreferrer"
             className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl bg-[#009EE3] hover:bg-[#0089C7] text-white font-black text-xs uppercase tracking-wider transition-all shadow-lg shadow-[#009EE3]/25 hover:scale-[1.01]"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
-            Pagar Ahora con Mercado Pago ({order!.formattedTotal})
+            Abrir Mercado Pago ({order?.formattedTotal || formattedFinalTotal})
           </a>
         </div>
       )}
 
+      {/* Si eligió MercadoPago pero hubo demora o requiere envío manual */}
       {formData.paymentMethod === 'mercadopago' && !mpPaymentUrl && (
-        <div className="p-4 rounded-xl bg-blue-50/60 dark:bg-blue-500/10 border border-blue-500/25 text-xs text-blue-900 dark:text-blue-200 font-medium mb-8 text-left leading-relaxed">
-          📱 Registramos tu pedido con Mercado Pago. Te enviaremos el link de pago directamente a tu WhatsApp ({formData.whatsapp}) a la brevedad.
+        <div className="p-5 rounded-2xl bg-blue-50/80 dark:bg-blue-500/10 border border-blue-500/30 text-left space-y-3 mb-8 shadow-sm">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0 shadow-sm border border-blue-200 p-1">
+              <img src="/images/mercadopago.png" alt="Mercado Pago" className="w-full h-full object-contain" />
+            </div>
+            <div>
+              <h4 className="text-xs font-black uppercase tracking-wider text-blue-900 dark:text-blue-300">
+                Pedido Registrado con Mercado Pago
+              </h4>
+              <p className="text-[11px] text-gray-500 dark:text-gray-400 font-medium">
+                Monto: {order?.formattedTotal || formattedFinalTotal}
+              </p>
+            </div>
+          </div>
+          <p className="text-xs text-blue-900 dark:text-blue-200 font-medium leading-relaxed">
+            Registramos tu pedido exitosamente. Te enviaremos el link de pago directamente a tu WhatsApp (<strong>{formData.whatsapp}</strong>) para abonar de forma inmediata.
+          </p>
+          <a
+            href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Hola AntarTech! Registré mi pedido por ${order?.formattedTotal || formattedFinalTotal} con Mercado Pago a nombre de ${formData.name}. ¿Me envían el link de pago?`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#25D366] hover:bg-[#1EBE55] text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md shadow-[#25D366]/20"
+          >
+            Solicitar link por WhatsApp ahora
+          </a>
         </div>
       )}
 
