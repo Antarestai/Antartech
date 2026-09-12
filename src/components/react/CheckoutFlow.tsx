@@ -92,6 +92,7 @@ export default function CheckoutFlow() {
     city: '',
     paymentMethod: '',
   });
+  const [mpPaymentUrl, setMpPaymentUrl] = useState<string | null>(null);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -269,6 +270,31 @@ export default function CheckoutFlow() {
         const errorData = await res.json().catch(() => ({}));
         console.error('Formspree error:', res.status, errorData);
         throw new Error('Error al enviar pedido');
+      }
+
+      // Si eligió Mercado Pago, intentar generar el link de Checkout Pro en Vercel
+      if (formData.paymentMethod === 'mercadopago') {
+        try {
+          const mpRes = await fetch('/api/create-preference', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              items: order.items,
+              payer: {
+                name: formData.name,
+                whatsapp: formData.whatsapp,
+              },
+            }),
+          });
+          if (mpRes.ok) {
+            const mpData = await mpRes.json();
+            if (mpData?.init_point) {
+              setMpPaymentUrl(mpData.init_point);
+            }
+          }
+        } catch (mpErr) {
+          console.warn('Fallback a WhatsApp para Mercado Pago:', mpErr);
+        }
       }
 
       setSubmitted(true);
@@ -888,9 +914,31 @@ export default function CheckoutFlow() {
       )}
 
       {/* Si eligió MercadoPago */}
-      {formData.paymentMethod === 'mercadopago' && (
+      {formData.paymentMethod === 'mercadopago' && mpPaymentUrl && (
+        <div className="p-5 rounded-2xl bg-blue-50/80 dark:bg-blue-500/10 border border-blue-500/30 text-left space-y-3.5 mb-8 shadow-sm">
+          <div>
+            <h4 className="text-xs font-black uppercase tracking-wider text-blue-900 dark:text-blue-300 flex items-center gap-1.5">
+              <span>💳</span> Pago Seguro con Mercado Pago
+            </h4>
+            <p className="text-xs text-gray-700 dark:text-gray-300 font-medium mt-1 leading-relaxed">
+              Tu orden fue registrada y tu link de pago por <strong>{order!.formattedTotal}</strong> está listo. Hacé clic para abonar con tarjeta, débito o dinero en cuenta:
+            </p>
+          </div>
+          <a
+            href={mpPaymentUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl bg-[#009EE3] hover:bg-[#0089C7] text-white font-black text-xs uppercase tracking-wider transition-all shadow-lg shadow-[#009EE3]/25 hover:scale-[1.01]"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+            Pagar Ahora con Mercado Pago ({order!.formattedTotal})
+          </a>
+        </div>
+      )}
+
+      {formData.paymentMethod === 'mercadopago' && !mpPaymentUrl && (
         <div className="p-4 rounded-xl bg-blue-50/60 dark:bg-blue-500/10 border border-blue-500/25 text-xs text-blue-900 dark:text-blue-200 font-medium mb-8 text-left leading-relaxed">
-          📱 Te enviaremos el link de pago de MercadoPago directamente a tu WhatsApp ({formData.whatsapp}) para que abones de forma rápida y segura.
+          📱 Registramos tu pedido con Mercado Pago. Te enviaremos el link de pago directamente a tu WhatsApp ({formData.whatsapp}) a la brevedad.
         </div>
       )}
 
