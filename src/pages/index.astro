@@ -10,6 +10,7 @@ import About from '../components/About.astro';
 import FAQ from '../components/FAQ.astro';
 import Contact from '../components/Contact.astro';
 import UseCases from '../components/UseCases.astro';
+import Reviews from '../components/Reviews.astro';
 
 const allDevices = await getCollection('devices');
 let featuredDevices = allDevices.filter(device => device.data.featured);
@@ -33,6 +34,7 @@ const discordLink = "https://discord.gg/antarestai";
     <Hero />
     <Marquee />
     <Products featuredDevices={featuredDevices} />
+    <Reviews />
     <UseCases />
     <Contact />
     <About />

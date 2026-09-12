@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import InstructionModal from '../../components/InstructionModal.astro';
+import Reviews from '../../components/Reviews.astro';
 import { getCollection, render } from 'astro:content'; 
 import { Image } from 'astro:assets';
 
@@ -446,6 +447,12 @@ const productJsonLd = {
 
         </div>
     </main>
+
+    <Reviews 
+        deviceId={device.id} 
+        title={`Opiniones sobre ${device.data.title}`} 
+        subtitle="Valoraciones reales de compradores de este producto en nuestra tienda oficial de Mercado Libre." 
+    />
 
     {instructionSteps.length > 0 && (
         <InstructionModal steps={instructionSteps} productTitle={device.data.title} firmwareUrl={device.data.firmwareUrl || ''} />

@@ -1,0 +1,159 @@
+---
+// src/components/Reviews.astro
+import { REVIEWS } from '../data/reviews';
+
+interface Props {
+  deviceId?: string;
+  title?: string;
+  subtitle?: string;
+}
+
+const { deviceId, title, subtitle } = Astro.props;
+
+const reviewsToDisplay = deviceId 
+  ? REVIEWS.filter(r => r.deviceId === deviceId)
+  : REVIEWS;
+
+const mlPerfilLink = "https://listado.mercadolibre.com.ar/_CustId_119316055?item_id=MLA1996684374&category_id=MLA432881&seller_id=119316055&client=recoview-selleritems&recos_listing=true#origin=vip&component=sellerData&typeSeller=classic";
+---
+
+{reviewsToDisplay.length > 0 && (
+<section id="opiniones" class="relative py-20 bg-gray-50/50 dark:bg-[#040114] transition-colors duration-700 overflow-hidden border-t border-b border-gray-200/60 dark:border-white/5">
+    <!-- Ambient subtle glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-yellow-400/5 dark:bg-yellow-500/[0.03] rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-14 scroll-reveal">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-yellow-400/10 border border-yellow-400/30 text-yellow-600 dark:text-yellow-400 text-[11px] font-black uppercase tracking-widest mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                </svg>
+                <span>Opiniones reales · 5.0 Estrellas</span>
+            </div>
+
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-gray-900 dark:text-white uppercase mb-4">
+                {title || 'Qué opinan quienes ya compiten y producen'}
+            </h2>
+
+            <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 font-light leading-relaxed">
+                {subtitle || 'Valoraciones reales de compradores en nuestra tienda oficial de Mercado Libre. Calidad comprobada en cada setup.'}
+            </p>
+
+            <!-- Trust Badges Bar -->
+            <div class="mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-semibold text-gray-600 dark:text-gray-300">
+                <div class="flex items-center gap-1.5 text-yellow-500">
+                    <div class="flex gap-0.5">
+                        {Array.from({ length: 5 }).map(() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                            </svg>
+                        ))}
+                    </div>
+                    <span class="font-bold text-gray-900 dark:text-white ml-1">5.0 / 5.0</span>
+                </div>
+                <div class="hidden sm:block w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700"></div>
+                <div class="flex items-center gap-2">
+                    <img src="/images/mercadolibre.png" alt="Mercado Libre" class="w-4 h-4 object-contain" />
+                    <span>100% Compradores Satisfechos</span>
+                </div>
+                <div class="hidden sm:block w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700"></div>
+                <div class="flex items-center gap-1.5 text-green-600 dark:text-green-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                    <span>Compra Protegida</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6 scroll-reveal">
+            {reviewsToDisplay.map((review) => (
+                <div class="group relative flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#0c091e] border border-gray-200/80 dark:border-white/[0.08] shadow-md dark:shadow-indigo-950/20 hover:border-yellow-400/50 dark:hover:border-yellow-400/40 hover:shadow-xl hover:shadow-yellow-500/10 transition-all duration-500 hover:-translate-y-1">
+                    
+                    <div>
+                        <!-- Header: Stars + Platform logo -->
+                        <div class="flex items-center justify-between gap-2 mb-4">
+                            <!-- 5 Stars -->
+                            <div class="flex items-center gap-0.5 text-yellow-400">
+                                {Array.from({ length: review.rating }).map(() => (
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                    </svg>
+                                ))}
+                            </div>
+
+                            <!-- ML Badge -->
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-yellow-400/15 border border-yellow-400/30 text-[10px] font-bold text-gray-800 dark:text-yellow-300">
+                                <img src="/images/mercadolibre.png" alt="Mercado Libre" class="w-3.5 h-3.5 object-contain" />
+                                <span>Mercado Libre</span>
+                            </div>
+                        </div>
+
+                        <!-- Product Pill -->
+                        <div class="mb-4">
+                            <span class="inline-block text-[10px] font-black uppercase tracking-wider text-indigo-600 dark:text-cyan-400 bg-indigo-50 dark:bg-cyan-950/60 border border-indigo-100 dark:border-cyan-800/40 px-2.5 py-1 rounded-lg">
+                                {review.productName}
+                            </span>
+                        </div>
+
+                        <!-- Comment -->
+                        <blockquote class="text-sm md:text-[15px] text-gray-800 dark:text-gray-200 font-medium leading-relaxed mb-5 italic">
+                            “{review.comment}”
+                        </blockquote>
+
+                        <!-- Buyer setup photo (if available) -->
+                        {review.image && (
+                            <div class="mb-5 overflow-hidden rounded-2xl border border-gray-200 dark:border-white/10 bg-black/5 dark:bg-black/40 group/img relative">
+                                <img 
+                                    src={review.image} 
+                                    alt={`Foto de setup enviada por comprador - ${review.productName}`}
+                                    class="w-full h-48 sm:h-52 object-cover object-center transform transition-transform duration-700 group-hover/img:scale-105"
+                                    loading="lazy"
+                                />
+                                <div class="absolute bottom-2 left-2 px-2 py-0.5 rounded-md bg-black/70 backdrop-blur-sm text-[9px] font-bold uppercase tracking-wider text-white/90 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-yellow-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                                    Setup real del comprador
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    <!-- Footer: Verified Author & Date -->
+                    <div class="pt-4 border-t border-gray-100 dark:border-white/5 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full bg-green-500/15 text-green-600 dark:text-green-400 flex items-center justify-center font-bold text-[10px]">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <span class="font-bold text-gray-800 dark:text-gray-200">{review.author}</span>
+                        </div>
+                        <span class="text-[11px] text-gray-400 dark:text-gray-500">{review.date}</span>
+                    </div>
+
+                </div>
+            ))}
+        </div>
+
+        <!-- CTA footer linking to official Mercado Libre profile -->
+        <div class="mt-12 text-center scroll-reveal">
+            <a 
+                href={mlPerfilLink} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="inline-flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-yellow-400/60 dark:hover:border-yellow-400/40 text-gray-800 dark:text-white hover:text-yellow-600 dark:hover:text-yellow-400 text-xs font-black uppercase tracking-widest transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-yellow-500/10 group"
+            >
+                <img src="/images/mercadolibre.png" alt="Mercado Libre" class="w-4 h-4 object-contain group-hover:scale-110 transition-transform" />
+                <span>Ver todas las opiniones en Mercado Libre</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+)}
