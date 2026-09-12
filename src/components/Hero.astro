@@ -31,6 +31,14 @@
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(8px) rotate(-1.5deg); }
         }
+        @keyframes engineering-float {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(6px); }
+        }
+        @keyframes line-pulse {
+            0%, 100% { width: 2.5rem; opacity: 0.75; }
+            50% { width: 3.75rem; opacity: 1; }
+        }
         .keycap {
             opacity: 1;
             will-change: transform;
@@ -38,6 +46,16 @@
         }
         .keycap:nth-child(even) {
             animation: keycap-float-reverse 9s ease-in-out infinite;
+        }
+        .engineering-badge {
+            display: inline-flex;
+            align-items: center;
+            will-change: transform;
+            animation: engineering-float 3.5s ease-in-out infinite;
+        }
+        .engineering-line {
+            display: inline-block;
+            animation: line-pulse 3.5s ease-in-out infinite;
         }
     </style>
 
@@ -85,15 +103,37 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             <div class="lg:col-span-8 scroll-reveal relative z-10 group">
-                <div class="flex items-center gap-4 mb-6">
-                    <span class="h-px w-16 bg-gradient-to-r from-fuchsia-600 to-cyan-500 opacity-80"></span>
+                <div class="engineering-badge flex items-center gap-3 mb-6 select-none">
+                    <div class="flex items-center text-cyan-500 dark:text-cyan-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 transform -rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                        <span class="engineering-line h-[1.5px] bg-gradient-to-r from-cyan-500 to-fuchsia-600 rounded-full ml-1"></span>
+                    </div>
                     <span class="text-xs font-black uppercase tracking-[0.4em] bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-600 to-cyan-500">Engineering & Design</span>
                 </div>
                 
-                <h1 id="interactive-title" class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter text-gray-900 dark:text-white leading-[0.9] uppercase break-keep relative">
+                <h1 id="interactive-title" class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter text-gray-900 dark:text-white leading-[0.9] uppercase break-keep relative">
                     Periféricos <br/> 
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-500 dark:from-fuchsia-400 dark:via-indigo-400 dark:to-cyan-400 italic">Custom.</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-500 dark:from-fuchsia-400 dark:via-indigo-400 dark:to-cyan-400 italic">Custom & SimRacing.</span>
                 </h1>
+
+                <!-- Action Button -->
+                <div class="mt-8 sm:mt-10 flex flex-wrap items-center gap-4">
+                    <a 
+                        href="#store" 
+                        class="group/btn inline-flex items-center gap-3 px-6 sm:px-7 py-3.5 sm:py-4 rounded-2xl bg-gray-900 text-white dark:bg-white dark:text-gray-950 font-black text-xs sm:text-sm uppercase tracking-widest hover:bg-gradient-to-r hover:from-fuchsia-600 hover:to-indigo-600 dark:hover:from-fuchsia-500 dark:hover:to-cyan-400 dark:hover:text-white transition-all duration-300 shadow-xl shadow-indigo-500/20 hover:shadow-2xl hover:shadow-indigo-500/30 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                    >
+                        <span>Ver Productos</span>
+                        <div class="w-6 h-6 rounded-full bg-white/20 dark:bg-black/10 flex items-center justify-center group-hover/btn:translate-y-1 transition-transform duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <polyline points="19 12 12 19 5 12"></polyline>
+                            </svg>
+                        </div>
+                    </a>
+                </div>
             </div>
 
             <div class="lg:col-span-4 border-l-2 border-indigo-600/30 pl-8 py-4 scroll-reveal delay-200">
