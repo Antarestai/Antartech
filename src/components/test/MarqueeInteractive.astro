@@ -1,0 +1,81 @@
+---
+// src/components/test/MarqueeInteractive.astro
+const tags = [
+  { label: "SimRacing", filter: "simracing", dot: "bg-indigo-500", icon: "🏎️" },
+  { label: "Accesorios Logitech", filter: "logitech", dot: "bg-cyan-500", icon: "🎮" },
+  { label: "Macropads & Perillas", filter: "productividad", dot: "bg-fuchsia-500", icon: "⌨️" },
+  { label: "QMK / VIA Config", filter: "productividad", dot: "bg-cyan-500", icon: "🎛️" },
+  { label: "Adaptadores 12-Bit", filter: "logitech", dot: "bg-indigo-500", icon: "⚡" },
+  { label: "SimHub iFlag", filter: "simracing", dot: "bg-fuchsia-500", icon: "🏁" },
+  { label: "Mods Magnéticos", filter: "logitech", dot: "bg-cyan-500", icon: "🧲" },
+  { label: "Hecho a mano en Bs As", filter: "all", dot: "bg-green-400", icon: "🇦🇷" },
+  { label: "Plug & Play", filter: "all", dot: "bg-indigo-500", icon: "🔌" },
+  { label: "Impresión 3D Reforzada", filter: "all", dot: "bg-fuchsia-500", icon: "🛠️" },
+];
+---
+
+<div id="interactive-marquee" class="relative z-20 overflow-hidden py-4 bg-white/90 dark:bg-[#030014] border-y border-gray-200/50 dark:border-white/5 select-none">
+    
+    <!-- Helper tooltip / pill -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-2 flex items-center justify-between">
+        <span class="text-[9px] font-black uppercase tracking-[0.25em] text-gray-400 dark:text-gray-500 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+            Categorías interactivas · Hacé clic en un tag para filtrar productos:
+        </span>
+    </div>
+
+    <!-- Ticker Track with Infinite Loop -->
+    <div class="marquee-track flex gap-4 whitespace-nowrap">
+        {/* Double array to achieve infinite loop */}
+        {[...tags, ...tags].map((t) => (
+            <button
+                type="button"
+                data-keyword-filter={t.filter}
+                class="keyword-tag-btn group/tag inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gray-100 dark:bg-white/[0.04] hover:bg-cyan-500/10 dark:hover:bg-cyan-500/15 border border-gray-200/80 dark:border-white/[0.08] hover:border-cyan-400/60 dark:hover:border-cyan-400/50 transition-all duration-300 text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-gray-700 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-300 cursor-pointer shadow-sm hover:scale-105 active:scale-95"
+            >
+                <span class={`w-1.5 h-1.5 rounded-full ${t.dot} group-hover/tag:scale-125 transition-transform`}></span>
+                <span>{t.icon} {t.label}</span>
+                <span class="opacity-0 group-hover/tag:opacity-100 text-[9px] text-cyan-500 transition-opacity">↵</span>
+            </button>
+        ))}
+    </div>
+</div>
+
+<style>
+    .marquee-track {
+        display: flex;
+        width: max-content;
+        animation: marquee-smooth 45s linear infinite;
+    }
+    
+    .marquee-track:hover {
+        animation-play-state: paused;
+    }
+    
+    @keyframes marquee-smooth {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-50% - 0.5rem)); }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const keywordButtons = document.querySelectorAll('.keyword-tag-btn');
+        keywordButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetFilter = btn.getAttribute('data-keyword-filter') || 'all';
+
+                // Dispatch global event for category filter
+                window.dispatchEvent(new CustomEvent('antares_apply_category_filter', {
+                    detail: { category: targetFilter }
+                }));
+
+                // Smooth scroll down to store section
+                const storeSection = document.getElementById('store');
+                if (storeSection) {
+                    storeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    });
+</script>

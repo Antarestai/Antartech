@@ -22,7 +22,7 @@ export const REVIEWS: Review[] = [
   {
     id: 'hb-1',
     deviceId: 'handbrake',
-    productName: 'Freno de Mano Pro Hall USB Simracing',
+    productName: 'Freno de Mano USB Simracing',
     author: 'Comprador verificado',
     date: 'Hace 2 semanas',
     rating: 5,
@@ -34,7 +34,7 @@ export const REVIEWS: Review[] = [
   {
     id: 'hb-2',
     deviceId: 'handbrake',
-    productName: 'Freno de Mano Pro Hall USB Simracing',
+    productName: 'Freno de Mano USB Simracing',
     author: 'Comprador verificado',
     date: 'Hace 3 meses',
     rating: 5,
@@ -46,7 +46,7 @@ export const REVIEWS: Review[] = [
   {
     id: 'hb-3',
     deviceId: 'handbrake',
-    productName: 'Freno de Mano Pro Hall USB Simracing',
+    productName: 'Freno de Mano USB Simracing',
     author: 'Comprador verificado',
     date: 'Hace 1 mes',
     rating: 4,
@@ -57,7 +57,7 @@ export const REVIEWS: Review[] = [
   {
     id: 'hb-4',
     deviceId: 'handbrake',
-    productName: 'Freno de Mano Pro Hall USB Simracing',
+    productName: 'Freno de Mano USB Simracing',
     author: 'Comprador verificado',
     date: 'Hace 4 meses',
     rating: 1,
@@ -66,8 +66,8 @@ export const REVIEWS: Review[] = [
     platform: 'mercadolibre',
     versionBadge: 'Feedback inicial · Versión V1',
     developerNote: {
-      title: 'Respuesta de AntarTech · Evolución del Producto a Versión V2',
-      text: 'Esta opinión corresponde a la primera versión de prueba de hace 4 meses y sirvió directamente como base de mejora. El usuario no lo tenía instalado en un cockpit ni perfilería rígida, sino en un agarre provisorio a mesa. A partir de este feedback se rediseñó la pieza entera: chasis con paredes reforzadas al triple de espesor, mayor densidad de relleno, encastres optimizados y anclaje mecánico blindado. La versión actual no es para nada la misma, no cruje y soporta uso competitivo intensivo.',
+      title: 'Respuesta de AntarTech',
+      text: 'Esta opinión corresponde a la de un hater, primera versión de prueba de hace 4 meses y sirvió directamente como base de mejora. El usuario no lo tenía instalado en un cockpit ni de manera optima, sino en un agarre provisorio a mesa. A partir de este feedback se rediseñó la pieza entera: con paredes reforzadas al triple de espesor, mayor densidad de relleno, encastres optimizados y anclaje reforzado. La versión actual no es para nada la misma.',
     },
   },
   {

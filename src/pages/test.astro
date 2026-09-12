@@ -1,0 +1,114 @@
+---
+// src/pages/test.astro
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// Test / Redesign components
+import HeroCompact from '../components/test/HeroCompact.astro';
+import FeaturedCarousel from '../components/test/FeaturedCarousel.astro';
+import MarqueeInteractive from '../components/test/MarqueeInteractive.astro';
+import ProductsRedesign from '../components/test/ProductsRedesign.astro';
+import MakerQuote from '../components/test/MakerQuote.astro';
+
+// Shared existing components
+import Reviews from '../components/Reviews.astro';
+import UseCases from '../components/UseCases.astro';
+import Contact from '../components/Contact.astro';
+import About from '../components/About.astro';
+import Gallery from '../components/Gallery.astro';
+import FAQ from '../components/FAQ.astro';
+
+const allDevices = await getCollection('devices');
+let featuredDevices = allDevices.filter(device => device.data.featured);
+
+// Sort devices by 'order' if it exists, otherwise put them at the end
+featuredDevices.sort((a, b) => {
+    const orderA = a.data.order ?? 999;
+    const orderB = b.data.order ?? 999;
+    return orderA - orderB;
+});
+
+const mlPerfilLink = "https://listado.mercadolibre.com.ar/_CustId_119316055?item_id=MLA1996684374&category_id=MLA432881&seller_id=119316055&client=recoview-selleritems&recos_listing=true#origin=vip&component=sellerData&typeSeller=classic";
+---
+
+<Layout
+    title="Antares Tech (Preview Rediseño) | Periféricos custom"
+    description="Versión de prueba y evaluación de la nueva experiencia de compra y conversión de AntarTech."
+>
+    <!-- Preview Banner Top -->
+    <div class="relative z-40 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-cyan-600 text-white text-[11px] font-bold py-2 px-4 text-center flex items-center justify-center gap-3">
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-black/30 border border-white/20 text-[9px] uppercase tracking-widest font-black">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+            Modo Preview / Test
+        </span>
+        <span class="hidden sm:inline">Estás viendo la versión de prueba optimizada para conversión.</span>
+        <a href="/" class="underline hover:text-cyan-200 ml-2 font-black">
+            Ver versión actual en producción →
+        </a>
+    </div>
+
+    <!-- 1. Hero Compacto (Above-the-fold) -->
+    <HeroCompact />
+
+    <!-- 2. Carrusel de Productos Destacados (Visible de inmediato) -->
+    <FeaturedCarousel devices={allDevices} />
+
+    <!-- 3. Barra Rotante de Keywords Interactiva (Clickeable con filtro) -->
+    <MarqueeInteractive />
+
+    <!-- 4. Grilla de Productos Rediseñada (Precios grandes, tags sutiles, CTAs explícitos) -->
+    <ProductsRedesign featuredDevices={featuredDevices} />
+
+    <!-- 5. Cita Personal del Creador (Reubicada más abajo) -->
+    <MakerQuote />
+
+    <!-- 6. Opiniones y Calificaciones Reales de Mercado Libre -->
+    <Reviews />
+
+    <!-- 7. Casos de Uso y Aplicaciones -->
+    <UseCases />
+
+    <!-- 8. Contacto -->
+    <Contact />
+
+    <!-- 9. Sobre AntarTech & Filosofía -->
+    <About />
+
+    <!-- 10. Galería -->
+    <Gallery />
+
+    <!-- 11. Preguntas Frecuentes -->
+    <FAQ />
+
+    <!-- Footer -->
+    <footer class="relative z-20 bg-[#d5d0c8] dark:bg-[#02000d] transition-colors duration-700 overflow-hidden font-['Fira_Code']">
+        <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent"></div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div>
+                    <a href="/test" class="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-cyan-500 dark:from-indigo-400 dark:to-cyan-400">AntarTech</a>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Versión de prueba (preview) · Buenos Aires, Argentina</p>
+                </div>
+                <div class="flex items-center gap-4 text-xs">
+                    <a href="/" class="text-indigo-600 dark:text-cyan-400 font-bold hover:underline">Sitio Principal</a>
+                    <span class="text-gray-400">·</span>
+                    <a href={mlPerfilLink} target="_blank" rel="noopener noreferrer" class="text-yellow-600 dark:text-yellow-400 font-bold hover:underline">Mercado Libre Oficial</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script is:inline>
+        // Scroll Reveal
+        const scrollRevealElements = document.querySelectorAll('.scroll-reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        scrollRevealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</Layout>
