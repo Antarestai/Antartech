@@ -9,7 +9,7 @@ tags: ["SimRacing", "Plug & Play", "USB", "Wired"]
 category: "SimRacing"
 mercadolibreUrl: "https://www.mercadolibre.com.ar/freno-de-mano-para-simulador-usb-simracing-pc-handbrake/up/MLAU3903154023?pdp_filters=item_id:MLA1753619707"
 firmwareUrl: "/downloads/DXTweak2.zip"
-price: 45000
+price: 65000
 stock: "En Stock"
 instructionSteps:
   - text: "Conectá el freno por USB sin tenerlo presionado. La PC lo detectará inmediatamente como 'PICO' o 'ANTABRAKE'."
