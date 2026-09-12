@@ -5,6 +5,7 @@ import Preloader from '../components/Preloader.astro';
 import CartDrawer from '../components/CartDrawer.astro';
 import Analytics from '@vercel/analytics/astro';
 import AntaresHelper from '../components/react/AntaresHelper.tsx';
+import CheckoutFlow from '../components/react/CheckoutFlow.tsx';
 
 interface Props {
 	title: string;
@@ -104,6 +105,7 @@ const ogImageURL = new URL('/logo.png', Astro.site);
 		</main>
 
 		<AntaresHelper client:only="react" />
+		<CheckoutFlow client:only="react" />
 
 		<button 
 			id="to-top-button" 

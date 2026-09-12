@@ -2,6 +2,7 @@
 
 // Eventos customizados para que los componentes de Astro puedan escuchar cambios
 export const CART_UPDATED_EVENT = 'antares_cart_updated';
+export const CHECKOUT_OPEN_EVENT = 'antares_checkout_open';
 
 // Clase Singleton para manejar el carrito
 class CartStore {
@@ -146,7 +147,7 @@ class CartStore {
 
     // Generar link de WhatsApp
     generateWhatsAppLink() {
-        const phoneNumber = "5491165361612"; // Número provisto por el usuario
+        const phoneNumber = "5491165361612";
 
         if (this.items.length === 0) return `https://wa.me/${phoneNumber}?text=Hola!`;
 
@@ -161,6 +162,34 @@ class CartStore {
 
         // Doble fallback por compatibilidad
         return `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
+    }
+
+    // Resumen de la orden para el checkout
+    getOrderSummary() {
+        const formatter = new Intl.NumberFormat('es-AR', {
+            style: 'currency',
+            currency: 'ARS',
+            maximumFractionDigits: 0,
+        });
+
+        return {
+            items: this.items.map(item => ({
+                ...item,
+                subtotal: item.price * item.quantity,
+                formattedPrice: formatter.format(item.price),
+                formattedSubtotal: formatter.format(item.price * item.quantity),
+            })),
+            totalItems: this.getTotalItems(),
+            totalPrice: this.getTotalPrice(),
+            formattedTotal: formatter.format(this.getTotalPrice()),
+        };
+    }
+
+    // Disparar apertura del checkout
+    openCheckout() {
+        if (typeof window !== 'undefined' && this.items.length > 0) {
+            window.dispatchEvent(new CustomEvent(CHECKOUT_OPEN_EVENT));
+        }
     }
 }
 
