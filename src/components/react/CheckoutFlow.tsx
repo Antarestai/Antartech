@@ -11,6 +11,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CHECKOUT_CONFIG } from '../../data/checkoutConfig';
 import { cartStore } from '../../scripts/cartStore.js';
+import { findCoupon, type Coupon } from '../../data/coupons';
 
 // ═══════════════════════ TYPES ═══════════════════════
 
@@ -99,8 +100,33 @@ export default function CheckoutFlow() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+  const [couponInput, setCouponInput] = useState('');
+  const [couponError, setCouponError] = useState<string | null>(null);
+
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  // — Manejo de cupón —
+  const handleApplyCoupon = () => {
+    if (!couponInput.trim()) {
+      setCouponError('Ingresá un código');
+      return;
+    }
+    const coupon = findCoupon(couponInput);
+    if (coupon) {
+      setAppliedCoupon(coupon);
+      setCouponError(null);
+    } else {
+      setCouponError('Código no válido o vencido');
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponInput('');
+    setCouponError(null);
+  };
 
   // — Verificar si viene redirigido de vuelta desde Mercado Pago —
   useEffect(() => {
@@ -136,11 +162,35 @@ export default function CheckoutFlow() {
 
   // — Cálculos de descuento —
   const isTransfer = formData.paymentMethod === 'transferencia';
-  const discountPercent = 5;
-  const discountAmount = isTransfer && order ? Math.round(order.totalPrice * 0.05) : 0;
-  const finalTotal = order ? order.totalPrice - discountAmount : 0;
+
+  // 1. Descuento por cupón
+  let couponDiscount = 0;
+  if (appliedCoupon && order) {
+    if (appliedCoupon.type === 'fixed_price') {
+      couponDiscount = Math.max(0, order.totalPrice - appliedCoupon.value);
+    } else if (appliedCoupon.type === 'percent') {
+      couponDiscount = Math.round(order.totalPrice * (appliedCoupon.value / 100));
+    } else if (appliedCoupon.type === 'fixed') {
+      couponDiscount = Math.min(order.totalPrice, appliedCoupon.value);
+    }
+  }
+  const subtotalAfterCoupon = order ? Math.max(0, order.totalPrice - couponDiscount) : 0;
+
+  // 2. Descuento por transferencia (5% OFF)
+  // Si el cupón es fixed_price (ej: ANTATEST que fija a $100), el total es exactamente $100.
+  const transferDiscount =
+    isTransfer && order && appliedCoupon?.type !== 'fixed_price'
+      ? Math.round(subtotalAfterCoupon * 0.05)
+      : 0;
+
+  const finalTotal = appliedCoupon?.type === 'fixed_price'
+    ? appliedCoupon.value
+    : Math.max(0, subtotalAfterCoupon - transferDiscount);
+
   const formattedFinalTotal = formatPrice(finalTotal);
-  const formattedDiscount = formatPrice(discountAmount);
+  const formattedCouponDiscount = formatPrice(couponDiscount);
+  const formattedTransferDiscount = formatPrice(transferDiscount);
+  const formattedDiscount = formattedTransferDiscount;
 
   // — Validación —
   const validate = useCallback(
@@ -269,7 +319,9 @@ export default function CheckoutFlow() {
         Dirección: formData.delivery === 'envio' ? `${formData.address}, ${formData.city}` : 'Retiro en persona',
         'Método de Pago': payLabels[formData.paymentMethod] || '—',
         'Subtotal Original': order.formattedTotal,
-        'Descuento Transferencia': isTransfer ? `5% (-${formattedDiscount})` : 'No aplica',
+        'Cupón Aplicado': appliedCoupon ? `${appliedCoupon.code} (${appliedCoupon.description})` : 'Ninguno',
+        'Descuento Cupón': appliedCoupon ? `-${formattedCouponDiscount}` : 'No aplica',
+        'Descuento Transferencia': transferDiscount > 0 ? `5% (-${formattedTransferDiscount})` : 'No aplica',
         'Monto Final a Cobrar': formattedFinalTotal,
         Productos: productLines,
       };
@@ -293,11 +345,30 @@ export default function CheckoutFlow() {
       let generatedMpUrl: string | null = null;
       if (formData.paymentMethod === 'mercadopago') {
         try {
+          // Preparamos los items ajustados por cupón para que Mercado Pago cobre exactamente finalTotal
+          const mpItemsToSend =
+            appliedCoupon?.type === 'fixed_price'
+              ? [
+                  {
+                    id: 'antatest',
+                    title: `${order.items[0]?.title || 'Producto AntarTech'} (Test $100 - Cupón ANTATEST)`,
+                    quantity: 1,
+                    price: appliedCoupon.value, // $100
+                  },
+                ]
+              : order.items.map((i) => {
+                  const ratio = finalTotal / order.totalPrice;
+                  return {
+                    ...i,
+                    price: Math.max(1, Math.round(i.price * ratio)),
+                  };
+                });
+
           const mpRes = await fetch('/api/create-preference', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              items: order.items,
+              items: mpItemsToSend,
               payer: {
                 name: formData.name,
                 whatsapp: formData.whatsapp,
@@ -486,12 +557,99 @@ export default function CheckoutFlow() {
         ))}
       </div>
 
-      <div className="p-5 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/10 shadow-sm flex justify-between items-center">
-        <div>
-          <span className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-gray-400 font-bold block">Total Estimado</span>
-          <span className="text-xs text-gray-600 dark:text-gray-300 font-medium">{order!.totalItems} {order!.totalItems === 1 ? 'producto' : 'productos'}</span>
+      {/* Sección Cupón de Descuento */}
+      <div className="p-4 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/10 shadow-sm space-y-2.5">
+        <label className="block text-[11px] font-black uppercase tracking-widest text-indigo-600 dark:text-cyan-400">
+          ¿Tenés un cupón de descuento?
+        </label>
+
+        {appliedCoupon ? (
+          <div className="flex items-center justify-between p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
+            <div className="flex items-center gap-2.5">
+              <div className="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center font-black text-xs shrink-0">
+                ✓
+              </div>
+              <div>
+                <span className="font-black text-xs uppercase tracking-wider text-emerald-700 dark:text-emerald-300 block">
+                  {appliedCoupon.code}
+                </span>
+                <p className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+                  {appliedCoupon.description}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={handleRemoveCoupon}
+              className="text-[10px] font-bold uppercase tracking-wider text-red-500 hover:text-red-600 dark:hover:text-red-400 px-2.5 py-1.5 rounded-lg hover:bg-red-500/10 transition-colors cursor-pointer"
+            >
+              ✕ Quitar
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-1.5">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                placeholder="Código (ej: ANTATEST)"
+                value={couponInput}
+                onChange={(e) => {
+                  setCouponInput(e.target.value.toUpperCase());
+                  setCouponError(null);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleApplyCoupon();
+                  }
+                }}
+                className="flex-1 px-3.5 py-2.5 rounded-xl text-xs uppercase font-bold tracking-wider bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:border-indigo-500 dark:focus:border-cyan-400 transition-colors"
+              />
+              <button
+                type="button"
+                onClick={handleApplyCoupon}
+                className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 dark:bg-cyan-500 dark:hover:bg-cyan-400 text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer shrink-0 shadow-sm"
+              >
+                Aplicar
+              </button>
+            </div>
+            {couponError && (
+              <p className="text-xs text-red-500 font-medium flex items-center gap-1">
+                <span>⚠</span> {couponError}
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Resumen Total Estimado */}
+      <div className="p-5 rounded-2xl bg-white/80 dark:bg-white/[0.04] border border-gray-200/80 dark:border-white/10 shadow-sm space-y-2.5">
+        <div className="flex justify-between items-center">
+          <div>
+            <span className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-gray-400 font-bold block">Subtotal</span>
+            <span className="text-xs text-gray-600 dark:text-gray-300 font-medium">{order!.totalItems} {order!.totalItems === 1 ? 'producto' : 'productos'}</span>
+          </div>
+          <span className={`font-black text-gray-900 dark:text-white ${appliedCoupon ? 'line-through opacity-50 text-sm' : 'text-3xl tracking-tight'}`}>
+            {order!.formattedTotal}
+          </span>
         </div>
-        <span className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">{order!.formattedTotal}</span>
+
+        {appliedCoupon && (
+          <>
+            <div className="flex justify-between items-center pt-2 border-t border-gray-200/60 dark:border-white/[0.06] text-xs">
+              <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                Cupón {appliedCoupon.code}:
+              </span>
+              <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                -{formattedCouponDiscount}
+              </span>
+            </div>
+            <div className="flex justify-between items-center pt-2 border-t border-gray-200/60 dark:border-white/[0.06]">
+              <span className="text-sm uppercase tracking-wider text-gray-900 dark:text-white font-black">Total Estimado</span>
+              <span className="text-3xl font-black text-indigo-600 dark:text-cyan-400 tracking-tight">{formattedFinalTotal}</span>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Banner 5% OFF por transferencia */}
@@ -918,10 +1076,17 @@ export default function CheckoutFlow() {
               <span>{order!.formattedTotal}</span>
             </div>
 
-            {isTransfer && (
+            {appliedCoupon && couponDiscount > 0 && (
+              <div className="flex justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                <span>Cupón {appliedCoupon.code}:</span>
+                <span>-{formattedCouponDiscount}</span>
+              </div>
+            )}
+
+            {isTransfer && transferDiscount > 0 && (
               <div className="flex justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
                 <span>Descuento Transferencia (5% OFF):</span>
-                <span>-{formattedDiscount}</span>
+                <span>-{formattedTransferDiscount}</span>
               </div>
             )}
 
@@ -939,6 +1104,7 @@ export default function CheckoutFlow() {
             { label: 'Nombre', value: formData.name },
             { label: 'WhatsApp', value: formData.whatsapp },
             ...(formData.dni ? [{ label: 'DNI', value: formData.dni }] : []),
+            ...(appliedCoupon ? [{ label: 'Cupón Aplicado', value: `${appliedCoupon.code} (-${formattedCouponDiscount})` }] : []),
             {
               label: 'Entrega',
               value:
