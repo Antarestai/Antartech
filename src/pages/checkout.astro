@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CheckoutFlow from '../components/react/CheckoutFlow.tsx';
+---
+
+<Layout title="Finalizar Compra — AntarTech" description="Completá tu pedido de periféricos AntarTech con opciones de pago por Transferencia Bancaria, MercadoPago o Efectivo al retirar.">
+    <!-- PCB Animated Ambient Background -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-[#d5d0c8] dark:bg-[#030014] transition-colors duration-700">
+        <div 
+            class="absolute inset-0 opacity-[0.25] dark:opacity-[0.7] transition-opacity duration-700" 
+            style="background: 
+                linear-gradient(135deg, var(--pcb-line) 2px, transparent 2px),
+                linear-gradient(225deg, var(--pcb-line) 2px, transparent 2px),
+                radial-gradient(var(--pcb-pad) 4px, transparent 4px);
+                background-size: 60px 60px, 60px 60px, 60px 60px;
+                background-position: 0 0, 30px 0, 30px 30px;
+                background-color: var(--pcb-bg);"
+        ></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#d5d0c8]/50 via-[#d5d0c8]/85 to-[#d5d0c8] dark:from-transparent dark:via-[#030014]/80 dark:to-[#030014] transition-colors duration-700"></div>
+        <div class="absolute top-0 right-0 -mr-40 -mt-20 w-[500px] h-[500px] rounded-full bg-indigo-500/10 dark:bg-indigo-600/10 blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 -ml-40 -mb-20 w-[500px] h-[500px] rounded-full bg-cyan-500/10 dark:bg-cyan-600/10 blur-[120px] pointer-events-none"></div>
+    </div>
+
+    <main class="pt-28 pb-20 min-h-screen relative z-10">
+        <CheckoutFlow client:only="react" />
+    </main>
+</Layout>

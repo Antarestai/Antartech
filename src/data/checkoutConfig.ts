@@ -9,6 +9,9 @@ export const CHECKOUT_CONFIG = {
   /** Número de WhatsApp del vendedor (con código de país) */
   whatsappNumber: '5491165361612',
 
+  /** Email de contacto para comprobantes o consultas */
+  contactEmail: 'antares.tech@gmail.com',
+
   /** Formspree endpoint (mismo que contacto, diferenciado por _subject) */
   formspreeEndpoint: 'https://formspree.io/f/xwvrbzob',
 
