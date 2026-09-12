@@ -11,7 +11,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CHECKOUT_CONFIG } from '../../data/checkoutConfig';
 import { cartStore } from '../../scripts/cartStore.js';
-import { findCoupon, type Coupon } from '../../data/coupons';
+import { validateCoupon, type Coupon } from '../../data/coupons';
 
 // ═══════════════════════ TYPES ═══════════════════════
 
@@ -49,6 +49,7 @@ interface FormData {
 interface FieldErrors {
   name?: string;
   whatsapp?: string;
+  dni?: string;
   address?: string;
   city?: string;
   paymentMethod?: string;
@@ -113,12 +114,12 @@ export default function CheckoutFlow() {
       setCouponError('Ingresá un código');
       return;
     }
-    const coupon = findCoupon(couponInput);
-    if (coupon) {
-      setAppliedCoupon(coupon);
+    const result = validateCoupon(couponInput, order?.totalPrice || 0);
+    if (result.valid) {
+      setAppliedCoupon(result.coupon);
       setCouponError(null);
     } else {
-      setCouponError('Código no válido o vencido');
+      setCouponError(result.reason);
     }
   };
 
@@ -209,6 +210,14 @@ export default function CheckoutFlow() {
           e.whatsapp = 'El número no debe superar los 13 dígitos';
         }
 
+        // DNI: obligatorio, entre 7 y 9 dígitos
+        const dniDigits = (data.dni || '').replace(/\D/g, '');
+        if (!dniDigits || dniDigits.length < 7) {
+          e.dni = 'Ingresá tu DNI (mínimo 7 dígitos sin puntos)';
+        } else if (dniDigits.length > 9) {
+          e.dni = 'El DNI no debe superar los 9 dígitos';
+        }
+
         if (data.delivery === 'envio') {
           if (!data.address.trim() || data.address.trim().length < 4) {
             e.address = 'Ingresá tu dirección completa (calle y número)';
@@ -233,7 +242,7 @@ export default function CheckoutFlow() {
     const errs = validate(step, formData);
     const stepKeys: (keyof FieldErrors)[][] = [
       [],
-      ['name', 'whatsapp', 'address', 'city'],
+      ['name', 'whatsapp', 'dni', 'address', 'city'],
       ['paymentMethod'],
       [],
     ];
@@ -709,16 +718,18 @@ export default function CheckoutFlow() {
       {/* DNI */}
       <div>
         <label className="block text-[11px] font-black uppercase tracking-widest text-indigo-600 dark:text-cyan-400 mb-2">
-          DNI <span className="text-gray-400 font-normal normal-case">(opcional)</span>
+          DNI (Documento Nacional de Identidad) *
         </label>
         <input
           type="text"
           inputMode="numeric"
-          placeholder="Número de documento"
+          placeholder="Número de documento (sin puntos)"
           value={formData.dni}
           onChange={(e) => updateField('dni', e.target.value.replace(/\D/g, ''))}
-          className="w-full bg-white dark:bg-[#0e0c1e] border border-gray-300 dark:border-white/15 rounded-xl px-4 py-3.5 text-sm text-gray-900 dark:text-white outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-300 shadow-sm"
+          onBlur={() => blur('dni')}
+          className={inputClass('dni')}
         />
+        {fieldError('dni')}
       </div>
 
       {/* Forma de Entrega */}
@@ -907,8 +918,8 @@ export default function CheckoutFlow() {
                               Monto a Transferir (5% OFF Aplicado)
                             </span>
                           </div>
-                          <div className="flex items-baseline gap-2.5 mt-1">
-                            <span className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">
+                          <div className="flex items-baseline gap-2 mt-1 flex-wrap">
+                            <span className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white tracking-tight">
                               {formattedFinalTotal}
                             </span>
                             <span className="text-xs text-gray-500 line-through">
@@ -923,7 +934,7 @@ export default function CheckoutFlow() {
                         <button
                           type="button"
                           onClick={() => copyText(String(finalTotal), 'monto')}
-                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-wider transition-all shadow-md shadow-emerald-600/25 cursor-pointer"
+                          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-wider transition-all shadow-md shadow-emerald-600/25 cursor-pointer shrink-0"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                           {copiedField === 'monto' ? '✓ Monto Copiado' : 'Copiar Monto'}
@@ -931,7 +942,7 @@ export default function CheckoutFlow() {
                       </div>
 
                       {/* Datos Bancarios con botón copiar para cada campo */}
-                      <div className="space-y-2 bg-white dark:bg-[#0e0c1e] p-4 rounded-xl border border-gray-200/80 dark:border-white/10 shadow-sm">
+                      <div className="space-y-2 bg-white dark:bg-[#0e0c1e] p-3.5 sm:p-4 rounded-xl border border-gray-200/80 dark:border-white/10 shadow-sm min-w-0">
                         <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 block mb-1">
                           Datos de la Cuenta ICBC
                         </span>
@@ -943,10 +954,10 @@ export default function CheckoutFlow() {
                           { label: 'CUIT', value: CHECKOUT_CONFIG.bankTransfer.cuit },
                           { label: 'Monto Exacto', value: formattedFinalTotal, copyTextValue: String(finalTotal), copyable: true },
                         ].map((row) => (
-                          <div key={row.label} className="flex items-center justify-between gap-2 py-1.5 border-b border-gray-100 dark:border-white/[0.04] last:border-0">
+                          <div key={row.label} className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 py-2 border-b border-gray-100 dark:border-white/[0.04] last:border-0 min-w-0">
                             <span className="text-xs font-bold text-gray-500 dark:text-gray-400 shrink-0">{row.label}</span>
-                            <div className="flex items-center gap-2 min-w-0">
-                              <span className="text-xs font-mono font-bold text-gray-900 dark:text-white truncate">{row.value}</span>
+                            <div className="flex items-center justify-between sm:justify-end gap-2 min-w-0 w-full sm:w-auto">
+                              <span className="text-xs font-mono font-bold text-gray-900 dark:text-white break-all sm:truncate">{row.value}</span>
                               {row.copyable && (
                                 <button
                                   type="button"
@@ -1419,27 +1430,27 @@ export default function CheckoutFlow() {
   // ═══════════════════════ MAIN RENDER ═══════════════════════
 
   return (
-    <div className="max-w-xl mx-auto px-4">
+    <div className="max-w-xl mx-auto px-3.5 sm:px-4 w-full overflow-x-hidden">
       {/* Header */}
       {!submitted && !returnStatus && (
         <>
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-xl font-black uppercase tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
-              <span className="w-2 h-6 rounded-full bg-gradient-to-b from-indigo-600 to-cyan-500 inline-block"></span>
+          <div className="flex items-center justify-between mb-5 sm:mb-6">
+            <h1 className="text-lg sm:text-xl font-black uppercase tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+              <span className="w-2 h-5 sm:h-6 rounded-full bg-gradient-to-b from-indigo-600 to-cyan-500 inline-block"></span>
               Finalizar Pedido
             </h1>
             <a
               href="/#store"
-              className="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 transition-colors inline-flex items-center gap-1"
+              className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-cyan-400 transition-colors inline-flex items-center gap-1"
             >
               ← Seguir Comprando
             </a>
           </div>
 
           {/* Stepper Progress Bar */}
-          <div className="flex items-center gap-2 mb-8">
+          <div className="flex items-center gap-1.5 sm:gap-2 mb-6 sm:mb-8 w-full">
             {STEP_LABELS.map((label, i) => (
-              <div key={label} className="flex-1 flex flex-col items-center gap-1.5">
+              <div key={label} className="flex-1 flex flex-col items-center gap-1 min-w-0">
                 <div className="w-full h-1.5 rounded-full bg-gray-300 dark:bg-white/[0.1] overflow-hidden">
                   <motion.div
                     className="h-full rounded-full bg-gradient-to-r from-indigo-600 to-cyan-500"
@@ -1448,7 +1459,7 @@ export default function CheckoutFlow() {
                     transition={{ duration: 0.35, ease: 'easeInOut' }}
                   />
                 </div>
-                <span className={`text-[10px] uppercase tracking-wider font-bold transition-colors duration-300 ${
+                <span className={`text-[9px] sm:text-[10px] uppercase tracking-normal sm:tracking-wider font-bold transition-colors duration-300 truncate text-center w-full ${
                   i <= step ? 'text-indigo-600 dark:text-cyan-400' : 'text-gray-400 dark:text-gray-500'
                 }`}>
                   {label}
@@ -1460,7 +1471,7 @@ export default function CheckoutFlow() {
       )}
 
       {/* Content Container */}
-      <div ref={contentRef} className="min-h-[320px]">
+      <div ref={contentRef} className="min-h-[320px] overflow-hidden w-full">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={returnStatus ? `return-${returnStatus}` : submitted ? 'success' : step}
@@ -1478,12 +1489,12 @@ export default function CheckoutFlow() {
 
       {/* Navigation Buttons */}
       {!submitted && !returnStatus && (
-        <div className="flex items-center gap-3 mt-8 pt-6 border-t border-gray-200/70 dark:border-white/10">
+        <div className="flex items-center gap-2 sm:gap-3 mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-gray-200/70 dark:border-white/10 w-full">
           <button
             type="button"
             onClick={goBack}
             disabled={submitting}
-            className="px-6 py-3.5 rounded-xl border border-gray-300 dark:border-white/15 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors disabled:opacity-50 cursor-pointer"
+            className="px-4 sm:px-6 py-3.5 rounded-xl border border-gray-300 dark:border-white/15 text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors disabled:opacity-50 cursor-pointer shrink-0"
           >
             {step === 0 ? '← Volver' : 'Atrás'}
           </button>
@@ -1491,20 +1502,20 @@ export default function CheckoutFlow() {
             type="button"
             onClick={step < 3 ? goNext : handleSubmit}
             disabled={submitting}
-            className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-black uppercase text-xs tracking-widest transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/25 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+            className="flex-1 min-w-0 flex items-center justify-center gap-2 py-3.5 px-3 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-black uppercase text-xs tracking-wider transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/25 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
           >
             {submitting ? (
               <>
-                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                <svg className="animate-spin h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none">
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" className="opacity-25" />
                   <path d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" fill="currentColor" className="opacity-75" />
                 </svg>
-                Procesando Pedido...
+                <span className="truncate">Procesando...</span>
               </>
             ) : step < 3 ? (
               'Continuar'
             ) : (
-              `Confirmar Pedido (${formattedFinalTotal})`
+              <span className="truncate">Confirmar Pedido ({formattedFinalTotal})</span>
             )}
           </button>
         </div>
