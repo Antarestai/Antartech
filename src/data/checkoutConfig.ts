@@ -31,14 +31,14 @@ export const CHECKOUT_CONFIG = {
     mercadopago:
       'Una vez confirmado tu pedido, te enviaremos el link de pago de MercadoPago por WhatsApp para que puedas abonar de forma rápida y segura.',
     efectivo:
-      'Abonás en efectivo al momento de retirar el producto. Coordinamos día y horario por WhatsApp.',
+      'Abonás en efectivo al momento de retirar. Podés retirar personalmente por Bauness 481 (Ciudad Evita) o a coordinar un punto de encuentro por WhatsApp.',
   },
 
   /** Instrucciones de entrega */
   deliveryInstructions: {
     envio:
-      'Te informamos el costo de envío y tiempos estimados por WhatsApp después de confirmar el pedido.',
+      'Los envíos se realizan por Correo Argentino a todo el país. Te informamos el costo exacto y el código de seguimiento por WhatsApp.',
     retiro:
-      'Coordinamos punto de encuentro y horario por WhatsApp después de confirmar tu pedido.',
+      'Podés retirar personalmente por Bauness 481 (Ciudad Evita) o a coordinar un punto de encuentro por WhatsApp tras confirmar el pedido.',
   },
 } as const;

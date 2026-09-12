@@ -231,7 +231,10 @@ export default function CheckoutFlow() {
       .map((i) => `${i.quantity}x ${i.title} (${i.formattedPrice} c/u) = ${i.formattedSubtotal}`)
       .join('\n');
 
-    const deliveryLabel = formData.delivery === 'envio' ? 'Envío a domicilio' : 'Retiro en persona';
+    const deliveryLabel =
+      formData.delivery === 'envio'
+        ? 'Envío por Correo Argentino a todo el país'
+        : 'Retiro en persona (Bauness 481, Ciudad Evita / a coordinar)';
     const payLabels: Record<string, string> = {
       transferencia: 'Transferencia Bancaria (ICBC) — 5% OFF',
       mercadopago: 'MercadoPago',
@@ -474,11 +477,26 @@ export default function CheckoutFlow() {
         </div>
 
         {/* Texto aclaratorio de entrega con alto contraste */}
-        <div className="p-3.5 rounded-xl bg-gray-100 dark:bg-white/[0.05] border border-gray-200 dark:border-white/10 mt-3 flex items-center gap-2.5">
-          <span className="text-sm">ℹ️</span>
-          <p className="text-xs text-gray-700 dark:text-gray-200 font-medium leading-relaxed">
-            {CHECKOUT_CONFIG.deliveryInstructions[formData.delivery]}
-          </p>
+        <div className="p-4 rounded-xl bg-gray-100/90 dark:bg-white/[0.05] border border-gray-300/80 dark:border-white/10 mt-3.5 space-y-1.5 shadow-sm">
+          {formData.delivery === 'envio' ? (
+            <>
+              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-indigo-600 dark:text-cyan-400">
+                <span>🚚</span> Envíos a todo el país por Correo Argentino
+              </div>
+              <p className="text-xs text-gray-700 dark:text-gray-200 font-medium leading-relaxed">
+                Despachamos tu pedido por <strong>Correo Argentino a cualquier localidad de la Argentina</strong>. Al confirmar la compra, te informamos el costo exacto según tu código postal y te compartimos el código de seguimiento oficial.
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                <span>📍</span> Punto de Retiro en Persona
+              </div>
+              <p className="text-xs text-gray-700 dark:text-gray-200 font-medium leading-relaxed">
+                Podés retirar personalmente por <strong>Bauness 481 (Ciudad Evita)</strong> o coordinar un punto de encuentro que nos quede cómodo a ambos por WhatsApp tras confirmar tu pedido.
+              </p>
+            </>
+          )}
         </div>
       </div>
 
@@ -690,10 +708,20 @@ export default function CheckoutFlow() {
 
                 {active && m.id === 'efectivo' && (
                   <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden border-t border-gray-200/60 dark:border-white/[0.06]">
-                    <div className="p-4 bg-emerald-50/60 dark:bg-emerald-500/5">
-                      <p className="text-xs text-emerald-900 dark:text-emerald-200 font-medium leading-relaxed">
-                        {CHECKOUT_CONFIG.paymentInstructions.efectivo}
+                    <div className="p-4 bg-emerald-50/60 dark:bg-emerald-500/5 space-y-3">
+                      <p className="text-xs text-emerald-950 dark:text-emerald-200 font-bold leading-relaxed flex items-center gap-1.5">
+                        <span>💵</span> Abonás en efectivo en mano al momento de retirar tu compra.
                       </p>
+                      <div className="p-3.5 bg-white dark:bg-[#0e0c1e] rounded-xl border border-gray-200/80 dark:border-white/10 text-xs text-gray-800 dark:text-gray-200 space-y-2 shadow-sm">
+                        <div className="flex items-start gap-2">
+                          <span className="font-bold text-emerald-600 dark:text-emerald-400 shrink-0">📍 Dirección de Retiro:</span>
+                          <span><strong>Bauness 481, Ciudad Evita</strong> (coordinamos día y horario).</span>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <span className="font-bold text-indigo-600 dark:text-cyan-400 shrink-0">🤝 O a coordinar:</span>
+                          <span>También podemos acordar un punto de encuentro que nos quede cómodo a ambos por WhatsApp.</span>
+                        </div>
+                      </div>
                     </div>
                   </motion.div>
                 )}
@@ -759,7 +787,13 @@ export default function CheckoutFlow() {
             { label: 'Nombre', value: formData.name },
             { label: 'WhatsApp', value: formData.whatsapp },
             ...(formData.dni ? [{ label: 'DNI', value: formData.dni }] : []),
-            { label: 'Entrega', value: formData.delivery === 'envio' ? 'Envío a domicilio' : 'Retiro en persona' },
+            {
+              label: 'Entrega',
+              value:
+                formData.delivery === 'envio'
+                  ? 'Envío por Correo Argentino a todo el país'
+                  : 'Retiro en persona — Bauness 481, Ciudad Evita (o a coordinar)',
+            },
             ...(formData.delivery === 'envio' ? [{ label: 'Dirección', value: `${formData.address}, ${formData.city}` }] : []),
             { label: 'Método de Pago', value: payLabels[formData.paymentMethod] || '—' },
           ].map((row) => (
